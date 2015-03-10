@@ -69,9 +69,9 @@ public class LoginController implements Serializable {
 		} catch (AuthenticationException e) {
 	    	log.info("Login failed: " + e.getMessage());
 	        FacesMessage facesMsg = new FacesMessage(
-	        FacesMessage.SEVERITY_ERROR, "Error", "login.failed") ;
+	        FacesMessage.SEVERITY_ERROR, "Error de autenticación.", "Usuario o contraseña errorneos.");
 	        FacesContext.getCurrentInstance().addMessage(null, facesMsg);
-	            
+
 	        return null;
 		}
 
