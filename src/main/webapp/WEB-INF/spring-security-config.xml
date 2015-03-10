@@ -1,0 +1,36 @@
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+  xmlns:beans="http://www.springframework.org/schema/beans"
+  xmlns:mvc="http://www.springframework.org/schema/mvc"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/security
+           http://www.springframework.org/schema/security/spring-security-3.2.xsd">
+
+  	<!-- pre-post-annotations habilita las anotaciones @PreAuthorize and @PostAuthorize
+	secured-annotations="enabled" habilita la anotacion @Security para el codigo Java --> 
+	<global-method-security pre-post-annotations="enabled"/>
+
+	<!-- Ignora la seguridad para ese patron-->
+	<http pattern="/resources/**" security="none" />
+	
+	<http use-expressions="true">
+        <intercept-url pattern="/pages/login.xhtml" access="anonymous" />
+        <form-login login-page="/pages/login.xhtml"  login-processing-url="/j_spring_security_check" />
+        <logout />
+    </http>
+ 
+<!--     <authentication-manager alias="authenticationManager"> -->
+<!--         <authentication-provider> -->
+<!--             <user-service> -->
+<!--                 <user name="Alberto" password="123" authorities="ROLE_ADMIN" /> -->
+<!--             </user-service> -->
+<!--         </authentication-provider> -->
+<!--     </authentication-manager> -->
+
+		<authentication-manager alias="authenticationManager">
+	    	<!-- Gestión de usuarios mediante un proveedor de servicios de usuarios: -->
+	    	<authentication-provider user-service-ref="userServiceImpl"/>
+  		</authentication-manager>
+
+</beans:beans>

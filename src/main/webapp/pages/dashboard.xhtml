@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      >  
+    
+      
+    <h:body>
+    	
+    	<ui:composition template="../templates/main.xhtml">
+			
+			<!-- Parametros para el paso de titulos, cabeceras, etc -->
+			<ui:param name="headerTitle1" value="Dashboard" />
+			<ui:param name="headerTitle2" value=" Página de inicio" />
+			<ui:param name="boxTitle" value="Resumen de estado" />
+			
+			<!-- Para la inclusion de javascript -->
+			<ui:define name="scripts">
+			 	<script type="text/javascript">
+				   $(document).ready(function(){
+					   
+					});
+				</script>
+			</ui:define>
+			
+			<ui:define name="content">
+				<div class="box-body">
+					<div class="row">
+			            <div class="col-lg-3 col-xs-6">
+			              <!-- small box -->
+			              <div class="small-box bg-aqua">
+			                <div class="inner">
+			                  <h3>150</h3>
+			                  <p>New Orders</p>
+			                </div>
+			                <div class="icon">
+			                  <i class="ion ion-bag"></i>
+			                </div>
+			                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+			              </div>
+			            </div><!-- ./col -->
+			            <div class="col-lg-3 col-xs-6">
+			              <!-- small box -->
+			              <div class="small-box bg-green">
+			                <div class="inner">
+			                  <h3>53<sup style="font-size: 20px">%</sup></h3>
+			                  <p>Bounce Rate</p>
+			                </div>
+			                <div class="icon">
+			                  <i class="ion ion-stats-bars"></i>
+			                </div>
+			                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+			              </div>
+			            </div><!-- ./col -->
+			            <div class="col-lg-3 col-xs-6">
+			              <!-- small box -->
+			              <div class="small-box bg-yellow">
+			                <div class="inner">
+			                  <h3>44</h3>
+			                  <p>User Registrations</p>
+			                </div>
+			                <div class="icon">
+			                  <i class="ion ion-person-add"></i>
+			                </div>
+			                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+			              </div>
+			            </div><!-- ./col -->
+			            <div class="col-lg-3 col-xs-6">
+			              <!-- small box -->
+			              <div class="small-box bg-red">
+			                <div class="inner">
+			                  <h3>65</h3>
+			                  <p>Unique Visitors</p>
+			                </div>
+			                <div class="icon">
+			                  <i class="ion ion-pie-graph"></i>
+			                </div>
+			                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+			              </div>
+			            </div><!-- ./col -->
+			          </div>
+					
+					<div class="row">
+						<div class="col-md-3 col-sm-6 col-xs-12">
+							<!-- Apply any bg-* class to to the info-box to color it -->
+							<div class="info-box bg-red">
+							  <span class="info-box-icon"><i class="fa fa-credit-card"></i></span>
+							  <div class="info-box-content">
+							    <span class="info-box-text">Likes</span>
+							    <span class="info-box-number">41,410</span>
+							    <!-- The progress section is optional -->
+							    <div class="progress">
+							      <div class="progress-bar" style="width: 70%"></div>
+							    </div>
+							    <span class="progress-description">
+							      70% Increase in 30 Days
+							    </span>
+							  </div><!-- /.info-box-content -->
+							</div><!-- /.info-box -->	
+						</div>
+						
+						<div class="col-md-3 col-sm-6 col-xs-12">
+							<!-- Apply any bg-* class to to the info-box to color it -->
+							<div class="info-box bg-yellow">
+							  <span class="info-box-icon"><i class="fa fa-money"></i></span>
+							  <div class="info-box-content">
+							    <span class="info-box-text">Likes</span>
+							    <span class="info-box-number">41,410</span>
+							    <!-- The progress section is optional -->
+							    <div class="progress">
+							      <div class="progress-bar" style="width: 70%"></div>
+							    </div>
+							    <span class="progress-description">
+							      70% Increase in 30 Days
+							    </span>
+							  </div><!-- /.info-box-content -->
+							</div><!-- /.info-box -->	
+						</div>
+						
+						<div class="col-md-3 col-sm-6 col-xs-12">
+							<!-- Apply any bg-* class to to the info-box to color it -->
+							<div class="info-box bg-blue">
+							  <span class="info-box-icon"><i class="fa fa-cc-mastercard"></i></span>
+							  <div class="info-box-content">
+							    <span class="info-box-text">Likes</span>
+							    <span class="info-box-number">41,410</span>
+							    <!-- The progress section is optional -->
+							    <div class="progress">
+							      <div class="progress-bar" style="width: 70%"></div>
+							    </div>
+							    <span class="progress-description">
+							      70% Increase in 30 Days
+							    </span>
+							  </div><!-- /.info-box-content -->
+							</div><!-- /.info-box -->	
+						</div>
+						
+						<div class="col-md-3 col-sm-6 col-xs-12">
+							<!-- Apply any bg-* class to to the info-box to color it -->
+							<div class="info-box bg-green">
+							  <span class="info-box-icon"><i class="fa fa-cc-visa"></i></span>
+							  <div class="info-box-content">
+							    <span class="info-box-text">Likes</span>
+							    <span class="info-box-number">41,410</span>
+							    <!-- The progress section is optional -->
+							    <div class="progress">
+							      <div class="progress-bar" style="width: 70%"></div>
+							    </div>
+							    <span class="progress-description">
+							      70% Increase in 30 Days
+							    </span>
+							  </div><!-- /.info-box-content -->
+							</div><!-- /.info-box -->	
+						</div>
+					
+					
+					</div>
+					<div class="row">
+						<div class="col-md-3 col-sm-6 col-xs-12">
+							<div class="info-box">
+							  <!-- Apply any bg-* class to to the icon to color it -->
+							  <span class="info-box-icon bg-red"><i class="fa fa-euro"></i></span>
+							  <div class="info-box-content">
+							    <span class="info-box-text">Likes</span>
+							    <span class="info-box-number">93,139</span>
+							  </div><!-- /.info-box-content -->
+							</div><!-- /.info-box -->
+						</div>
+						
+						<div class="col-md-3 col-sm-6 col-xs-12">
+							<div class="info-box">
+							  <!-- Apply any bg-* class to to the icon to color it -->
+							  <span class="info-box-icon bg-blue"><i class="fa fa-bank"></i></span>
+							  <div class="info-box-content">
+							    <span class="info-box-text">Likes</span>
+							    <span class="info-box-number">93,139</span>
+							  </div><!-- /.info-box-content -->
+							</div><!-- /.info-box -->
+						</div>
+						
+						<div class="col-md-3 col-sm-6 col-xs-12">
+							<div class="info-box">
+							  <!-- Apply any bg-* class to to the icon to color it -->
+							  <span class="info-box-icon bg-green"><i class="fa fa-briefcase"></i></span>
+							  <div class="info-box-content">
+							    <span class="info-box-text">Likes</span>
+							    <span class="info-box-number">93,139</span>
+							  </div><!-- /.info-box-content -->
+							</div><!-- /.info-box -->
+						</div>
+						
+						<div class="col-md-3 col-sm-6 col-xs-12">
+							<div class="info-box">
+							  <!-- Apply any bg-* class to to the icon to color it -->
+							  <span class="info-box-icon bg-yellow"><i class="fa fa-folder-open"></i></span>
+							  <div class="info-box-content">
+							    <span class="info-box-text">Likes</span>
+							    <span class="info-box-number">93,139</span>
+							  </div><!-- /.info-box-content -->
+							</div><!-- /.info-box -->
+						</div>
+					</div>
+					
+					
+					<!-- Apply any bg-* class to to the info-box to color it -->
+					<div class="info-box bg-red">
+					  <span class="info-box-icon"><i class="fa fa-comments-o"></i></span>
+					  <div class="info-box-content">
+					    <span class="info-box-text">Likes</span>
+					    <span class="info-box-number">41,410</span>
+					    <!-- The progress section is optional -->
+					    <div class="progress">
+					      <div class="progress-bar" style="width: 70%"></div>
+					    </div>
+					    <span class="progress-description">
+					      70% Increase in 30 Days
+					    </span>
+					  </div><!-- /.info-box-content -->
+					</div><!-- /.info-box -->
+					
+					<!-- Apply any bg-* class to to the info-box to color it -->
+					<div class="info-box bg-red">
+					  <span class="info-box-icon"><i class="fa fa-comments-o"></i></span>
+					  <div class="info-box-content">
+					    <span class="info-box-text">Likes</span>
+					    <span class="info-box-number">41,410</span>
+					    <!-- The progress section is optional -->
+					    <div class="progress">
+					      <div class="progress-bar" style="width: 70%"></div>
+					    </div>
+					    <span class="progress-description">
+					      70% Increase in 30 Days
+					    </span>
+					  </div><!-- /.info-box-content -->
+					</div><!-- /.info-box -->
+				
+				
+				</div><!-- /.box-body -->
+				
+				<!-- Para la botonera -->
+		        <div class="box-footer">
+					BOTONERA        
+		        </div><!-- /.box-footer-->
+		        
+				
+			</ui:define>
+    	</ui:composition>
+    	
+    </h:body>
+
+</html>

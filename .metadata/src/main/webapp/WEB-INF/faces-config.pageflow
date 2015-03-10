@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf14241618498430" configfile="/EasyHome-Conta/src/main/webapp/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="index.xhtml" x="24" y="12" id="pf14247021223383" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf14247021223384" path="/index.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/home.xhtml" x="338" y="12" id="pf14247021223385" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf14247021223384" path="/pages/home.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="templates/leftMenu.xhtml" x="24" y="156" id="pf142487936045523" referenceLink="//@navigationRule.1/@fromViewId|" outlinks="pf142487962532025" path="/templates/leftMenu.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/user/user-list.xhtml" x="324" y="156" id="pf142487936045524" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" inlinks="pf142487962532025" path="/pages/user-list.xhtml"/>
+  <links id="pf14247021223384" target="pf14247021223385" source="pf14247021223383" outcome="entrar"/>
+  <links id="pf142487962532025" target="pf142487936045524" source="pf142487936045523" outcome="user-list"/>
+</pageflow:Pageflow>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">  
+      
+    <h:body>
+    	
+    	<ui:composition template="../../templates/main.xhtml">
+			<!-- Parametros para el paso de titulos, cabeceras, etc -->
+			<ui:param name="headerTitle1" value="Gestión de usuarios" />
+			<ui:param name="headerTitle2" value="" />
+			<ui:param name="boxTitle" value="Formulario" />
+			<ui:param name="boxFooter" value="" />
+			
+			<!-- Para la inclusion de javascript -->
+			<ui:define name="scripts">
+			 	<script type="text/javascript">
+				   $(document).ready(function(){
+					   
+					});
+				</script>
+			</ui:define>
+			
+			<ui:define name="content">
+				<h:form id="form" styleClass="form-horizontal"  role="form">	
+					<div class="box-body">
+						<div class="row">
+						    <div class="col-md-8 col-md-offset-2">
+						      
+						      	<h:inputHidden value="#{userBean.user.idUser}"></h:inputHidden>
+						      			        
+						        <!-- Text input-->
+						          <div class="form-group">
+						            <label class="col-sm-2 control-label" for="textinput">Nombre</label>
+						            <div class="col-sm-6">
+						              <h:inputText pt:placeholder="Nombre" class="form-control" label="Nombre" value="#{userBean.user.nombre}"/>
+						            </div>
+						          </div>
+						
+						          <!-- Text input-->
+						          <div class="form-group">
+						            <label class="col-sm-2 control-label" for="textinput">1º apellido</label>
+						            <div class="col-sm-6">
+						             <h:inputText pt:placeholder="1º apellido" class="form-control" label="1º apellido" value="#{userBean.user.apellido1}"/>
+						            </div>
+						          </div>
+						          
+						          <!-- Text input-->
+						          <div class="form-group">
+						            <label class="col-sm-2 control-label" for="textinput">2º apellido</label>
+						            <div class="col-sm-6">
+						              <h:inputText pt:placeholder="2º apellido" class="form-control" label="2º apellido" value="#{userBean.user.apellido2}"/>
+						            </div>
+						          </div>
+						
+						          <!-- Text input-->
+						          <div class="form-group">
+						            <label class="col-sm-2 control-label" for="textinput">Username</label>
+						            <div class="col-sm-4">
+						              <h:inputText pt:placeholder="Nombre de usuario" class="form-control" label="Password" value="#{userBean.user.username}" />
+						            </div>
+						
+						            <label class="col-sm-2 control-label" for="textinput">Password</label>
+						            <div class="col-sm-4">
+						               <h:inputSecret pt:placeholder="Clave" class="form-control" label="Password" value="#{userBean.user.password}"/>
+						            </div>
+						          </div>
+						        
+	
+						    </div><!-- /.col-lg-12 -->
+						</div><!-- /.row -->
+					</div><!-- /.box-body -->
+					
+					<!-- Para la botonera -->
+			        <div class="box-footer">
+ 						
+    					<div class="btn-toolbar">
+    						<h:commandLink action="#{userBean.doListUsers}" styleClass="btn btn-default pull-right" value="Volver"/>
+   					 		<h:commandButton styleClass="btn btn-primary pull-right" value="Guardar" action="#{userBean.doSaveUser}"/>
+   					 	</div>
+		    			
+			        </div><!-- /.box-footer-->
+		    	</h:form>
+			</ui:define>
+    	</ui:composition>
+    	
+    </h:body>
+
+</html>

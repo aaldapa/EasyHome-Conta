@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config
+    xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
+    version="2.2">
+	
+	<!-- Spring supports the ELResolver mechanism as a next-generation version of JSF EL integration. -->
+	<application>
+		<el-resolver>
+    		org.springframework.web.jsf.el.SpringBeanFacesELResolver
+		</el-resolver>
+  	</application>
+
+	<!-- Internacionalizacion -->
+	<application>
+	   <locale-config>
+	      <default-locale>es</default-locale>
+	      <supported-locale>es</supported-locale>
+	      <supported-locale>en</supported-locale>
+	   </locale-config>
+	   <resource-bundle>
+         <base-name>i18n.messages </base-name>
+         <var>msg</var>
+      </resource-bundle>
+	</application> 
+
+	<!-- Reglas de navegacion -->
+	
+	<!-- Login -->
+	<navigation-rule>
+		<from-view-id>/pages/login.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>entrar</from-outcome>
+			<to-view-id>/pages/dashboard.xhtml</to-view-id>
+		</navigation-case>
+		
+	</navigation-rule>
+	
+	<!-- Logout -->
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+			<navigation-case>
+				<from-outcome>logout</from-outcome>
+				<to-view-id>/pages/login.xhtml</to-view-id>
+				<redirect/>
+			</navigation-case>
+	</navigation-rule>
+	
+	<!-- Menu --> 
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>userList</from-outcome>
+			<to-view-id>/pages/user/user-list.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<!-- Users -->
+	<navigation-rule>
+		<from-view-id>/pages/user/user-list.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>formulario</from-outcome>
+			<to-view-id>/pages/user/user.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/pages/user/user.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>listado</from-outcome>
+			<to-view-id>/pages/user/user-list.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+</faces-config>

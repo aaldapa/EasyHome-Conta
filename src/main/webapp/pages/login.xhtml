@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+   	<h:head>
+    	<h:outputStylesheet name="./css/login.css" target="head"/>
+    	<h:outputStylesheet name="./bootstrap/css/bootstrap.css" target="head"/>
+    	<h:outputScript library="primefaces" name="jquery/jquery.js" target="head" />
+    	<h:outputScript library="primefaces" name="jquery/jquery-plugins.js" target="head" />
+    	<h:outputScript name="./bootstrap/js/bootstrap.js" target="head"/>
+    	
+    	<!-- This is a very simple parallax effect achieved by simple CSS 3 multiple backgrounds, made by http://twitter.com/msurguy -->
+    	<h:outputScript name="./plugins/TweenLite.min.js" target="head"/>
+     	<script type="text/javascript">  
+          $(document).ready(function(){
+        	  $(document).mousemove(function(e){
+        		     TweenLite.to($('body'), 
+        		        .5, 
+        		        { css: 
+        		            {
+        		                backgroundPosition: ""+ parseInt(event.pageX/8) + "px "+parseInt(event.pageY/'12')+"px, "+parseInt(event.pageX/'15')+"px "+parseInt(event.pageY/'15')+"px, "+parseInt(event.pageX/'30')+"px "+parseInt(event.pageY/'30')+"px"
+        		            }
+        		        });
+        		  });
+          });
+      </script>
+      
+      <title>#{msg[login.text.title]}</title>
+      
+   	</h:head>
+ 
+    <h:body>
+    	
+		<div class="container">
+		    <div class="row vertical-offset-100">
+		    	<div class="col-md-4 col-md-offset-4">
+		    		<div class="panel panel-default">
+					  	<div class="panel-heading">
+					    	<h3 class="panel-title"><h:outputLabel value="#{msg['login.text.info']}"/></h3>
+					 	</div>
+					 	<div class="center-block">
+							<h:graphicImage class="profile-img" library="img" name="photo.png" alt=""/>
+						</div>
+					  	<div class="panel-body">
+					    	<h:form>
+					    	<h:messages globalOnly="true" ></h:messages>
+		                    <fieldset>
+					    	  	<div class="form-group">
+									<div class="form-group">
+										<div class="input-group">
+											<span class="input-group-addon">
+												<i class="glyphicon glyphicon-user"></i>
+											</span> 
+											<h:inputText id="id_username" styleClass="form-control" pt:placeholder="E-mail"  label="user" value="#{loginBean.username}"/>
+												
+										</div>
+									</div>					
+					    		</div>
+					    		<div class="form-group">
+					    			<div class="input-group">
+										<span class="input-group-addon">
+											<i class="glyphicon glyphicon-lock"></i>
+										</span>
+					    				<h:inputSecret id="id_password" styleClass="form-control" pt:placeholder="Password"  label="pass" value="#{loginBean.password}"/>
+											
+					    			</div>
+					    		</div>
+<!--  					    		<div class="checkbox">  -->
+<!-- 					    	    	<label>  -->
+<!--  					    	    		<input name="remember" type="checkbox" value="Remember Me"/> Remember Me -->
+<!--  					    	    	</label>  -->
+<!--  					    	    </div>  -->
+					    		
+					    		<h:commandButton class="btn btn-lg btn-primary btn-block" action="#{loginBean.doLogin}" value="#{msg['login.boton.entrar']}" />
+					    	</fieldset>
+					      	</h:form>
+					    </div>
+					</div>
+				</div>
+			</div>
+		</div>	
+    </h:body>
+</html>
+
+<!-- <html xmlns="http://www.w3.org/1999/xhtml" -->
+<!--     xmlns:h="http://java.sun.com/jsf/html" -->
+<!--     xmlns:f="http://java.sun.com/jsf/core" -->
+<!--     xmlns:p="http://primefaces.org/ui"> -->
+<!-- <f:view> -->
+<!--     <h:form id="loginForm"> -->
+<!--         <h:messages style="color: red;" /> -->
+
+<!--         <table> -->
+<!--             <tr> -->
+<!--                 <td><p:outputLabel for="j_username" value="Username" /></td> -->
+<!--                 <td><p:inputText id="j_username" value="#{loginBean.username}" /></td> -->
+<!--             </tr> -->
+<!--             <tr> -->
+<!--                 <td><p:outputLabel for="j_password" value="Password" /></td> -->
+<!--                 <td><p:password id="j_password" value="#{loginBean.password}" /></td> -->
+<!--             </tr> -->
+<!--             <tr> -->
+<!--                 <td colspan="2"><p:commandButton id="login" value="Acceder" type="submit" action="#{loginBean.doLogin}" /></td> -->
+<!--             </tr> -->
+<!--         </table> -->
+<!--     </h:form> -->
+<!-- </f:view> -->
+
+<!-- </html> -->
