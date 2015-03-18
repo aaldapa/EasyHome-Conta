@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
 
+import com.easyhomeconta.model.Rol;
 import com.easyhomeconta.model.User;
 /**
  * 
@@ -14,9 +15,8 @@ import com.easyhomeconta.model.User;
 public interface UserService extends UserDetailsService{
 
 	public List<User> findAllUsers();
+	public List<Rol> findAllRoles();
 	public void createUser(User user);
 	public void updateUser(User user);
-	public User getUser(Integer id); 
 	public void deleteUser(Integer id);
-	
 }

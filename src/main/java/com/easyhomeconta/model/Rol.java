@@ -3,7 +3,6 @@
  */
 package com.easyhomeconta.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -13,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.springframework.security.core.GrantedAuthority;
 
@@ -31,13 +31,16 @@ public class Rol implements GrantedAuthority {
 	private Integer idRol;
 	   
 	@ManyToMany(mappedBy="lstRoles")
-	private List<User> lstUsuarios= new ArrayList<User>();
+	private List<User> lstUsuarios;
 	
 	@Column(name="role", unique=true, nullable=false)
 	private String role;
 	
 	@Column(name="descripcion", length=255)
 	private String descripcion;
+	
+	@Transient
+	private Boolean selected;
 	
 	public Rol() {
 		super();
@@ -91,6 +94,59 @@ public class Rol implements GrantedAuthority {
 	public String getRoleAbr() {
 		String rolAbr=role.substring(5);
 		return rolAbr;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((descripcion == null) ? 0 : descripcion.hashCode());
+		result = prime * result + ((idRol == null) ? 0 : idRol.hashCode());
+		result = prime * result
+				+ ((lstUsuarios == null) ? 0 : lstUsuarios.hashCode());
+		result = prime * result + ((role == null) ? 0 : role.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Rol other = (Rol) obj;
+		if (descripcion == null) {
+			if (other.descripcion != null)
+				return false;
+		} else if (!descripcion.equals(other.descripcion))
+			return false;
+		if (idRol == null) {
+			if (other.idRol != null)
+				return false;
+		} else if (!idRol.equals(other.idRol))
+			return false;
+		if (lstUsuarios == null) {
+			if (other.lstUsuarios != null)
+				return false;
+		} else if (!lstUsuarios.equals(other.lstUsuarios))
+			return false;
+		if (role == null) {
+			if (other.role != null)
+				return false;
+		} else if (!role.equals(other.role))
+			return false;
+		return true;
+	}
+
+	public Boolean getSelected() {
+		return selected;
+	}
+
+	public void setSelected(Boolean selected) {
+		this.selected = selected;
 	}
 	
 }

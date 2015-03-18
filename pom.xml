@@ -7,7 +7,7 @@
   <name>EasyHome-Conta</name>
   <properties>
 	<jdk.version>1.7</jdk.version>
-	<jsf.version>2.2.4</jsf.version>
+	<jsf.version>2.2.3</jsf.version>
 <!-- 	<spring.version>4.1.2.RELEASE</spring.version> -->
 	<spring.version>3.2.6.RELEASE</spring.version>
 	<spring.security.version>3.2.6.RELEASE</spring.security.version>
@@ -36,6 +36,13 @@
     	<type>jar</type>
     	<scope>provided</scope>
 	</dependency>
+	
+<!-- 	<dependency> -->
+<!-- 		<groupId>javax.el</groupId> -->
+<!-- 		<artifactId>javax.el-api</artifactId> -->
+<!-- 		<version>3.0.0</version> -->
+<!-- 	</dependency> -->
+	
     
     <!-- JSTL -->
     <dependency>

@@ -35,7 +35,7 @@
 						      
 						      	<h:inputHidden value="#{userBean.user.idUser}"></h:inputHidden>
 						      			        
-						        <!-- Text input-->
+       						    <!-- Text input-->
 						          <div class="form-group">
 						            <label class="col-sm-2 control-label" for="textinput">Nombre</label>
 						            <div class="col-sm-6">
@@ -59,6 +59,27 @@
 						            </div>
 						          </div>
 						
+								<!-- Listado de roles -->      
+								<div class="form-group">
+									<label class="col-sm-2 control-label" for="textinput">Roles</label>
+	                      			<!-- Parece ser que el bucle c:forEach de jsf no envia bien los valores del #{rol.selected} asi que usamos el ui:repeat-->
+	                      			<ui:repeat var="rol" value="#{userBean.lstRoles}" varStatus="y" >
+										
+										<!-- la etiqueta c:set para varibles no funciona dentro de la etiqueta ui:repeat
+										Para utilizar valores dinamicos de variables usamos ui:param y para evaluar la condicion
+										lo hacemos dentro de la propia etiqueta -->
+										<ui:param name="separacion" value="#{y.index eq 2 ? 'col-md-offset-2' : ''}"  />
+										
+										<div class="col-sm-4 checkbox #{separacion}">	
+	                        				<label>
+	                        					<h:selectBooleanCheckbox value="#{rol.selected}" />
+	                          					#{rol.role}
+	                          					 
+	                        				</label>
+	                        			</div>
+	                        		</ui:repeat>								
+	                      		</div>
+						        
 						          <!-- Text input-->
 						          <div class="form-group">
 						            <label class="col-sm-2 control-label" for="textinput">Username</label>
@@ -68,11 +89,9 @@
 						
 						            <label class="col-sm-2 control-label" for="textinput">Password</label>
 						            <div class="col-sm-4">
-						               <h:inputSecret pt:placeholder="Clave" class="form-control" label="Password" value="#{userBean.user.password}"/>
+						               <h:inputSecret pt:placeholder="Clave" class="form-control" label="Password" value="#{userBean.user.password}" redisplay="true"/>
 						            </div>
-						          </div>
-						        
-	
+						          </div>	
 						    </div><!-- /.col-lg-12 -->
 						</div><!-- /.row -->
 					</div><!-- /.box-body -->
@@ -82,7 +101,7 @@
  						
     					<div class="btn-toolbar">
     						<h:commandLink action="#{userBean.doListUsers}" styleClass="btn btn-default pull-right" value="Volver"/>
-   					 		<h:commandButton styleClass="btn btn-primary pull-right" value="Guardar" action="#{userBean.doSaveUser}"/>
+   					 		<h:commandButton styleClass="btn btn-primary pull-right" value="Guardar" action="#{userBean.doSaveUser}" update="id_data_table"/>
    					 	</div>
 		    			
 			        </div><!-- /.box-footer-->

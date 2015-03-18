@@ -1,7 +1,7 @@
 body{
-    background-image: url("#{resource['img/back.png']}");
+    background: url("#{resource['/img/back.png']}");
 	background-color: #444;
-    background-image: url("#{resource['img/pinlayer2.png']}"),url("#{resource['img/pinlayer1.png']}"),url("#{resource['img/back.png']}");
+    background: url("#{resource['/img/pinlayer2.png']}"),url("#{resource['/img/pinlayer1.png']}"),url("#{resource['/img/back.png']}");
 }
 .vertical-offset-100{
     padding-top:100px;

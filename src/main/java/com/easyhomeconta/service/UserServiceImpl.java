@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.easyhomeconta.dao.UserDao;
+import com.easyhomeconta.model.Rol;
 import com.easyhomeconta.model.User;
 /**
  * 
@@ -37,13 +38,12 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional
 	public void createUser(User user) {
+		//Por defecto, creamos al usuario con los atributos a true
+		user.setAccountNonExpired(true);
+		user.setAccountNonLocked(true);
+		user.setEnabled(true);
+		user.setCredentialsNonExpired(true);
 		userDao.create(user);
-	}
-
-	@Override
-	public User getUser(Integer id) {
-		User user=userDao.findById(id);
-		return user;
 	}
 
 	@Override
@@ -68,6 +68,10 @@ public class UserServiceImpl implements UserService {
 		return usuario;
 	}
 
-	
+	@Override
+	public List<Rol> findAllRoles() {
+		List<Rol> lstRoles=userDao.findAllRoles();
+		return lstRoles;
+	}
 
 }

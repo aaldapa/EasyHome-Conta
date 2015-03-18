@@ -13,6 +13,7 @@ import javax.inject.Named;
 
 import org.apache.log4j.Logger;
 
+import com.easyhomeconta.model.Rol;
 import com.easyhomeconta.model.User;
 import com.easyhomeconta.service.UserService;
 
@@ -29,8 +30,10 @@ public class UserController {
 	@Inject
 	private UserService userService;
 	
-	private List<User> lstUsers=new ArrayList<User>();
+	private List<User> lstUsers=new ArrayList<User>();	
+	private List<Rol> lstRoles=new ArrayList<Rol>();
 	
+
 	private User selectedUser= new User();
 	private User user;
 	
@@ -43,7 +46,7 @@ public class UserController {
 	 */
 	public String doLoadForm(User usuario){
 		setUser(usuario);
-		return "formulario";
+		return "userForm";
 	}
 	
 	/**
@@ -52,7 +55,17 @@ public class UserController {
 	 */
 	public String doLoadForm(){
 		setUser(selectedUser);
-		return "formulario";
+		//Cargo los roles
+		this.lstRoles=userService.findAllRoles();
+		//Setteo los roles que se van a mostrar en funcion de los que tiene el usuario
+		for (Rol rolBean: lstRoles){
+			for(Rol rol:user.getLstRoles()){
+				if (rol.getIdRol().compareTo(rolBean.getIdRol())==0)
+					rolBean.setSelected(true);
+			}
+		}
+		
+		return "userForm";
 	}
 	
 	/**
@@ -61,7 +74,9 @@ public class UserController {
 	 */
 	public String doNewForm(){
 		setUser(new User());
-		return "formulario";
+		this.lstRoles=userService.findAllRoles();
+		
+		return "userForm";
 	}
 	
 	/**
@@ -82,15 +97,28 @@ public class UserController {
 	/**
 	 * Guarda un usuario en base de datos y vuelve al listado
 	 */
-	public String doSaveUser(){
-		//Si el id es null se crea un usuario nuevo 
-		if (user.getIdUser()==null){
-			//TODO: Validar que el username no este ya utilizado
-			userService.createUser(user);
-		//Si el id no es null se modifica el usuario
+	public String doSaveUser(){		
+		//Elimino todos los posibles roles que pudiese tener el usuario para dar de alta los que esten ahora checkeados
+		user.setLstRoles(new ArrayList<Rol>());
+		
+		for (Rol rol:lstRoles){
+			if (rol.getSelected())
+				user.getLstRoles().add(rol);
 		}
+		
+		//Si el id es null significa que estamos creando un nuevo user 
+		if (user.getIdUser()==null){
+			//se crea un usuario nuevo
+			userService.createUser(user);
+			//Se inserta en el arrayList para que se vea en el datetable
+			lstUsers.add(user);
+		}
+		//Si el id no es null es porque se ha cargado un usuario y se trata de una modificacion
 		else
 			userService.updateUser(user);
+		
+		
+		
 		return "userList";
 		
 	}
@@ -125,8 +153,7 @@ public class UserController {
      */
     public void onRowUnselect(AjaxBehaviorEvent event) {
     	selectedRow=false;
-    }  
-	
+    } 
 	
 	/**
 	 * Elimina el usuario de la tabla y de la base de datos
@@ -136,7 +163,19 @@ public class UserController {
 		//Borro el usuario de la base de datos
 		userService.deleteUser(usuario.getIdUser());
 		//Elimino el usuario de la tabla		
-		lstUsers.remove(selectedUser);
+		lstUsers.remove(usuario);
+	}
+	
+	/**
+	 * Obtiene todos roles en una lista de beans
+	 * @return
+	 */
+	public List<Rol> getLstRoles() {
+		return lstRoles;
+	}
+	
+	public void setLstRoles(List<Rol> lstRoles) {
+		this.lstRoles = lstRoles;
 	}
 	
 	public List<User> getLstUsers() {
@@ -170,5 +209,5 @@ public class UserController {
 	public void setSelectedRow(Boolean selectedRow) {
 		this.selectedRow = selectedRow;
 	}
-
+	
 }

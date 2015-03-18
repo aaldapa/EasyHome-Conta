@@ -60,16 +60,8 @@
 	<navigation-rule>
 		<from-view-id>/pages/user/user-list.xhtml</from-view-id>
 		<navigation-case>
-			<from-outcome>formulario</from-outcome>
+			<from-outcome>userForm</from-outcome>
 			<to-view-id>/pages/user/user.xhtml</to-view-id>
-		</navigation-case>
-	</navigation-rule>
-	
-	<navigation-rule>
-		<from-view-id>/pages/user/user.xhtml</from-view-id>
-		<navigation-case>
-			<from-outcome>listado</from-outcome>
-			<to-view-id>/pages/user/user-list.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 	

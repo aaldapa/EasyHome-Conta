@@ -6,9 +6,7 @@ package com.easyhomeconta.controller;
 import java.io.IOException;
 import java.io.Serializable;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.ServletException;
@@ -27,7 +25,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
  */
 @Named(value="loginBean")
 @SessionScoped
-public class LoginController implements Serializable {
+public class LoginController extends BasicManageBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -41,36 +39,32 @@ public class LoginController implements Serializable {
 	@Inject 
 	private AuthenticationManager authenticationManager;
 	
-	/**
-	 * Constructor por defecto
-	 */
 	public LoginController() {
 		super();
 	}
 	
-	public String doLogin()  throws ServletException, IOException{
+	public String doLogin() throws ServletException, IOException{
 
 		try{
 			log.info("Login started for User with Name: "+username);
-			
-			// Compruebo si se han introducido los datos 
-			if (username == null || password == null) {
-				FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "login.error.required" );
-				FacesContext.getCurrentInstance().addMessage(null, facesMsg);
-				
-				log.info("Login not started because userName or Password is empty: "+username);
-				return null;
-				
-	       }
 		    
 			authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(this.username, this.password));
 			SecurityContextHolder.getContext().setAuthentication(authentication);
 		 
 		} catch (AuthenticationException e) {
 	    	log.info("Login failed: " + e.getMessage());
-	        FacesMessage facesMsg = new FacesMessage(
-	        FacesMessage.SEVERITY_ERROR, "Error de autenticación.", "Usuario o contraseña errorneos.");
-	        FacesContext.getCurrentInstance().addMessage(null, facesMsg);
+	    	
+	    	//Recogemos el string del properties
+//	    	FacesContext context = FacesContext.getCurrentInstance();
+//	        ResourceBundle msg = ResourceBundle.getBundle("i18n.messages", context.getViewRoot().getLocale());
+	        
+	    	//Añadimos mensaje a la pagina
+//	        FacesMessage facesMsg = new FacesMessage(
+//	        FacesMessage.SEVERITY_ERROR, msg.getString("login.error.autenticacion"), msg.getString("login.error.credenciales"));
+//	        FacesContext.getCurrentInstance().addMessage(null, facesMsg);
+	        
+	    	//Simplificado utilizando metodos en la superclase
+	    	addErrorMessage(getString("login.error.autenticacion"),getString("login.error.credenciales"));
 
 	        return null;
 		}

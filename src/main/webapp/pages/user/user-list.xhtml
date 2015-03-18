@@ -64,7 +64,6 @@
 					           #{user.apellido2}
 					       </p:column>
 					       
-					       
 					       <p:column style="width:150px;text-align: center">
 	             				<!-- Ejecuta un javascript que muestra los datos del usuario de la fila en una ventana modal -->
 	             				<p:commandButton update=":id_form:userDetail" oncomplete="PF('userDialog').show()" icon="ui-icon-search" title="Ver">
@@ -106,7 +105,7 @@
 						<div id="id_botonera" class="btn-toolbar">
 
     						<!-- Gracias al atributo rendered los botones de editar y eliminar se muestran siempre que el atributo selectedRow es true. 
-    						El valor del atributo es modificado cada vez que se selecciona o deselecciona el boton por medio de una llamada ajax -->
+    						El valor del atributo es modificado cada vez que se selecciona o deselecciona una fila de la tabla, por medio de una llamada ajax -->
     						<c:set var="isRowSelected" value="#{userBean.selectedRow}"/>
     					
     						<h:commandLink id="id_boton_eliminar" styleClass="btn btn-default pull-right"	action="#{userBean.doDeleteUsers}"	onclick="return confirm('¿Deseas eliminar este registro?')"	
