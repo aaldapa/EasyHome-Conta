@@ -12,9 +12,9 @@
     	
     	<ui:composition template="../../templates/main.xhtml">
 			<!-- Parametros para el paso de titulos, cabeceras, etc -->
-			<ui:param name="headerTitle1" value="Gestión de usuarios" />
+			<ui:param name="headerTitle1" value="#{msg['usuarios.listado.titulo']}" />
 			<ui:param name="headerTitle2" value="" />
-			<ui:param name="boxTitle" value="Listado" />
+			<ui:param name="boxTitle" value="#{msg['usuarios.listado.subtitulo']}" />
 			<ui:param name="boxFooter" value="" />
 			
 			<!-- Para la inclusion de javascript -->
@@ -45,36 +45,36 @@
 							<f:ajax event="rowUnselect" listener="#{userBean.onRowUnselect}" render=":id_form"/>
 	
 							<f:facet name="header">
-					           Lista de usuarios (#{fn:length(userBean.lstUsers)})
+					          #{msg['usuarios.listado.tabla.titulo']} (#{fn:length(userBean.lstUsers)})
 					       </f:facet>
 					 		
-					 		<p:column headerText="Id"  style="width:50px;text-align: center">
+					 		<p:column headerText="#{msg['usuarios.listado.tabla.col.id']}"  style="width:50px;text-align: center">
 					           #{user.idUser}
 					       	</p:column>
 					 
-					       <p:column headerText="Nombre" resizable="true" sortBy="#{user.nombre}">
+					       <p:column headerText="#{msg['usuarios.listado.tabla.col.nombre']}" resizable="true" sortBy="#{user.nombre}">
 					           #{user.nombre}
 					       </p:column>
 					 
-					        <p:column headerText="1º apellido">
+					        <p:column headerText="#{msg['usuarios.listado.tabla.col.apel1']}">
 					           #{user.apellido1}
 					       </p:column>
 					 
-					 		<p:column headerText="2º apellido">
+					 		<p:column headerText="#{msg['usuarios.listado.tabla.col.apel2']}">
 					           #{user.apellido2}
 					       </p:column>
 					       
 					       <p:column style="width:150px;text-align: center">
 	             				<!-- Ejecuta un javascript que muestra los datos del usuario de la fila en una ventana modal -->
-	             				<p:commandButton update=":id_form:userDetail" oncomplete="PF('userDialog').show()" icon="ui-icon-search" title="Ver">
+	             				<p:commandButton update=":id_form:userDetail" oncomplete="PF('userDialog').show()" icon="ui-icon-search" title="#{msg['usuarios.listado.botones.ver']}">
 	                				<f:setPropertyActionListener value="#{user}" target="#{userBean.selectedUser}" />
 	            				</p:commandButton>
 	            				
 	            				<!-- Envia como parametro el usuario de la fila para el metodo que carga el formulario -->
-	            				<p:commandButton action="#{userBean.doLoadForm(user)}" icon="ui-icon-pencil" title="Editar" ajax="false"/>
+	            				<p:commandButton action="#{userBean.doLoadForm(user)}" icon="ui-icon-pencil" title="#{msg['usuarios.listado.botones.editar']}" ajax="false"/>
 	            				
 	            				<!-- Envia como parametro el usuario de la fila para el metodo de eliminacion -->
-	            				<p:commandButton action="#{userBean.doDeleteUser(user)}" update="id_data_table" icon="ui-icon-trash" title="Eliminar" onclick="return confirm('¿Deseas eliminar este registro?')"/>
+	            				<p:commandButton action="#{userBean.doDeleteUser(user)}" update="id_data_table" icon="ui-icon-trash" title="#{msg['usuarios.listado.botones.eliminar']}" onclick="return confirm('#{msg['usuarios.listado.botones.confirmacion']}')"/>
 	            			</p:column>
 					   	</p:dataTable>
 					   
@@ -83,16 +83,16 @@
 					        <p:outputPanel id="userDetail" style="text-align:center;">
 					            <p:panelGrid columns="2" rendered="#{not empty userBean.selectedUser}">
 					                
-					                <h:outputText value="Id:" style="color:black"/>
+					                <h:outputText value="#{msg['usuarios.listado.tabla.col.id']}" style="color:black"/>
 					                <h:outputText value="#{userBean.selectedUser.idUser}" />
 					                
-		       		                <h:outputText value="Nombre:" />
+		       		                <h:outputText value="#{msg['usuarios.listado.tabla.col.nombre']}" />
 		       		                <h:outputText value="#{userBean.selectedUser.nombre}" />
 		       		                
-		       		                <h:outputText value="1º apellido:" />
+		       		                <h:outputText value="#{msg['usuarios.listado.tabla.col.apel1']}" />
 		       		                <h:outputText value="#{userBean.selectedUser.apellido1}" />
 		       		                
-		       		                <h:outputText value="2º apellido:" />
+		       		                <h:outputText value="#{msg['usuarios.listado.tabla.col.apel2']}" />
 		       		                <h:outputText value="#{userBean.selectedUser.apellido2}" />
 					            </p:panelGrid>
 					        </p:outputPanel>
@@ -108,15 +108,15 @@
     						El valor del atributo es modificado cada vez que se selecciona o deselecciona una fila de la tabla, por medio de una llamada ajax -->
     						<c:set var="isRowSelected" value="#{userBean.selectedRow}"/>
     					
-    						<h:commandLink id="id_boton_eliminar" styleClass="btn btn-default pull-right"	action="#{userBean.doDeleteUsers}"	onclick="return confirm('¿Deseas eliminar este registro?')"	
-    							icon="ui-icon-trash" title="Eliminar" value="Eliminar" rendered="#{isRowSelected}">
+    						<h:commandLink id="id_boton_eliminar" styleClass="btn btn-default pull-right"	action="#{userBean.doDeleteUsers}"	onclick="return confirm('#{msg['usuarios.listado.botones.confirmacion']}')"
+    							icon="ui-icon-trash" title="#{msg['usuarios.listado.botones.eliminar']}" value="#{msg['usuarios.listado.botones.eliminar']}" rendered="#{isRowSelected}">
     							<f:ajax execute="id_form" render="id_form:id_data_table" />
     						</h:commandLink>
     						
-    						<h:commandLink id="id_boton_editar" styleClass="btn btn-default pull-right"	action="#{userBean.doLoadForm}" title="Editar" value="Editar" 
+    						<h:commandLink id="id_boton_editar" styleClass="btn btn-default pull-right"	action="#{userBean.doLoadForm}" title="#{msg['usuarios.listado.botones.editar']}" value="#{msg['usuarios.listado.botones.editar']}" 
     							rendered="#{isRowSelected}"/>
     						
-    						<h:commandButton action="#{userBean.doNewForm}" styleClass="btn btn-primary pull-right"  value="Nuevo"/>
+    						<h:commandButton action="#{userBean.doNewForm}" styleClass="btn btn-primary pull-right" title="#{msg['usuarios.listado.botones.nuevo']}" value="#{msg['usuarios.listado.botones.nuevo']}"/>
 				            	
 						</div> 
 			        </div><!-- /.box-footer-->
