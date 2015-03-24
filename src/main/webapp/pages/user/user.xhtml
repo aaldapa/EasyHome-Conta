@@ -9,7 +9,7 @@
       xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:c="http://java.sun.com/jsp/jstl/core">  
       
-    <h:body>
+    <h:body>	
     	
     	<ui:composition template="../../templates/main.xhtml">
 			<!-- Parametros para el paso de titulos, cabeceras, etc -->
@@ -20,9 +20,25 @@
 			
 			<!-- Para la inclusion de javascript -->
 			<ui:define name="scripts">
+			 	
+<!-- 			 	<h:outputScript library="primefaces" name="jquery/bootstrap-datepicker.js"/> -->
+			 	
+			 	<h:outputScript name="./plugins/datepicker/bootstrap-datepicker.js" target="head"/>
+			 	<h:outputScript name="./plugins/datepicker/locales/bootstrap-datepicker.es.js" target="head"/>
+			 	<h:outputStylesheet name="./plugins/datepicker/datepicker3.css" target="head"/>
+			 	
 			 	<script type="text/javascript">
 				   $(document).ready(function(){
-					   
+					   $('.date').datepicker({
+ 						  	format:'dd-mm-yyyy',
+ 						  	language: 'es',
+ 						  	weekStart:1,
+ 						 	autoclose:true,
+ 						  	todayHighlight:true,
+ 						  	showOnFocus:true,
+ 						  	keyboardNavigation:false
+					  	});
+	
 					});
 				</script>
 			</ui:define>
@@ -34,7 +50,39 @@
 						    <div class="col-md-8 col-md-offset-2">
 						      
 						      	<h:inputHidden value="#{userBean.user.idUser}"></h:inputHidden>
-						      			        
+						
+								<!-- Si se trata hemos entrado al formulario mediante edicion mostramos estos campos -->
+								<c:if test="#{not empty userBean.user.idUser}">
+								
+									<!-- Text inputs-->
+									<div class="form-group">
+								        <label class="col-sm-2 control-label">Alta #{requestLocale}</label>
+								        <div class="col-sm-3">
+								            <div class="input-group input-append">
+								            	<h:inputText class="form-control" value="#{userBean.user.fechaCreacion}" readonly="true">
+	       	             							<f:convertDateTime pattern="#{msg['patron.fecha.corta']}" />
+		 					          			</h:inputText>
+								                <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+								            </div>
+								        </div>
+								        
+								        <label class="col-sm-3 control-label" for="textinput">Ult. acceso</label>
+								        <div class="col-sm-4">
+								            <div class="input-group input-append">
+			 					         		<h:inputText class="form-control " value="#{userBean.user.ultimaConexion}" readonly="true">
+	       	             							<f:convertDateTime pattern="#{msg['patron.fecha.corta.hora']}" />
+		 					          			</h:inputText>
+								                <span class="input-group-addon add-on"><span class="glyphicon glyphicon-log-in"></span></span>
+								            </div>
+								        </div>
+								    </div>
+								
+								
+								</c:if>
+								
+								
+					                
+					                
        						    <!-- Text input-->
 						          <div class="form-group">
 						            <label class="col-sm-2 control-label" for="textinput">Nombre</label>
@@ -80,7 +128,7 @@
 	                        		</ui:repeat>								
 	                      		</div>
 						        
-						          <!-- Text input-->
+						          <!-- Text inputs-->
 						          <div class="form-group">
 						            <label class="col-sm-2 control-label" for="textinput">Username</label>
 						            <div class="col-sm-4">

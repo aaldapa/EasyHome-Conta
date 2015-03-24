@@ -1,5 +1,6 @@
 package com.easyhomeconta.service;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -38,6 +39,9 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional
 	public void createUser(User user) {
+		//Le insertamos fecha de creacion
+		user.setFechaCreacion(new Date());
+		
 		//Por defecto, creamos al usuario con los atributos a true
 		user.setAccountNonExpired(true);
 		user.setAccountNonLocked(true);

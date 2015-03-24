@@ -50,6 +50,11 @@
   -Dorg.apache.el.parser.COERCE_TO_ZERO=false 
   -->
   
+  <context-param>  
+    <param-name>primefaces.THEME</param-name>  
+    <param-value>aristo</param-value>  
+  </context-param>  
+  
   <!-- Spring -->
   <listener>
   	<listener-class>

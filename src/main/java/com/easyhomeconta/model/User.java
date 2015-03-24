@@ -4,6 +4,7 @@
 package com.easyhomeconta.model;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -16,6 +17,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -43,10 +46,23 @@ public class User implements UserDetails{
 	      inverseJoinColumns={@JoinColumn(name="id_rol")})
 	private List<Rol> lstRoles;
 	
+	@Temporal(TemporalType.DATE)
+	private Date fechaCreacion;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date ultimaConexion;
+	
+	
+	@Column(nullable=false)
 	private String nombre;
+	
 	private String apellido1;
 	private String apellido2;
+	
+	@Column(nullable=false)
 	private String username;
+	
+	@Column(nullable=false)
 	private String password;
 	
 	@Transient
@@ -63,32 +79,10 @@ public class User implements UserDetails{
 	private Boolean credentialsNonExpired;
 	@Column(name="activo", nullable=false)
 	private Boolean enabled=true;
-	
-	
+		
 	public User() {
 		super();
 	}
-
-	public User(Integer idUser, List<Rol> lstRoles, String nombre,
-			String apellido1, String apellido2, String username,
-			String password, Boolean accountNonExpired,
-			Boolean accountNonLocked, Boolean credentialsNonExpired,
-			Boolean enabled) {
-		super();
-		this.idUser = idUser;
-		this.lstRoles = lstRoles;
-		this.nombre = nombre;
-		this.apellido1 = apellido1;
-		this.apellido2 = apellido2;
-		this.username = username;
-		this.password = password;
-		this.accountNonExpired = accountNonExpired;
-		this.accountNonLocked = accountNonLocked;
-		this.credentialsNonExpired = credentialsNonExpired;
-		this.enabled = enabled;
-	}
-
-
 
 	public Integer getIdUser() {
 		return idUser;
@@ -195,24 +189,52 @@ public class User implements UserDetails{
 		return nombreSesion.toString();
 	}
 
+	public Date getFechaCreacion() {
+		return fechaCreacion;
+	}
+
+	public void setFechaCreacion(Date fechaCreacion) {
+		this.fechaCreacion = fechaCreacion;
+	}
+
+	public Date getUltimaConexion() {
+		return ultimaConexion;
+	}
+
+	public void setUltimaConexion(Date ultimaConexion) {
+		this.ultimaConexion = ultimaConexion;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + (accountNonExpired ? 1231 : 1237);
-		result = prime * result + (accountNonLocked ? 1231 : 1237);
+		result = prime
+				* result
+				+ ((accountNonExpired == null) ? 0 : accountNonExpired
+						.hashCode());
+		result = prime
+				* result
+				+ ((accountNonLocked == null) ? 0 : accountNonLocked.hashCode());
 		result = prime * result
 				+ ((apellido1 == null) ? 0 : apellido1.hashCode());
 		result = prime * result
 				+ ((apellido2 == null) ? 0 : apellido2.hashCode());
-		result = prime * result + (credentialsNonExpired ? 1231 : 1237);
-		result = prime * result + (enabled ? 1231 : 1237);
+		result = prime
+				* result
+				+ ((credentialsNonExpired == null) ? 0 : credentialsNonExpired
+						.hashCode());
+		result = prime * result + ((enabled == null) ? 0 : enabled.hashCode());
+		result = prime * result
+				+ ((fechaCreacion == null) ? 0 : fechaCreacion.hashCode());
 		result = prime * result + ((idUser == null) ? 0 : idUser.hashCode());
 		result = prime * result
 				+ ((lstRoles == null) ? 0 : lstRoles.hashCode());
 		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
 		result = prime * result
 				+ ((password == null) ? 0 : password.hashCode());
+		result = prime * result
+				+ ((ultimaConexion == null) ? 0 : ultimaConexion.hashCode());
 		result = prime
 				* result
 				+ ((userNameForSession == null) ? 0 : userNameForSession
@@ -231,9 +253,15 @@ public class User implements UserDetails{
 		if (getClass() != obj.getClass())
 			return false;
 		User other = (User) obj;
-		if (accountNonExpired != other.accountNonExpired)
+		if (accountNonExpired == null) {
+			if (other.accountNonExpired != null)
+				return false;
+		} else if (!accountNonExpired.equals(other.accountNonExpired))
 			return false;
-		if (accountNonLocked != other.accountNonLocked)
+		if (accountNonLocked == null) {
+			if (other.accountNonLocked != null)
+				return false;
+		} else if (!accountNonLocked.equals(other.accountNonLocked))
 			return false;
 		if (apellido1 == null) {
 			if (other.apellido1 != null)
@@ -245,9 +273,20 @@ public class User implements UserDetails{
 				return false;
 		} else if (!apellido2.equals(other.apellido2))
 			return false;
-		if (credentialsNonExpired != other.credentialsNonExpired)
+		if (credentialsNonExpired == null) {
+			if (other.credentialsNonExpired != null)
+				return false;
+		} else if (!credentialsNonExpired.equals(other.credentialsNonExpired))
 			return false;
-		if (enabled != other.enabled)
+		if (enabled == null) {
+			if (other.enabled != null)
+				return false;
+		} else if (!enabled.equals(other.enabled))
+			return false;
+		if (fechaCreacion == null) {
+			if (other.fechaCreacion != null)
+				return false;
+		} else if (!fechaCreacion.equals(other.fechaCreacion))
 			return false;
 		if (idUser == null) {
 			if (other.idUser != null)
@@ -269,6 +308,11 @@ public class User implements UserDetails{
 				return false;
 		} else if (!password.equals(other.password))
 			return false;
+		if (ultimaConexion == null) {
+			if (other.ultimaConexion != null)
+				return false;
+		} else if (!ultimaConexion.equals(other.ultimaConexion))
+			return false;
 		if (userNameForSession == null) {
 			if (other.userNameForSession != null)
 				return false;
@@ -280,5 +324,19 @@ public class User implements UserDetails{
 		} else if (!username.equals(other.username))
 			return false;
 		return true;
-	}	
+	}
+
+	@Override
+	public String toString() {
+		return "User [idUser=" + idUser + ", lstRoles=" + lstRoles
+				+ ", fechaCreacion=" + fechaCreacion + ", ultimaConexion="
+				+ ultimaConexion + ", nombre=" + nombre + ", apellido1="
+				+ apellido1 + ", apellido2=" + apellido2 + ", username="
+				+ username + ", password=" + password + ", userNameForSession="
+				+ userNameForSession + ", accountNonExpired="
+				+ accountNonExpired + ", accountNonLocked=" + accountNonLocked
+				+ ", credentialsNonExpired=" + credentialsNonExpired
+				+ ", enabled=" + enabled + "]";
+	}
+
 }

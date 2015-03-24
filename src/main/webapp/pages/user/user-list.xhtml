@@ -19,6 +19,9 @@
 			
 			<!-- Para la inclusion de javascript -->
 			<ui:define name="scripts">
+			<h:outputScript library="primefaces" name="jquery/jquery.js" target="head" />
+ 			<h:outputScript library="primefaces" name="jquery/jquery-plugins.js" target="head" />
+			
 			 	<script type="text/javascript">
 				   $(document).ready(function(){
 					   
@@ -82,6 +85,11 @@
 					   	<p:dialog header="User Info" widgetVar="userDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
 					        <p:outputPanel id="userDetail" style="text-align:center;">
 					            <p:panelGrid columns="2" rendered="#{not empty userBean.selectedUser}">
+					                
+					                <h:outputText value="#{msg['usuarios.listado.tabla.col.conexion']}" style="color:black"/>
+					                <h:outputText value="#{userBean.selectedUser.ultimaConexion}" >
+					                	<f:convertDateTime pattern="#{msg['patron.fecha.corta.hora']}" />
+					                </h:outputText>
 					                
 					                <h:outputText value="#{msg['usuarios.listado.tabla.col.id']}" style="color:black"/>
 					                <h:outputText value="#{userBean.selectedUser.idUser}" />
