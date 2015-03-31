@@ -13,29 +13,16 @@
 
 	<!-- Ignora la seguridad para ese patron-->
 	
-<!-- 	<http pattern="/resources/**" security="none"/> -->
+	<http pattern="/resources/**" security="none"/>
 	
 	<http use-expressions="true" access-denied-page="/access-denied.xhtml">
-<!--         <intercept-url pattern="/pages/login.xhtml" access="permitAll" /> -->
-<!--         <intercept-url pattern="/pages/user/user-list.xhtml" access="hasRole('ROLE_USER')"/> -->
-<!--         <intercept-url pattern="/pages/user/user.xhtml" access="hasRole('ROLE_ADMIN')"/> -->
-        
-<!--         <intercept-url pattern="/pages/login.xhtml" access="permitAll" /> -->
-<!--         <intercept-url pattern="/access-denied.xhtml" access="permitAll" /> -->
-<!--         <intercept-url pattern="/pages/dashboard.xhtml" access="hasRole('ROLE_ADMIN')"/> -->
-<!--         <intercept-url pattern="/**" access="denyAll" /> -->
-        
-<!--         <form-login login-page="/pages/login.xhtml"  login-processing-url="/j_spring_security_check" /> -->
-<!--         <logout  invalidate-session="true"  logout-success-url="/pages/login.xhtml" /> -->
-
 		
 		<intercept-url pattern="/pages/login.xhtml" access="permitAll" />
 		
 		<intercept-url pattern="/pages/user/**" access="hasRole('Administrador')"/>
 		<intercept-url pattern="/pages/**" access="authenticated" />
-		<intercept-url pattern="/resources/**" access="denyAll" />
         <form-login login-page="/pages/login.xhtml"  />
-        <logout logout-success-url="/session-expired.xhtml"/>
+        <logout />
         
     </http>
  

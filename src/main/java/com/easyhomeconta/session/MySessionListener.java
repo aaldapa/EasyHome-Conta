@@ -37,8 +37,7 @@ public class MySessionListener implements HttpSessionListener {
    public void sessionCreated(HttpSessionEvent arg0) {
 	   
 	   log.info("Sesión creada");
-
-          
+         
    }
 
    @Override
@@ -50,7 +49,7 @@ public class MySessionListener implements HttpSessionListener {
    /**
     * Obtengo el usuario logado del SecurityContext de Spring Security and realizo las operaciones necesarias. 
     */
-   public void prepareLogoutActiveUser (HttpSession httpSession) {
+   private void prepareLogoutActiveUser (HttpSession httpSession) {
 
 	   SecurityContextImpl securityCtx= (SecurityContextImpl) httpSession.getAttribute("SPRING_SECURITY_CONTEXT");
 	   	
@@ -60,32 +59,20 @@ public class MySessionListener implements HttpSessionListener {
 		     // Obtengo la autenticacion del contexto seguro para capturar al usuario logado 
 		     Authentication authentication = securityCtx.getAuthentication();
 		     User user=(User) authentication.getPrincipal();
-		     
-		     //Gestiono el tipo de fin de session comprobando si existe en sesion el atributo logoutManual (Introducido desde la accion de logout)
-		     LogonType logonType;
-		     if (httpSession.getAttribute("logoutManual")!=null)
-		    	 logonType=LogonType.LOGOUT;
-		     else
-		    	 logonType=LogonType.TIMEDOUT;
-		     
+		   
 		     // Llamo al service que se encarga de guardar el cierre de session en base de datos.
-		     getLogonService(httpSession.getServletContext()).createLogout(user,  logonType);
+		     getLogonService(httpSession.getServletContext()).createLogout(user,  LogonType.TIMEDOUT);
 	    } 
 	    
-	    httpSession.invalidate();
    }
    
    //Cargo el bean de forma manual para poder usar la implementacion
-   public LogonService getLogonService(ServletContext sc) {
+   private LogonService getLogonService(ServletContext sc) {
 	   if (logonService == null) 
 		   logonService = (LogonService) WebApplicationContextUtils.getRequiredWebApplicationContext(sc)
 		        .getBean("logonServiceImpl");
 	   
 	   return logonService;
-   }	
-
-	
-   
-   
+   }
    
 }

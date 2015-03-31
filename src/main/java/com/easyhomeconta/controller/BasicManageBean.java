@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.easyhomeconta.controller;
 
 import java.io.Serializable;
@@ -10,12 +7,15 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 /**
+ * Esta pretendo que sea la clase de la que extiendan todos las clases ManagedBean. En ella añadire operaciones usuales para que 
+ * desde el resto de managedbean se puedan utilizar, haciendo asi el codigo mas claro y legible.
  * @author cuesta
  *
  */
 @SuppressWarnings("serial")
 public class BasicManageBean implements IBasicManageBean, Serializable {
 	
+
 	public void addErrorMessage(String errorMessage) {
 		addErrorMessage(null, errorMessage, null);
 	}
@@ -39,15 +39,9 @@ public class BasicManageBean implements IBasicManageBean, Serializable {
 	public void addInfoMessage(String componentId, String sumaryInfoMessage,String detailInfoMessage) {
 		addMessage(componentId, sumaryInfoMessage, detailInfoMessage, FacesMessage.SEVERITY_INFO);
 	}
-
-	public String getString(String bundle) {
-		FacesContext context = FacesContext.getCurrentInstance();
-        ResourceBundle msg = ResourceBundle.getBundle("i18n.messages", context.getViewRoot().getLocale());
-        return msg.getString(bundle);
-	}
 	
 	/**
-	 * 
+	 * Añade un mensaje al contexto para mostrarlo en pantalla. 
 	 * @param componentId. Id del componente para el que se desea mostrar el mensaje
 	 * @param sumaryErrorMessage. Mensaje principal.
 	 * @param detailMessage. Mensaje detallado.
@@ -64,4 +58,12 @@ public class BasicManageBean implements IBasicManageBean, Serializable {
 		message.setSeverity(severity);
 		FacesContext.getCurrentInstance().addMessage(componentId, message);
 	}
+	
+
+	public String getString(String bundle) {
+		FacesContext context = FacesContext.getCurrentInstance();
+        ResourceBundle msg = ResourceBundle.getBundle("i18n.messages", context.getViewRoot().getLocale());
+        return msg.getString(bundle);
+	}
+
 }
