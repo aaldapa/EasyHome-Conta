@@ -8,9 +8,8 @@
   <properties>
 	<jdk.version>1.7</jdk.version>
 	<jsf.version>2.2.3</jsf.version>
-<!-- 	<spring.version>4.1.2.RELEASE</spring.version> -->
-	<spring.version>3.2.6.RELEASE</spring.version>
-	<spring.security.version>3.2.6.RELEASE</spring.security.version>
+	<spring.version> 4.1.6.RELEASE</spring.version>
+	<spring.security.version>3.2.7.RELEASE</spring.security.version>
 	<hibernate.version>4.3.6.Final</hibernate.version>
 	
   </properties>
@@ -164,6 +163,18 @@
 	</dependency>  
 	
   </dependencies>
+ 
+ <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-framework-bom</artifactId>
+        <version>${spring.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+</dependencyManagement>
  
  <repositories>
     <repository>
