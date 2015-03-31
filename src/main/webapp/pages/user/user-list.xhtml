@@ -86,10 +86,10 @@
 					        <p:outputPanel id="userDetail" style="text-align:center;">
 					            <p:panelGrid columns="2" rendered="#{not empty userBean.selectedUser}">
 					                
-					                <h:outputText value="#{msg['usuarios.listado.tabla.col.conexion']}" style="color:black"/>
-					                <h:outputText value="#{userBean.selectedUser.ultimaConexion}" >
-					                	<f:convertDateTime pattern="#{msg['patron.fecha.corta.hora']}" />
-					                </h:outputText>
+<!-- 					                <h:outputText value="#{msg['usuarios.listado.tabla.col.conexion']}" style="color:black"/> -->
+<!-- 					                <h:outputText value="#{userBean.selectedUser.ultimaConexion}" > -->
+<!-- 					                	<f:convertDateTime pattern="#{msg['patron.fecha.corta.hora']}" /> -->
+<!-- 					                </h:outputText> -->
 					                
 					                <h:outputText value="#{msg['usuarios.listado.tabla.col.id']}" style="color:black"/>
 					                <h:outputText value="#{userBean.selectedUser.idUser}" />

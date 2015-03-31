@@ -61,11 +61,37 @@
 		org.springframework.web.context.ContextLoaderListener
 	</listener-class>
   </listener>
+  
   <listener>
     <listener-class>
 		org.springframework.web.context.request.RequestContextListener
 	</listener-class>
   </listener>
+  <!-- En este listener guardo la en base de datos la desconexion por timeout -->
+  <listener>
+	<listener-class>
+    	com.easyhomeconta.session.MySessionListener
+    </listener-class>
+  </listener>
+  
+  <!-- Set timeout to 30 minutes --> 
+  <session-config> 
+  	<session-timeout>30</session-timeout> 
+  </session-config>
+  
+  <!-- Utilizo este filtro para reenviar la peticion a la pagina "session-expired.xhtml" en caso de que la session haya expirado  -->
+  <filter>
+	<filter-name>SessionTimeoutFilter</filter-name>
+	<filter-class>
+		com.easyhomeconta.session.SessionTimeOutFilter
+	</filter-class>
+  </filter>
+  
+  <filter-mapping>
+    <filter-name>SessionTimeoutFilter</filter-name>
+    <url-pattern>*.xhtml</url-pattern>
+  </filter-mapping> 
+  
   
   <!-- Spring Security -->
    <filter>

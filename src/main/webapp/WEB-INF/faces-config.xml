@@ -33,6 +33,7 @@
 		<navigation-case>
 			<from-outcome>entrar</from-outcome>
 			<to-view-id>/pages/dashboard.xhtml</to-view-id>
+			<redirect/>
 		</navigation-case>
 		
 	</navigation-rule>
@@ -53,6 +54,7 @@
 		<navigation-case>
 			<from-outcome>userList</from-outcome>
 			<to-view-id>/pages/user/user-list.xhtml</to-view-id>
+			<redirect/>
 		</navigation-case>
 	</navigation-rule>
 	
@@ -62,6 +64,7 @@
 		<navigation-case>
 			<from-outcome>userForm</from-outcome>
 			<to-view-id>/pages/user/user.xhtml</to-view-id>
+			<redirect/>
 		</navigation-case>
 	</navigation-rule>
 	

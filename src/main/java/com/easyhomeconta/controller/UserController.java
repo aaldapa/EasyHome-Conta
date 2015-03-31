@@ -4,6 +4,7 @@
 package com.easyhomeconta.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.faces.bean.RequestScoped;
@@ -38,6 +39,8 @@ public class UserController {
 	private User user;
 	
 	private Boolean selectedRow;
+	
+	private Date ultimaConexion;
 
 	/**
 	 * Recibe el usuario al que pertenece el boton editar de la fila de la tabla y lo carga en el formulario 
@@ -208,6 +211,14 @@ public class UserController {
 
 	public void setSelectedRow(Boolean selectedRow) {
 		this.selectedRow = selectedRow;
+	}
+
+	public Date getUltimaConexion() {
+		return ultimaConexion;
+	}
+
+	public void setUltimaConexion(Date ultimaConexion) {
+		this.ultimaConexion = ultimaConexion;
 	}
 	
 }

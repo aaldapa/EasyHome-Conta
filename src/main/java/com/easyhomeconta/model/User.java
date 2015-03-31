@@ -3,10 +3,12 @@
  */
 package com.easyhomeconta.model;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -16,6 +18,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -49,9 +52,8 @@ public class User implements UserDetails{
 	@Temporal(TemporalType.DATE)
 	private Date fechaCreacion;
 	
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date ultimaConexion;
-	
+	@OneToMany(mappedBy="user",cascade= CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<LogonInfo> lstAccess=new ArrayList<LogonInfo>();
 	
 	@Column(nullable=false)
 	private String nombre;
@@ -195,148 +197,6 @@ public class User implements UserDetails{
 
 	public void setFechaCreacion(Date fechaCreacion) {
 		this.fechaCreacion = fechaCreacion;
-	}
-
-	public Date getUltimaConexion() {
-		return ultimaConexion;
-	}
-
-	public void setUltimaConexion(Date ultimaConexion) {
-		this.ultimaConexion = ultimaConexion;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime
-				* result
-				+ ((accountNonExpired == null) ? 0 : accountNonExpired
-						.hashCode());
-		result = prime
-				* result
-				+ ((accountNonLocked == null) ? 0 : accountNonLocked.hashCode());
-		result = prime * result
-				+ ((apellido1 == null) ? 0 : apellido1.hashCode());
-		result = prime * result
-				+ ((apellido2 == null) ? 0 : apellido2.hashCode());
-		result = prime
-				* result
-				+ ((credentialsNonExpired == null) ? 0 : credentialsNonExpired
-						.hashCode());
-		result = prime * result + ((enabled == null) ? 0 : enabled.hashCode());
-		result = prime * result
-				+ ((fechaCreacion == null) ? 0 : fechaCreacion.hashCode());
-		result = prime * result + ((idUser == null) ? 0 : idUser.hashCode());
-		result = prime * result
-				+ ((lstRoles == null) ? 0 : lstRoles.hashCode());
-		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
-		result = prime * result
-				+ ((password == null) ? 0 : password.hashCode());
-		result = prime * result
-				+ ((ultimaConexion == null) ? 0 : ultimaConexion.hashCode());
-		result = prime
-				* result
-				+ ((userNameForSession == null) ? 0 : userNameForSession
-						.hashCode());
-		result = prime * result
-				+ ((username == null) ? 0 : username.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		User other = (User) obj;
-		if (accountNonExpired == null) {
-			if (other.accountNonExpired != null)
-				return false;
-		} else if (!accountNonExpired.equals(other.accountNonExpired))
-			return false;
-		if (accountNonLocked == null) {
-			if (other.accountNonLocked != null)
-				return false;
-		} else if (!accountNonLocked.equals(other.accountNonLocked))
-			return false;
-		if (apellido1 == null) {
-			if (other.apellido1 != null)
-				return false;
-		} else if (!apellido1.equals(other.apellido1))
-			return false;
-		if (apellido2 == null) {
-			if (other.apellido2 != null)
-				return false;
-		} else if (!apellido2.equals(other.apellido2))
-			return false;
-		if (credentialsNonExpired == null) {
-			if (other.credentialsNonExpired != null)
-				return false;
-		} else if (!credentialsNonExpired.equals(other.credentialsNonExpired))
-			return false;
-		if (enabled == null) {
-			if (other.enabled != null)
-				return false;
-		} else if (!enabled.equals(other.enabled))
-			return false;
-		if (fechaCreacion == null) {
-			if (other.fechaCreacion != null)
-				return false;
-		} else if (!fechaCreacion.equals(other.fechaCreacion))
-			return false;
-		if (idUser == null) {
-			if (other.idUser != null)
-				return false;
-		} else if (!idUser.equals(other.idUser))
-			return false;
-		if (lstRoles == null) {
-			if (other.lstRoles != null)
-				return false;
-		} else if (!lstRoles.equals(other.lstRoles))
-			return false;
-		if (nombre == null) {
-			if (other.nombre != null)
-				return false;
-		} else if (!nombre.equals(other.nombre))
-			return false;
-		if (password == null) {
-			if (other.password != null)
-				return false;
-		} else if (!password.equals(other.password))
-			return false;
-		if (ultimaConexion == null) {
-			if (other.ultimaConexion != null)
-				return false;
-		} else if (!ultimaConexion.equals(other.ultimaConexion))
-			return false;
-		if (userNameForSession == null) {
-			if (other.userNameForSession != null)
-				return false;
-		} else if (!userNameForSession.equals(other.userNameForSession))
-			return false;
-		if (username == null) {
-			if (other.username != null)
-				return false;
-		} else if (!username.equals(other.username))
-			return false;
-		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "User [idUser=" + idUser + ", lstRoles=" + lstRoles
-				+ ", fechaCreacion=" + fechaCreacion + ", ultimaConexion="
-				+ ultimaConexion + ", nombre=" + nombre + ", apellido1="
-				+ apellido1 + ", apellido2=" + apellido2 + ", username="
-				+ username + ", password=" + password + ", userNameForSession="
-				+ userNameForSession + ", accountNonExpired="
-				+ accountNonExpired + ", accountNonLocked=" + accountNonLocked
-				+ ", credentialsNonExpired=" + credentialsNonExpired
-				+ ", enabled=" + enabled + "]";
 	}
 
 }

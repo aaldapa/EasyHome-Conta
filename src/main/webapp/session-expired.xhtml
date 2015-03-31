@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+   	<h:head>
+   	
+		<h:outputStylesheet name="/dist/css/AdminLTE.css" target="head"/>
+    	<h:outputStylesheet name="/bootstrap/css/bootstrap.css" target="head"/>
+    	<h:outputScript library="primefaces" name="jquery/jquery.js" target="head" />
+    	<h:outputScript library="primefaces" name="jquery/jquery-plugins.js" target="head" />
+    	<h:outputScript name="/bootstrap/js/bootstrap.js" target="head"/>
+    	<h:outputStylesheet name="css/font-awesome.css" />
+   	    <style>
+	      .example-modal .modal {
+	        position: relative;
+	        top: auto;
+	        bottom: auto;
+	        right: auto;
+	        left: auto;
+	        display: block;
+	        z-index: 1;
+	      }
+	      .example-modal .modal {
+	        background: transparent!important;
+	      }
+    </style>
+   	</h:head>
+   	<h:body style="background-color:#ecf0f5;min-height: 1068px;">
+	<div class="example-modal">
+		<div class="modal modal-info">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">×</span>
+						</button>
+						<h4 class="modal-title">
+							<i class="fa fa-warning text-blank"></i> La sesión ha caducado!!
+						</h4>
+					</div>
+					<div class="modal-body">
+						<p>Por seguridad debe de volver a iniciar sesión introduciendo
+							sus credenciales.</p>
+					</div>
+					<div class="modal-footer">
+						<h:outputLink value="#{request.contextPath}/"
+							styleClass="btn btn-outline">
+	                 	Ir a pantalla de inicio...
+	                 </h:outputLink>
+					</div>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal-dialog -->
+		</div>
+		<!-- /.modal -->
+	</div>
+
+</h:body>
+</html>
