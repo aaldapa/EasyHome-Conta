@@ -3,7 +3,8 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:c="http://java.sun.com/jsp/jstl/core">
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:sec="http://www.springframework.org/security/tags">
  
 	<ui:composition>
 		<h:form >
@@ -34,11 +35,14 @@
 		                <li><a href="index2.html"><i class="fa fa-circle-o"></i> Dashboard v2</a></li>
 		              </ul>
 		            </li>
-		             <li>
-			        	<h:commandLink action="#{userBean.doListUsers}">
-				        	<i class="fa fa-users fa-fw"></i>Usuarios
-		 				</h:commandLink>
-			        </li>
+<!-- 		            <sec:authorize ifAllGranted="Administrador" > -->
+					<sec:authorize access="hasAnyRole('Administrador')"> 
+			             <li>
+				        	<h:commandLink action="#{userBean.doListUsers}">
+					        	<i class="fa fa-users fa-fw"></i>Usuarios
+			 				</h:commandLink>
+				        </li>
+			        </sec:authorize>
 		            <li class="treeview">
 		              <a href="#">
 		                <i class="fa fa-files-o"></i>

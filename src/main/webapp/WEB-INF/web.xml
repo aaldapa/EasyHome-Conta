@@ -12,11 +12,12 @@
     </param-value>
   </context-param>
   
-<!--   <context-param> -->
-<!--    	<description>Registro del taglib de spring para poder usar las etiquetas en las paginas</description> -->
-<!--     <param-name>javax.faces.FACELETS_LIBRARIES</param-name> -->
-<!--     <param-value>/WEB-INF/spring-security.taglib.xml</param-value> -->
-<!--   </context-param> -->
+	<!-- TagLibs de Spring security -->
+  <context-param>
+   	<description>Registro del taglib de spring para poder usar las etiquetas en las paginas</description>
+    <param-name>javax.faces.FACELETS_LIBRARIES</param-name>
+    <param-value>/WEB-INF/spring-security.taglib.xml</param-value>
+  </context-param>
   
   <!-- Estado proyecto -->
   <context-param>
@@ -67,6 +68,7 @@
 		org.springframework.web.context.request.RequestContextListener
 	</listener-class>
   </listener>
+  
   <!-- En este listener guardo la en base de datos la desconexion por timeout -->
   <listener>
 	<listener-class>

@@ -9,13 +9,17 @@
 
   	<!-- pre-post-annotations habilita las anotaciones @PreAuthorize and @PostAuthorize
 	secured-annotations="enabled" habilita la anotacion @Security para el codigo Java --> 
-	<global-method-security secured-annotations="enabled"/>
+<!-- 	<global-method-security secured-annotations="enabled"/> -->
+
+
+	<global-method-security pre-post-annotations="enabled" />  
+    
 
 	<!-- Ignora la seguridad para ese patron-->
 	
 	<http pattern="/resources/**" security="none"/>
 	
-	<http use-expressions="true" access-denied-page="/access-denied.xhtml">
+	<http use-expressions="true" access-denied-page="/access-denied.xhtml" auto-config="true">
 		
 		<intercept-url pattern="/pages/login.xhtml" access="permitAll" />
 		
