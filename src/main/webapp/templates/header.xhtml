@@ -120,17 +120,15 @@
                     <h:graphicImage library="img" name="users/#{loginBean.authentication.principal.idUser}.jpg" alt="" styleClass="img-circle"/>
                     <p>
                       #{logonUSer.userNameForSession} - #{logonUSer.lstRoles[0].role}
-                
-                      
                       
                     <small><i class="fa fa-laptop"></i>  Última conexión:</small>
                       
                        <small>
-                      	<h:outputText value="#{loginBean.authentication.principal.fechaUltimoLogin}" >
-	                      	<f:convertDateTime pattern="#{msg['patron.fecha.corta.hora']}" />
-						</h:outputText>
-                      
+	                      	<h:outputText value="#{loginBean.authentication.principal.fechaUltimoLogin}" >
+		                      	<f:convertDateTime pattern="#{msg['patron.fecha.larga.hora.corta']}" timeZone="GMT+2" />
+							</h:outputText>
                        </small>
+                      
                     </p>
                   </li>
 <!--                   Menu Body -->

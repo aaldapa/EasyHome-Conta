@@ -58,14 +58,14 @@ public class LoginController extends BasicManageBean implements Serializable {
 	public String doLogin() throws ServletException, IOException{
 
 		try{
-			log.info("Login started for User with Name: "+username);
+			log.info("El usuario "+username+ " se ha logado en la aplicación");
 		    
 			authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(this.username, this.password));
 			SecurityContextHolder.getContext().setAuthentication(authentication);
 			
 		 
 		} catch (AuthenticationException e) {
-	    	log.info("Login failed: " + e.getMessage());
+	    	log.info("Login error: " + e.getMessage());
 	    	
 	    	//Recogemos el string del properties
 //	    	FacesContext context = FacesContext.getCurrentInstance();
@@ -108,13 +108,13 @@ public class LoginController extends BasicManageBean implements Serializable {
 //		httpSession.setAttribute("logoutManual", true);
 		
 		try{
-				log.info("Login started for User with Name: "+username);
+				log.info("El usuario "+username + " abandona la aplicación");
 			    
 				authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(this.username, this.password));
 				SecurityContextHolder.getContext().setAuthentication(authentication);
 							 
 			} catch (AuthenticationException e) {
-		    	log.info("Login failed: " + e.getMessage());
+		    	log.info("Logout error: " + e.getMessage());
 		        return null;
 			}
 

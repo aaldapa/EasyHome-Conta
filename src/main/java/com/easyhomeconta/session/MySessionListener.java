@@ -48,7 +48,7 @@ public class MySessionListener implements HttpSessionListener {
    @Override
    public void sessionDestroyed(HttpSessionEvent arg0) {
 	   prepareLogoutActiveUser(arg0.getSession());
-	   log.info("Sesion destruida");
+	   log.info("La sesion ha caducado");
    }
 
    /**
