@@ -106,6 +106,12 @@
 <!--     <location>/session-expired.xhtml</location> -->
 <!--   </error-page> -->
   
+  <!-- Los metodos con anotaciones de seguridad en java, cuando no se cumple la restriccion dan un error de acceso de negado.
+  Mediante este control, cuando se provoque un error de este tipo mostrare la pagina de acceso denegado -->
+  <error-page>
+    <exception-type>org.springframework.security.access.AccessDeniedException</exception-type>
+    <location>/access-denied.xhtml</location>
+  </error-page>
   
   <!-- JSF mapping -->
   <servlet>

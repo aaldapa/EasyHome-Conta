@@ -69,6 +69,7 @@ public class User implements UserDetails{
 	
 	@Transient
 	private String userNameForSession;
+	private Date fechaUltimoLogin;
 	
 	/*
 	 * Campos necesarios para la implementacion del la seguridad desde el login
@@ -189,6 +190,22 @@ public class User implements UserDetails{
 		nombreSesion.append(" ");
 		nombreSesion.append(this.apellido1);
 		return nombreSesion.toString();
+	}
+
+	public List<LogonInfo> getLstAccess() {
+		return lstAccess;
+	}
+
+	public void setLstAccess(List<LogonInfo> lstAccess) {
+		this.lstAccess = lstAccess;
+	}
+
+	public Date getFechaUltimoLogin() {
+		return fechaUltimoLogin;
+	}
+
+	public void setFechaUltimoLogin(Date fechaUltimoLogin) {
+		this.fechaUltimoLogin = fechaUltimoLogin;
 	}
 
 	public Date getFechaCreacion() {

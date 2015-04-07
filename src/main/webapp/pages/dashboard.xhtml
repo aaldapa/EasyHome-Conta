@@ -3,10 +3,11 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"   
       xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      >  
-    
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
       
     <h:body>
     	
@@ -16,6 +17,7 @@
 			<ui:param name="headerTitle1" value="Dashboard" />
 			<ui:param name="headerTitle2" value=" Página de inicio" />
 			<ui:param name="boxTitle" value="Resumen de estado" />
+			<ui:param name="boxFooter" value="" />
 			
 			<!-- Para la inclusion de javascript -->
 			<ui:define name="scripts">
@@ -27,7 +29,8 @@
 			</ui:define>
 			
 			<ui:define name="content">
-				<div class="box-body">
+				
+		        <div class="box-body">
 					<div class="row">
 			            <div class="col-lg-3 col-xs-6">
 			              <!-- small box -->
@@ -244,7 +247,6 @@
 		        <div class="box-footer">
 					BOTONERA        
 		        </div><!-- /.box-footer-->
-		        
 				
 			</ui:define>
     	</ui:composition>

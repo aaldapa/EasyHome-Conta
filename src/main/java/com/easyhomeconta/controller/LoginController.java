@@ -19,8 +19,10 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.easyhomeconta.model.Enumeraciones.LogonType;
+import com.easyhomeconta.model.LogonInfo;
 import com.easyhomeconta.model.User;
 import com.easyhomeconta.service.LogonService;
+import com.easyhomeconta.service.UserService;
 
 /**
  * Controlador para el Login
@@ -45,6 +47,9 @@ public class LoginController extends BasicManageBean implements Serializable {
 	
 	@Inject
 	private LogonService logonService;
+	
+	@Inject
+	private UserService userService;
 	
 	public LoginController() {
 		super();
@@ -79,8 +84,10 @@ public class LoginController extends BasicManageBean implements Serializable {
 
 		//Guardamos la entrada en la tabla de accesos
 		User userLogado=(User) authentication.getPrincipal();
+		//LogonInfo logonInfo=logonService.findLastLoginByidUser(userLogado.getIdUser());
+		//userLogado.setFechaUltimoLogin(logonInfo.getFecha());
 		logonService.createLogin(userLogado);
-
+		
 		return "entrar";
 	}
 
@@ -111,9 +118,14 @@ public class LoginController extends BasicManageBean implements Serializable {
 		        return null;
 			}
 
-			//Guardamos la entrada en la tabla de accesos
+			//Guardamos la salida en la tabla de accesos
 			User userLogado=(User) authentication.getPrincipal();
 			logonService.createLogout(userLogado, LogonType.LOGOUT);
+			
+			//Guardamos el logout en la tabla de users
+			LogonInfo logonInfo=logonService.findLastLoginByidUser(userLogado.getIdUser());
+			userLogado.setFechaUltimoLogin(logonInfo.getFecha());
+			userService.updateUser(userLogado);
 		
 		return "logout";
 	}

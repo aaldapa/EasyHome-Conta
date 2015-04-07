@@ -1,6 +1,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
       xmlns:sec="http://www.springframework.org/security/tags">
  
     <ui:composition>
@@ -8,7 +10,7 @@
     <h:form>
         <header class="main-header">
         <h:outputLink value="#{request.contextPath}/pages/dashboard.xhtml" styleClass="logo">
-       		<b>HomeEasy</b> - Conta
+       		<b>EasyHome</b> - Conta
        </h:outputLink>
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top" role="navigation">
@@ -103,32 +105,46 @@
                 </ul>
               </li>
               <!-- User Account: style can be found in dropdown.less -->
+              <c:set var="logonUSer" value="#{loginBean.authentication.principal}"/>
+              
+              
               <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
 					<h:graphicImage library="img" name="photo.png" alt="" styleClass="user-image" />
-                  <span class="hidden-xs">#{loginBean.authentication.principal.userNameForSession}</span>
+					
+                  <span class="hidden-xs">#{logonUSer.userNameForSession}</span>
                 </a>
                 <ul class="dropdown-menu">
                   <!-- User image -->
                   <li class="user-header">
                     <h:graphicImage library="img" name="users/#{loginBean.authentication.principal.idUser}.jpg" alt="" styleClass="img-circle"/>
                     <p>
-                      #{loginBean.authentication.principal.userNameForSession} - Web Developer
-                      <small>Member since Nov. 2012</small>
+                      #{logonUSer.userNameForSession} - #{logonUSer.lstRoles[0].role}
+                
+                      
+                      
+                    <small><i class="fa fa-laptop"></i>  Última conexión:</small>
+                      
+                       <small>
+                      	<h:outputText value="#{loginBean.authentication.principal.fechaUltimoLogin}" >
+	                      	<f:convertDateTime pattern="#{msg['patron.fecha.corta.hora']}" />
+						</h:outputText>
+                      
+                       </small>
                     </p>
                   </li>
-                  <!-- Menu Body -->
-                  <li class="user-body">
-                    <div class="col-xs-4 text-center">
-                      <a href="#">Followers</a>
-                    </div>
-                    <div class="col-xs-4 text-center">
-                      <a href="#">Sales</a>
-                    </div>
-                    <div class="col-xs-4 text-center">
-                      <a href="#">Friends</a>
-                    </div>
-                  </li>
+<!--                   Menu Body -->
+<!--                   <li class="user-body"> -->
+<!--                     <div class="col-xs-4 text-center"> -->
+<!--                       <a href="#">Followers</a> -->
+<!--                     </div> -->
+<!--                     <div class="col-xs-4 text-center"> -->
+<!--                       <a href="#">Sales</a> -->
+<!--                     </div> -->
+<!--                     <div class="col-xs-4 text-center"> -->
+<!--                       <a href="#">Friends</a> -->
+<!--                     </div> -->
+<!--                   </li> -->
                   <!-- Menu Footer-->
                   <li class="user-footer">
                     <div class="pull-left">

@@ -1,8 +1,8 @@
 package com.easyhomeconta.service;
 
+import com.easyhomeconta.model.Enumeraciones.LogonType;
 import com.easyhomeconta.model.LogonInfo;
 import com.easyhomeconta.model.User;
-import com.easyhomeconta.model.Enumeraciones.LogonType;
 
 public interface LogonService {
 	

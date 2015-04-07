@@ -1,0 +1,5 @@
+/* correccion de error en primefaces */
+.ui-column-dnd-bottom {
+	display: none;
+	position: absolute;
+}

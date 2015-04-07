@@ -3,6 +3,8 @@
  */
 package com.easyhomeconta.session;
 
+import java.util.Date;
+
 import javax.inject.Named;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
@@ -17,6 +19,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 import com.easyhomeconta.model.Enumeraciones.LogonType;
 import com.easyhomeconta.model.User;
 import com.easyhomeconta.service.LogonService;
+import com.easyhomeconta.service.UserService;
 
 /**
  * HttpSessionListener es un listener que se ejecuta cada vez que ocurre algo referente a la session.
@@ -32,6 +35,8 @@ public class MySessionListener implements HttpSessionListener {
 	private final Logger log = Logger.getLogger(MySessionListener.class);
 	
 	LogonService logonService;
+	
+	UserService userService;
 	
    @Override
    public void sessionCreated(HttpSessionEvent arg0) {
@@ -60,8 +65,15 @@ public class MySessionListener implements HttpSessionListener {
 		     Authentication authentication = securityCtx.getAuthentication();
 		     User user=(User) authentication.getPrincipal();
 		   
-		     // Llamo al service que se encarga de guardar el cierre de session en base de datos.
-		     getLogonService(httpSession.getServletContext()).createLogout(user,  LogonType.TIMEDOUT);
+		     // Cargo el service y guardo el cierre de session en base de datos.
+		     logonService=getLogonService(httpSession.getServletContext());
+		     logonService.createLogout(user,  LogonType.TIMEDOUT);
+		     
+		     //Cargo el service de user y guardo la fecha del ultimo login en la tabla users
+		     userService=getUserService(httpSession.getServletContext());
+		     Date fechaUltimoLogin=logonService.findLastLoginByidUser(user.getIdUser()).getFecha();
+		     user.setFechaUltimoLogin(fechaUltimoLogin);
+		     userService.updateUser(user);
 	    } 
 	    
    }
@@ -73,6 +85,15 @@ public class MySessionListener implements HttpSessionListener {
 		        .getBean("logonServiceImpl");
 	   
 	   return logonService;
+   }
+   
+   //Cargo el bean de forma manual para poder usar la implementacion
+   private UserService getUserService(ServletContext sc) {
+	   if (userService == null) 
+		   userService = (UserService) WebApplicationContextUtils.getRequiredWebApplicationContext(sc)
+		        .getBean("userServiceImpl");
+	   
+	   return userService;
    }
    
 }
