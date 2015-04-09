@@ -3,6 +3,7 @@
  */
 package com.easyhomeconta.controller;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -13,6 +14,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.apache.log4j.Logger;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import com.easyhomeconta.model.Rol;
 import com.easyhomeconta.model.User;
@@ -24,7 +26,9 @@ import com.easyhomeconta.service.UserService;
  */
 @Named(value="userBean")
 @RequestScoped
-public class UserController {
+public class UserController extends BasicManageBean implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 
 	private final Logger log = Logger.getLogger(UserController.class);
 	
@@ -111,10 +115,19 @@ public class UserController {
 		
 		//Si el id es null significa que estamos creando un nuevo user 
 		if (user.getIdUser()==null){
-			//se crea un usuario nuevo
-			userService.createUser(user);
-			//Se inserta en el arrayList para que se vea en el datetable
-			lstUsers.add(user);
+			
+			//Si el usuario no existe 
+			if (!userService.isUsernameInDB(user.getUsername())){
+				//se crea un usuario nuevo
+				userService.createUser(user);
+				//Se inserta en el arrayList para que se vea en el datetable
+				lstUsers.add(user);
+			}
+			else{
+				addInfoMessage(getStringFromBundle("usuarios.form.error.usuario.duplicado.sumary"),getStringFromBundle("usuarios.form.error.usuario.duplicado.detail"));
+				return null;
+			}
+			
 		}
 		//Si el id no es null es porque se ha cargado un usuario y se trata de una modificacion
 		else

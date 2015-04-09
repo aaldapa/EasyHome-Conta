@@ -3,3 +3,31 @@
 	display: none;
 	position: absolute;
 } */
+/* Sobre escribos los estilos del elemento growl de primefaces para personalizar los estilos de mis mensajes*/
+/*Posicion*/
+.ui-growl {   
+    position:fixed;
+    top: 20%;
+   /* left: 15%; 
+    margin:0px auto;
+    width: 360px;
+    height: 110px;
+    z-index:9999;*/ 
+}*/
+/*Imagen
+.ui-growl-image { 
+    width: 100px;
+    height: 95px;
+    float: left;
+}*/
+/*Titulo*/
+/*.ui-growl-title {
+    font: 18px "Lucida Console", Monaco, monospace;
+    text-align: left;
+}
+
+.ui-growl-message p {
+    font: 14px "Lucida Console", Monaco, monospace;
+    letter-spacing: -1px;
+    text-align: left;
+}*/

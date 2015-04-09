@@ -71,15 +71,15 @@
 							       
 							       <p:column headerText="" style="width:50px;text-align: center" priority="3">
 			             				<!-- Ejecuta un javascript que muestra los datos del usuario de la fila en una ventana modal -->
-			             				<p:commandButton update=":id_form:userDetail" oncomplete="PF('userDialog').show()" icon="ui-icon-search" title="#{msg['usuarios.listado.botones.ver']}">
+			             				<p:commandButton update=":id_form:userDetail" oncomplete="PF('userDialog').show()" icon="ui-icon-search" title="#{msg['boton.ver']}">
 			                				<f:setPropertyActionListener value="#{user}" target="#{userBean.selectedUser}" />
 			            				</p:commandButton>
 			            				
 			            				<!-- Envia como parametro el usuario de la fila para el metodo que carga el formulario -->
-<!-- 			            				<p:commandButton action="#{userBean.doLoadForm(user)}" icon="ui-icon-pencil" title="#{msg['usuarios.listado.botones.editar']}" ajax="false"/> -->
+<!-- 			            				<p:commandButton action="#{userBean.doLoadForm(user)}" icon="ui-icon-pencil" title="#{msg['boton.editar']}" ajax="false"/> -->
 			            				
 			            				<!-- Envia como parametro el usuario de la fila para el metodo de eliminacion -->
-<!-- 			            				<p:commandButton action="#{userBean.doDeleteUser(user)}" update="id_data_table" icon="ui-icon-trash" title="#{msg['usuarios.listado.botones.eliminar']}" onclick="return confirm('#{msg['usuarios.listado.botones.confirmacion']}')"/> -->
+<!-- 			            				<p:commandButton action="#{userBean.doDeleteUser(user)}" update="id_data_table" icon="ui-icon-trash" title="#{msg['boton.eliminar']}" onclick="return confirm('#{msg['usuarios.listado.botones.confirmacion']}')"/> -->
 			            			</p:column>
 							   	</p:dataTable>
 							   
@@ -120,14 +120,14 @@
     						<c:set var="isRowSelected" value="#{userBean.selectedRow}"/>
     					
     						<h:commandLink id="id_boton_eliminar" styleClass="btn btn-default pull-right"	action="#{userBean.doDeleteUsers}"	onclick="return confirm('#{msg['usuarios.listado.botones.confirmacion']}')"
-    							icon="ui-icon-trash" title="#{msg['usuarios.listado.botones.eliminar']}" value="#{msg['usuarios.listado.botones.eliminar']}" rendered="#{isRowSelected}">
+    							icon="ui-icon-trash" title="#{msg['boton.eliminar']}" value="#{msg['boton.eliminar']}" rendered="#{isRowSelected}">
     							<f:ajax execute="id_form" render="id_form:id_data_table" />
     						</h:commandLink>
     						
-    						<h:commandLink id="id_boton_editar" styleClass="btn btn-default pull-right"	action="#{userBean.doLoadForm}" title="#{msg['usuarios.listado.botones.editar']}" value="#{msg['usuarios.listado.botones.editar']}" 
+    						<h:commandLink id="id_boton_editar" styleClass="btn btn-default pull-right"	action="#{userBean.doLoadForm}" title="#{msg['boton.editar']}" value="#{msg['boton.editar']}" 
     							rendered="#{isRowSelected}"/>
     						
-    						<h:commandButton action="#{userBean.doNewForm}" styleClass="btn btn-primary pull-right" title="#{msg['usuarios.listado.botones.nuevo']}" value="#{msg['usuarios.listado.botones.nuevo']}"/>
+    						<h:commandButton action="#{userBean.doNewForm}" styleClass="btn btn-primary pull-right" title="#{msg['boton.nuevo']}" value="#{msg['boton.nuevo']}"/>
 				            	
 						</div> 
 			        </div><!-- /.box-footer-->

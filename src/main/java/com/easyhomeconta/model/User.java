@@ -61,7 +61,7 @@ public class User implements UserDetails{
 	private String apellido1;
 	private String apellido2;
 	
-	@Column(nullable=false)
+	@Column(nullable=false, unique=true)
 	private String username;
 	
 	@Column(nullable=false)

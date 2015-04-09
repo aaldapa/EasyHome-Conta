@@ -52,4 +52,16 @@ public class UserDaoImpl extends GenericDaoImpl<User> implements UserDao {
 		List<Rol> lstRoles=query.getResultList();
 		return lstRoles;
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<User> findUsersbyUsername(String username) {
+		Query query = entityManager.createQuery("select u from User u where "
+	    		+ " u.username= :username");
+	    query.setParameter("username", username);
+	    List<User> lstUsers = (List<User>) query.getResultList();
+	    return lstUsers;
+
+	}
+	
 }

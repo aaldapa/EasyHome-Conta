@@ -14,13 +14,19 @@
     	<h:outputScript library="primefaces" name="jquery/jquery.js" target="head" />
     	<h:outputScript library="primefaces" name="jquery/jquery-plugins.js" target="head" />
     	<h:outputScript name="./bootstrap/js/bootstrap.js" target="head"/>
+    	<h:outputScript name="./js/mis-js.js" target="head" />
     	<h:outputStylesheet name="css/font-awesome.css" />
     	
     	<!-- This is a very simple parallax effect achieved by simple CSS 3 multiple backgrounds, made by http://twitter.com/msurguy -->
     	<h:outputScript name="./plugins/TweenLite.min.js" target="head"/>
      	<script type="text/javascript">  
 	          $(document).ready(function(){
-	        	  $(document).mousemove(function(e){
+	        	//Para mostrar y ocultar los mensajes de campos obligatorios
+					estilarMessages();
+					$('.fa-times-circle-o').on('click', ocultarMessage);
+					
+					//Efecto de movimiento del fondo al mover el cursor
+	        		 $(document).mousemove(function(e){
 	        		     TweenLite.to($('body'), 
 	        		        .5, 
 	        		        { css: 
@@ -28,36 +34,16 @@
 	        		                backgroundPosition: ""+ parseInt(event.pageX/8) + "px "+parseInt(event.pageY/'12')+"px, "+parseInt(event.pageX/'15')+"px "+parseInt(event.pageY/'15')+"px, "+parseInt(event.pageX/'30')+"px "+parseInt(event.pageY/'30')+"px"
 	        		            }
 	        		        });
-	        		});
-	
-					estilarMessages();
-	
-		      		//
-	          		$('.fa-times-circle-o').on('click', 
-	                  	function(){
-	                  	$(this).parent().hide();
-	      			});
+	        			});
+
+	        				      		
 	          	
 	          });
 
-	        //Aplica los estilos a los mensajes de error que aparecen en las etiquetas h:message con la clase .has-error.
-	        //Mostrando el texto del error en rojo y recuadrando la caja de texto a la que pertenece el h:message
-			function estilarMessages(){
-				$.each($('.has-error'),function (id,obj){
-					var $icon=$("<i/>").addClass('fa fa-times-circle-o').css('cursor','pointer');
-					$icon.append("&nbsp;");
-					$(obj).addClass('control-label');
-					$(obj).prepend($icon);
-					$(obj).parent().addClass('has-error');	
-				});
-			}
-	
-	        function cerrarMessage(){}
       	</script>
       
       	<title>
-       	#{msg['login.text.title']}
-
+       		#{msg['login.text.title']}
 		</title>
       
    	</h:head>
@@ -76,7 +62,7 @@
 						</div>
 					  	<div class="panel-body">
 					    	<h:form>
-					    	<p:growl id="messages" showDetail="true" globalOnly="true"/>
+					    	<p:growl id="messages" showDetail="true" globalOnly="true" sticky="false"/>
 		                    <fieldset>
 					    	  	<div class="form-group">
 									<div class="form-group">
@@ -85,7 +71,7 @@
 											<span class="input-group-addon">
 												<i class="glyphicon glyphicon-user"></i>
 											</span> 
-											<h:inputText id="id_username" styleClass="form-control" pt:placeholder="#{msg['login.placeholder.user']}"  label="#{msg['login.placeholder.user']}" value="#{loginBean.username}" required="true" requiredMessage="#{msg['login.error.required']}"/>
+											<h:inputText id="id_username" styleClass="form-control" pt:placeholder="#{msg['login.placeholder.user']}"  label="#{msg['login.placeholder.user']}" value="#{loginBean.username}" required="true" requiredMessage="#{msg['error.campo.obligatorio']}"/>
 										</div>
 										
 									</div>					
@@ -96,7 +82,7 @@
 										<span class="input-group-addon">
 											<i class="glyphicon glyphicon-lock"></i>
 										</span>
-					    				<h:inputSecret id="id_password" styleClass="form-control" pt:placeholder="#{msg['login.placeholder.pass']}"  label="#{msg['login.placeholder.pass']}" value="#{loginBean.password}" required="true" requiredMessage="#{msg['login.error.required']}"/>
+					    				<h:inputSecret id="id_password" styleClass="form-control" pt:placeholder="#{msg['login.placeholder.pass']}"  label="#{msg['login.placeholder.pass']}" value="#{loginBean.password}" required="true" requiredMessage="#{msg['error.campo.obligatorio']}"/>
 											
 					    			</div>
 					    		</div>			    		

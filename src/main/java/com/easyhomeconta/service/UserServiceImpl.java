@@ -48,6 +48,7 @@ public class UserServiceImpl implements UserService {
 		user.setEnabled(true);
 		user.setCredentialsNonExpired(true);
 		userDao.create(user);
+		
 	}
 
 	@Override
@@ -76,6 +77,18 @@ public class UserServiceImpl implements UserService {
 	public List<Rol> findAllRoles() {
 		List<Rol> lstRoles=userDao.findAllRoles();
 		return lstRoles;
+	}
+
+	/**
+	 * Devuelve true si el username ya esta elegido y false en caso contrario.
+	 */
+	@Override
+	public Boolean isUsernameInDB(String username) {
+		List<User> lstUsers=userDao.findUsersbyUsername(username);
+		if (lstUsers.isEmpty())
+			return false;
+		else
+			return true;
 	}
 
 }

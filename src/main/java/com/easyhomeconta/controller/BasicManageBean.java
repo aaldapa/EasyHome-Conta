@@ -60,7 +60,7 @@ public class BasicManageBean implements IBasicManageBean, Serializable {
 	}
 	
 
-	public String getString(String bundle) {
+	public String getStringFromBundle(String bundle) {
 		FacesContext context = FacesContext.getCurrentInstance();
         ResourceBundle msg = ResourceBundle.getBundle("i18n.messages", context.getViewRoot().getLocale());
         return msg.getString(bundle);

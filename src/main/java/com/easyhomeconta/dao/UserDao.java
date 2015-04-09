@@ -19,4 +19,12 @@ public interface UserDao extends GenericDao<User> {
      * @return
      */
     public List<Rol> findAllRoles();
+    
+    /**
+     * Devuelve la lista de usuarios cuyo username coincide con el pasado como parametro
+     * Este metodo es utilizado para validar que no exista ya un username utilizado.
+     * @param username
+     * @return
+     */
+     public List<User> findUsersbyUsername(String username);
 }

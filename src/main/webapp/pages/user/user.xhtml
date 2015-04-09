@@ -13,9 +13,9 @@
     	
     	<ui:composition template="../../templates/main.xhtml">
 			<!-- Parametros para el paso de titulos, cabeceras, etc -->
-			<ui:param name="headerTitle1" value="Gestión de usuarios" />
+			<ui:param name="headerTitle1" value="#{msg['usuarios.listado.titulo']}" />
 			<ui:param name="headerTitle2" value="" />
-			<ui:param name="boxTitle" value="Formulario" />
+			<ui:param name="boxTitle" value="#{msg['usuarios.form.subtitulo']}" />
 			<ui:param name="boxFooter" value="" />
 			
 			<!-- Para la inclusion de javascript -->
@@ -25,10 +25,17 @@
 			 	
 			 	<h:outputScript name="./plugins/datepicker/bootstrap-datepicker.js" target="head"/>
 			 	<h:outputScript name="./plugins/datepicker/locales/bootstrap-datepicker.es.js" target="head"/>
+			 	<h:outputScript name="./js/mis-js.js" target="head"/>
 			 	<h:outputStylesheet name="./plugins/datepicker/datepicker3.css" target="head"/>
 			 	
 			 	<script type="text/javascript">
 				   $(document).ready(function(){
+						//Gestion de mensajes de error
+					   	estilarMessages();
+						$('.fa-times-circle-o').on('click', ocultarMessage);
+
+
+
 					   $('.date').datepicker({
  						  	format:'dd-mm-yyyy',
  						  	language: 'es',
@@ -46,6 +53,7 @@
 			<ui:define name="content">
 				
 				<h:form id="form" styleClass="form-horizontal"  role="form">	
+					<p:growl id="messages" showDetail="true" globalOnly="true"/>
 					<div class="box-body">
 						<div class="row">
 						    
@@ -58,7 +66,9 @@
 								
 									<!-- Text inputs-->
 									<div class="form-group">
-								        <label class="col-sm-2 control-label">Alta #{requestLocale}</label>
+								        <label class="col-sm-2 control-label">
+								        	<h:outputLabel value="#{msg['usuarios.form.fecha.alta']}"/>
+								       	</label>
 								        <div class="col-sm-3">
 								            <div class="input-group input-append">
 								            	<h:inputText class="form-control" value="#{userBean.user.fechaCreacion}" readonly="true">
@@ -85,23 +95,31 @@
 					                
        						    <!-- Text input-->
 						          <div class="form-group">
-						            <label class="col-sm-2 control-label" for="textinput">Nombre</label>
+						            <h:message for="id_nombre" errorClass="has-error" infoClass="has-info"/>
+						            <label class="col-sm-2 control-label" for="textinput">
+						            	<h:outputLabel value="#{msg['usuarios.form.nombre']}"/>
+						            </label>
 						            <div class="col-sm-6">
-						              <h:inputText pt:placeholder="Nombre" class="form-control" label="Nombre" value="#{userBean.user.nombre}"/>
+						              <h:inputText id="id_nombre" pt:placeholder="Nombre" class="form-control" label="Nombre" value="#{userBean.user.nombre}" required="true" requiredMessage="#{msg['error.campo.obligatorio']}"/>
 						            </div>
 						          </div>
 						
 						          <!-- Text input-->
 						          <div class="form-group">
-						            <label class="col-sm-2 control-label" for="textinput">1º apellido</label>
+						            <h:message for="id_apel1" errorClass="has-error" infoClass="has-info"/>
+						            <label class="col-sm-2 control-label" for="textinput">
+						            	<h:outputLabel value="#{msg['usuarios.form.apel1']}"/>
+						            </label>
 						            <div class="col-sm-6">
-						             <h:inputText pt:placeholder="1º apellido" class="form-control" label="1º apellido" value="#{userBean.user.apellido1}"/>
+						             <h:inputText id="id_apel1" pt:placeholder="1º apellido" class="form-control" label="1º apellido" value="#{userBean.user.apellido1}" required="true" requiredMessage="#{msg['error.campo.obligatorio']}"/>
 						            </div>
 						          </div>
 						          
 						          <!-- Text input-->
 						          <div class="form-group">
-						            <label class="col-sm-2 control-label" for="textinput">2º apellido</label>
+						            <label class="col-sm-2 control-label" for="textinput">
+						            	<h:outputLabel value="#{msg['usuarios.form.apel2']}"/>
+						            </label>
 						            <div class="col-sm-6">
 						              <h:inputText pt:placeholder="2º apellido" class="form-control" label="2º apellido" value="#{userBean.user.apellido2}"/>
 						            </div>
@@ -109,7 +127,9 @@
 						
 								<!-- Listado de roles -->      
 								<div class="form-group">
-									<label class="col-sm-2 control-label" for="textinput">Roles</label>
+									<label class="col-sm-2 control-label" for="textinput">
+										<h:outputLabel value="#{msg['usuarios.form.roles']}"/>
+									</label>
 	                      			<!-- Parece ser que el bucle c:forEach de jsf no envia bien los valores del #{rol.selected} asi que usamos el ui:repeat-->
 	                      			<ui:repeat var="rol" value="#{userBean.lstRoles}" varStatus="y" >
 										
@@ -130,14 +150,23 @@
 						        
 						          <!-- Text inputs-->
 						          <div class="form-group">
-						            <label class="col-sm-2 control-label" for="textinput">Username</label>
+						            
+						            <label class="col-sm-2 control-label" for="textinput">
+						            	<h:outputLabel value="#{msg['usuarios.form.username']}"/>
+						            </label>
+						            
 						            <div class="col-sm-4">
-						              <h:inputText pt:placeholder="Nombre de usuario" class="form-control" label="Password" value="#{userBean.user.username}" />
+						              <h:message for="id_username" errorClass="has-error" infoClass="has-info"/>
+						              <h:inputText id="id_username" pt:placeholder="#{msg['usuarios.form.username']}" class="form-control" label="#{msg['usuarios.form.username']}" value="#{userBean.user.username}" required="true" requiredMessage="#{msg['error.campo.obligatorio']}"/>
 						            </div>
-						
-						            <label class="col-sm-2 control-label" for="textinput">Password</label>
+									
+									
+						            <label class="col-sm-2 control-label" for="textinput">
+						            	<h:outputLabel value="#{msg['usuarios.form.password']}"/>
+						            </label>
 						            <div class="col-sm-4">
-						               <h:inputSecret pt:placeholder="Clave" class="form-control" label="Password" value="#{userBean.user.password}" redisplay="true"/>
+						               <h:message for="id_password" errorClass="has-error" infoClass="has-info"/>
+						               <h:inputSecret id="id_password" pt:placeholder="#{msg['usuarios.form.password']}" class="form-control" label="#{msg['usuarios.form.password']}" value="#{userBean.user.password}" redisplay="true" required="true" requiredMessage="#{msg['error.campo.obligatorio']}"/>
 						            </div>
 						          </div>	
 						    </div><!-- /.col-lg-12 -->
@@ -148,8 +177,8 @@
 			        <div class="box-footer">
  						
     					<div class="btn-toolbar">
-    						<h:commandLink action="#{userBean.doListUsers}" styleClass="btn btn-default pull-right" value="Volver"/>
-   					 		<h:commandButton styleClass="btn btn-primary pull-right" value="Guardar" action="#{userBean.doSaveUser}" update="id_data_table"/>
+    						<h:commandLink action="#{userBean.doListUsers}" styleClass="btn btn-default pull-right" value="#{msg['boton.volver']}" immediate="true"/>
+   					 		<h:commandButton styleClass="btn btn-primary pull-right" value="#{msg['boton.guardar']}" action="#{userBean.doSaveUser}" update="id_data_table"/>
    					 	</div>
 		    			
 			        </div><!-- /.box-footer-->

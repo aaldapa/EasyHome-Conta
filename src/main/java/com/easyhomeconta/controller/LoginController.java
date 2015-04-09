@@ -77,7 +77,7 @@ public class LoginController extends BasicManageBean implements Serializable {
 //	        FacesContext.getCurrentInstance().addMessage(null, facesMsg);
 	        
 	    	//Simplificado utilizando metodos en la superclase
-	    	addErrorMessage(getString("login.error.autenticacion"),getString("login.error.credenciales"));
+	    	addErrorMessage(getStringFromBundle("login.error.autenticacion"),getStringFromBundle("login.error.credenciales"));
 	    	
 	        return null;
 		}

@@ -19,4 +19,6 @@ public interface UserService extends UserDetailsService{
 	public void createUser(User user);
 	public void updateUser(User user);
 	public void deleteUser(Integer id);
+	public Boolean isUsernameInDB(String username);
+	
 }

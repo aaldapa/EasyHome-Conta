@@ -54,6 +54,6 @@ public interface IBasicManageBean {
 	 * @param resourceBundle
 	 * @return
 	 */
-	public String getString(String resourceBundle);
+	public String getStringFromBundle(String resourceBundle);
 	
 }
