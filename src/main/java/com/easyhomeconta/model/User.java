@@ -3,6 +3,8 @@
  */
 package com.easyhomeconta.model;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -17,6 +19,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -24,6 +27,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import org.primefaces.model.DefaultStreamedContent;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -67,9 +71,14 @@ public class User implements UserDetails{
 	@Column(nullable=false)
 	private String password;
 	
+	private Date fechaUltimoLogin;
+	
+	@Lob
+	private byte[] photo;
+	
+	
 	@Transient
 	private String userNameForSession;
-	private Date fechaUltimoLogin;
 	
 	/*
 	 * Campos necesarios para la implementacion del la seguridad desde el login
@@ -216,4 +225,20 @@ public class User implements UserDetails{
 		this.fechaCreacion = fechaCreacion;
 	}
 
+	public byte[] getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(byte[] photo) {
+		this.photo = photo;
+	}
+
+	
+	public DefaultStreamedContent getPhotoDSContent(){
+		if (this.getPhoto()!=null){
+			InputStream is = new ByteArrayInputStream(this.getPhoto());
+			return new DefaultStreamedContent(is);
+		}
+			return null;
+	}
 }

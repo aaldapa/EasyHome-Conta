@@ -21,11 +21,11 @@
 			<!-- Para la inclusion de javascript -->
 			<ui:define name="scripts">
 			 	
-<!-- 			 	<h:outputScript library="primefaces" name="jquery/bootstrap-datepicker.js"/> -->
+				<h:outputScript library="primefaces" name="jquery/jquery.js" />
+ 				<h:outputScript library="primefaces" name="jquery/jquery-plugins.js" />
 			 	
 			 	<h:outputScript name="./plugins/datepicker/bootstrap-datepicker.js" target="head"/>
 			 	<h:outputScript name="./plugins/datepicker/locales/bootstrap-datepicker.es.js" target="head"/>
-			 	
 			 	<h:outputStylesheet name="./plugins/datepicker/datepicker3.css" target="head"/>
 			 	
 			 	<script type="text/javascript">
@@ -45,22 +45,88 @@
  						  	showOnFocus:true,
  						  	keyboardNavigation:false
 					  	});
-	
+
+						//Al pulsar el boton se muestra/oculta el componente para subir fotos,
+						// ademas se cambia el texto del boton y el el valor de una variable de control que determina si se desea subir imagen 
+						$(PrimeFaces.escapeClientId('form:id_boton_cambiar_foto')).on('click', function(){
+							    var estado=$(PrimeFaces.escapeClientId('form:id_campo_cambiar_foto')).val();
+							    //console.log('Estado actual: '+estado);
+							    
+					    		if (estado=='true'){
+					    			$(PrimeFaces.escapeClientId('form:id_campo_cambiar_foto')).val('false');
+					    			$(PrimeFaces.escapeClientId('form:id_fileUpload')).addClass('hide');
+					    			$(this).val('Cambiar foto');
+					    		}
+					    		else{
+					    			$(PrimeFaces.escapeClientId('form:id_campo_cambiar_foto')).val('true');
+					    			$(PrimeFaces.escapeClientId('form:id_fileUpload')).removeClass('hide');
+					    			$(this).val('Cancelar');
+					    			
+					    		}
+				    			
+								
+								//console.log('cambiado: '+$(PrimeFaces.escapeClientId('form:id_campo_cambiar_foto')).val());
+								//console.log('Invisible: '+$(PrimeFaces.escapeClientId('form:id_fileUpload')).hasClass('hide'));
+						  });
+				   	
 					});
+
 				</script>
 			</ui:define>
 			
 			<ui:define name="content">
 				
-				<h:form id="form" styleClass="form-horizontal"  role="form">	
+				<h:form id="form" styleClass="form-horizontal"  role="form" enctype="multipart/form-data">	
 					<p:growl id="messages" showDetail="true" globalOnly="true"/>
 					<div class="box-body">
 						<div class="row">
 						    
+						    
 						    <div class="col-md-8 col-md-offset-2">
 						      
 						      	<h:inputHidden value="#{userBean.user.idUser}"></h:inputHidden>
+						      	<h:inputHidden value="#{userBean.cambiarFoto}" id="id_campo_cambiar_foto"/>
 						
+								 <!-- Text input-->
+						          <div class="form-group">
+<!-- 						            <label class="col-sm-2 control-label" for="textinput"> -->
+<!-- 						            	<h:outputLabel value="Cargar foto"/> -->
+<!-- 						            </label> -->
+										<label class="col-sm-2 control-label" for="textinput">
+											<c:choose>
+							                	<c:when test="#{not empty userBean.user.photoDSContent}">
+							                		<p:graphicImage id="image" value="#{userBean.user.photoDSContent}"  width="95%" styleClass="user-image" cache="false"></p:graphicImage>	
+							                	</c:when>
+							                	<c:otherwise>
+							                		<h:graphicImage  library="img" name="photo.png" alt="" styleClass="user-image" width="95%"/>
+							                	</c:otherwise>
+							                </c:choose>
+						                 </label>
+						            <div class="col-sm-10">
+						            	<h:commandButton id="id_boton_cambiar_foto" class="btn btn-sm pull-right" value="Cambiar foto" type="button" />
+						            	<p:fileUpload id="id_fileUpload" 
+						            				value="#{userBean.imagen}"
+			 					         			label="Cambiar foto" 
+			 					         			mode="simple"
+			 					         			skinSimple="false"
+			 					         			styleClass="btn btn-primary hide"
+			 					         			 
+			 					         			/>	
+						            	
+<!-- 						            	<c:choose> -->
+<!-- 						            		<c:when test="#{not empty userBean.user.photoDSContent || not empty userBean.user.idUser}"> -->
+<!-- 						            		sssss		 -->
+<!-- 						            		</c:when> -->
+<!-- 						            		<c:otherwise> -->
+<!-- 						            		yyy -->
+<!-- 						               		</c:otherwise> -->
+						            	
+<!-- 						            	</c:choose> -->
+						            	
+						            </div>
+						          </div>	
+								
+								
 								<!-- Si se trata hemos entrado al formulario mediante edicion mostramos estos campos -->
 								<c:if test="#{not empty userBean.user.idUser}">
 								
@@ -87,6 +153,7 @@
 <!-- 								                <span class="input-group-addon add-on"><span class="glyphicon glyphicon-log-in"></span></span> -->
 <!-- 								            </div> -->
 <!-- 								        </div> -->
+
 								    </div>
 								
 								
@@ -168,7 +235,9 @@
 						               <h:message for="id_password" errorClass="has-error" infoClass="has-info"/>
 						               <h:inputSecret id="id_password" pt:placeholder="#{msg['usuarios.form.password']}" class="form-control" label="#{msg['usuarios.form.password']}" value="#{userBean.user.password}" redisplay="true" required="true" requiredMessage="#{msg['error.campo.obligatorio']}"/>
 						            </div>
-						          </div>	
+						          </div>
+						          
+						          
 						    </div><!-- /.col-lg-12 -->
 						</div><!-- /.row -->
 					</div><!-- /.box-body -->

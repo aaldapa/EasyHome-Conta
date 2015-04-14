@@ -101,16 +101,24 @@
     <welcome-file>index.xhtml</welcome-file>
   </welcome-file-list>
   
-<!--   <error-page> -->
-<!--     <exception-type>javax.faces.application.ViewExpiredException</exception-type> -->
-<!--     <location>/session-expired.xhtml</location> -->
-<!--   </error-page> -->
+  <!-- ERRORES -->
+  <!-- Errores de session expirada-->
+  <error-page>
+    <exception-type>javax.faces.application.ViewExpiredException</exception-type>
+    <location>/session-expired.xhtml</location>
+  </error-page>
   
   <!-- Los metodos con anotaciones de seguridad en java, cuando no se cumple la restriccion dan un error de acceso de negado.
   Mediante este control, cuando se provoque un error de este tipo mostrare la pagina de acceso denegado -->
   <error-page>
     <exception-type>org.springframework.security.access.AccessDeniedException</exception-type>
     <location>/access-denied.xhtml</location>
+  </error-page>
+  
+  <!-- Errores generales -->
+  <error-page>
+    <error-code>500</error-code>
+    <location>/error-500.xhtml</location>
   </error-page>
   
   <!-- JSF mapping -->
@@ -138,28 +146,28 @@
     <url-pattern>*.xhtml</url-pattern>
   </servlet-mapping>
   
-  <mime-mapping>
-    <extension>eot</extension>
-    <mime-type>application/vnd.ms-fontobject</mime-type>
-  </mime-mapping>
-  <mime-mapping>
-    <extension>otf</extension>
-    <mime-type>font/opentype</mime-type>
-  </mime-mapping>
-  <mime-mapping>
-    <extension>ttf</extension>
-    <mime-type>application/x-font-ttf</mime-type>
-  </mime-mapping>
-  <mime-mapping>
-    <extension>woff</extension>
-    <mime-type>application/x-font-woff</mime-type>
-  </mime-mapping>
-  <mime-mapping>
-    <extension>svg</extension>
-    <mime-type>image/svg+xml</mime-type>
-  </mime-mapping>
-  <mime-mapping>
-    <extension>ico</extension>
-    <mime-type>image/x-icon</mime-type>
-  </mime-mapping>
+<!--   <mime-mapping> -->
+<!--     <extension>eot</extension> -->
+<!--     <mime-type>application/vnd.ms-fontobject</mime-type> -->
+<!--   </mime-mapping> -->
+<!--   <mime-mapping> -->
+<!--     <extension>otf</extension> -->
+<!--     <mime-type>font/opentype</mime-type> -->
+<!--   </mime-mapping> -->
+<!--   <mime-mapping> -->
+<!--     <extension>ttf</extension> -->
+<!--     <mime-type>application/x-font-ttf</mime-type> -->
+<!--   </mime-mapping> -->
+<!--   <mime-mapping> -->
+<!--     <extension>woff</extension> -->
+<!--     <mime-type>application/x-font-woff</mime-type> -->
+<!--   </mime-mapping> -->
+<!--   <mime-mapping> -->
+<!--     <extension>svg</extension> -->
+<!--     <mime-type>image/svg+xml</mime-type> -->
+<!--   </mime-mapping> -->
+<!--   <mime-mapping> -->
+<!--     <extension>ico</extension> -->
+<!--     <mime-type>image/x-icon</mime-type> -->
+<!--   </mime-mapping> -->
 </web-app>

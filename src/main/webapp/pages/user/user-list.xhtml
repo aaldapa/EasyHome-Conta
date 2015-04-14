@@ -88,6 +88,17 @@
 							        <p:outputPanel id="userDetail" style="text-align:center;">
 							            <p:panelGrid columns="2" rendered="#{not empty userBean.selectedUser}">
 							                
+							                <h:outputText value=""/>
+							                <c:choose>
+							                	<c:when test="#{not empty userBean.selectedUser.photoDSContent}">
+							                		<p:graphicImage id="image" value="#{userBean.selectedUser.photoDSContent}" styleClass="user-image" width="128px;" cache="false"></p:graphicImage>	
+							                	</c:when>
+							                	<c:otherwise>
+							                		<h:graphicImage  library="img" name="photo.png" alt="" styleClass="user-image"/>
+							                	</c:otherwise>
+							                </c:choose> 				                
+							                
+							                
 							                <h:outputText value="#{msg['usuarios.listado.tabla.col.id']}" style="color:black"/>
 							                <h:outputText value="#{userBean.selectedUser.idUser}" />
 							                
@@ -104,6 +115,9 @@
 							                <h:outputText value="#{userBean.selectedUser.fechaUltimoLogin}" >
 							                	<f:convertDateTime pattern="#{msg['patron.fecha.corta.hora.corta']}" timeZone="GMT+2" />
 							                </h:outputText>
+							                
+							                
+                							
 							            </p:panelGrid>
 							        </p:outputPanel>
 						    	</p:dialog>
@@ -112,7 +126,7 @@
 					</div><!-- /.box-body -->
 				
 					<!-- Para la botonera -->
-			        <div class="box-footer">
+			        <div class="box-footer  ">
 						<div id="id_botonera" class="btn-toolbar">
 
     						<!-- Gracias al atributo rendered los botones de editar y eliminar se muestran siempre que el atributo selectedRow es true. 

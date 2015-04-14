@@ -7,7 +7,7 @@
   <name>EasyHome-Conta</name>
   <properties>
 	<jdk.version>1.7</jdk.version>
-	<jsf.version>2.2.3</jsf.version>
+	<jsf.version>2.2.7</jsf.version>
 	<spring.version> 4.1.6.RELEASE</spring.version>
 	<spring.security.version>3.2.7.RELEASE</spring.security.version>
 	<hibernate.version>4.3.6.Final</hibernate.version>

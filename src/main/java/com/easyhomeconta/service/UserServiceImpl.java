@@ -90,5 +90,13 @@ public class UserServiceImpl implements UserService {
 		else
 			return true;
 	}
+	/**
+	 * Devuelve el usuario con id pasado como parametro
+	 */
+	@Override
+	public User getUserById(Integer id) {
+		User user=userDao.findById(id);
+		return user;
+	}
 
 }

@@ -20,5 +20,6 @@ public interface UserService extends UserDetailsService{
 	public void updateUser(User user);
 	public void deleteUser(Integer id);
 	public Boolean isUsernameInDB(String username);
+	public User getUserById(Integer id);
 	
 }

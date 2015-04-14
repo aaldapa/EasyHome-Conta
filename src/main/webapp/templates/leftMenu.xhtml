@@ -15,18 +15,30 @@
 		          <!-- Sidebar user panel -->
 		          <div class="user-panel">
 		            <div class="pull-left image">					
-						<h:graphicImage library="img" name="users/#{loginBean.authentication.principal.idUser}.jpg" alt="" styleClass="img-circle"/>
+<!-- 						<h:graphicImage library="img" name="users/#{loginBean.authentication.principal.idUser}.jpg" alt="" styleClass="img-circle"/> -->
+						
+						<c:choose>
+	                	<c:when test="#{not empty logonUser.photoDSContent}">
+	                		<p:graphicImage id="id_session_image" value="#{loginBean.authentication.principal.photoDSContent}"  styleClass="img-circle" cache="false"></p:graphicImage>	
+	                	</c:when>
+	                	<c:otherwise>
+	                		<h:graphicImage  library="img" name="photo.png" alt="" styleClass="img-circle"/>
+	                	</c:otherwise>
+	                </c:choose>
+						
 		            </div>
 		            <div class="pull-left info">
 		            	
-		              <p> #{loginBean.authentication.principal.userNameForSession} </p>
+		              <p> 
+						#{logonUser.userNameForSession}
+		              </p>
 		
 		              <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
 		            </div>
 		          </div>
 		          <!-- sidebar menu: : style can be found in sidebar.less -->
 		          <ul class="sidebar-menu">
-		            <li class="header">MAIN NAVIGATION</li>
+		            <li class="header"><h:outputText value="#{msg['leftmenu.menu.title']}"/> </li>
 		            <li class="treeview">
 		              <a href="#">
 		                <i class="fa fa-dashboard"></i> <span>Dashboard</span> <i class="fa fa-angle-left pull-right"></i>
@@ -40,7 +52,9 @@
 					<sec:authorize access="hasAnyRole('Administrador')"> 
 			             <li>
 				        	<h:commandLink action="#{userBean.doListUsers}">
-					        	<i class="fa fa-users fa-fw"></i>Usuarios
+					        	<i class="fa fa-users fa-fw"></i>
+					        	<h:graphicImage  library="img" name="separador.gif"/>
+					        	<h:outputText value="#{msg['leftmenu.usuarios']}"/>
 			 				</h:commandLink>
 				        </li>
 			        </sec:authorize>
@@ -170,6 +184,7 @@
 		        </section>
 		        <!-- /.sidebar -->
 		      </aside>
+		     
 		</h:form>
 	</ui:composition>
 

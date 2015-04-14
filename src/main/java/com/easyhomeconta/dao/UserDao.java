@@ -7,6 +7,14 @@ import com.easyhomeconta.model.User;
 
 public interface UserDao extends GenericDao<User> {
 	
+	
+	
+	
+	/**
+	 * Devuelve la lista de usuarios "activos". Este metodo debe ser solo accedido por usuarios con rol de administrador
+	 */
+	public List<User> findAll();
+
 	/**
      * Devuelve un Object User que coincida con el username
      * @param username

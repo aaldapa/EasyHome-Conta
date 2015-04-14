@@ -31,3 +31,30 @@
     letter-spacing: -1px;
     text-align: left;
 }*/
+
+/*Sobre escribo los estilos del fileupload*/
+
+
+/*.fileinput-button Browse button.
+.ui-fileupload start Upload button.
+.ui-fileupload cancel Cancel button.
+fileupload-content Content container
+
+
+.ui-fileupload-buttonbar {
+    background: transparent none;
+    border: none;
+}
+
+.ui-fileupload-content {
+    display: none;
+}
+
+.ui-fileupload-upload{
+	display: none;
+	
+}
+.ui-fileupload-buttonbar .ui-fileupload-choose {
+    background-color: rgba(142, 103, 64, 0.98);
+}
+*/

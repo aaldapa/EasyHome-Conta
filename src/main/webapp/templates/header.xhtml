@@ -3,6 +3,7 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui"
       xmlns:sec="http://www.springframework.org/security/tags">
  
     <ui:composition>
@@ -18,113 +19,145 @@
           <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
           </a>
           <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
-              <!-- Messages: style can be found in dropdown.less-->
-              <li class="dropdown messages-menu">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <i class="fa fa-envelope-o"></i>
-                  <span class="label label-success">4</span>
-                </a>
-                <ul class="dropdown-menu">
-                  <li class="header">You have 4 messages</li>
-                  <li>
-                    <!-- inner menu: contains the actual data -->
-                    <ul class="menu">
-                      <li><!-- start message -->
-                        <a href="#">
-                          <div class="pull-left">
-<!--                             <h:graphicImage  library="img" name="photo.png" alt="" styleClass="user-image"/> -->
-                            <h:graphicImage  library="img" name="users/#{loginBean.authentication.principal.idUser}.jpg" alt="" styleClass="user-image"/>
-                          </div>
-                          <h4>
-                            Support Team
-                            <small><i class="fa fa-clock-o"></i> 5 mins</small>
-                          </h4>
-                          <p>Why not buy a new awesome theme?</p>
-                        </a>
-                      </li><!-- end message -->
-                    </ul>
-                  </li>
-                  <li class="footer"><a href="#">See All Messages</a></li>
-                </ul>
-              </li>
-              <!-- Notifications: style can be found in dropdown.less -->
-              <li class="dropdown notifications-menu">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <i class="fa fa-bell-o"></i>
-                  <span class="label label-warning">10</span>
-                </a>
-                <ul class="dropdown-menu">
-                  <li class="header">You have 10 notifications</li>
-                  <li>
-                    <!-- inner menu: contains the actual data -->
-                    <ul class="menu">
-                      <li>
-                        <a href="#">
-                          <i class="fa fa-users text-aqua"></i> 5 new members joined today
-                        </a>
-                      </li>
-                    </ul>
-                  </li>
-                  <li class="footer"><a href="#">View all</a></li>
-                </ul>
-              </li>
-              <!-- Tasks: style can be found in dropdown.less -->
-              <li class="dropdown tasks-menu">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <i class="fa fa-flag-o"></i>
-                  <span class="label label-danger">9</span>
-                </a>
-                <ul class="dropdown-menu">
-                  <li class="header">You have 9 tasks</li>
-                  <li>
-                    <!-- inner menu: contains the actual data -->
-                    <ul class="menu">
-                      <li><!-- Task item -->
-                        <a href="#">
-                          <h3>
-                            Design some buttons
-                            <small class="pull-right">20%</small>
-                          </h3>
-                          <div class="progress xs">
-                            <div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                              <span class="sr-only">20% Complete</span>
-                            </div>
-                          </div>
-                        </a>
-                      </li><!-- end task item -->
-                    </ul>
-                  </li>
-                  <li class="footer">
-                    <a href="#">View all tasks</a>
-                  </li>
-                </ul>
-              </li>
+<!--               Messages: style can be found in dropdown.less -->
+<!--               <li class="dropdown messages-menu"> -->
+<!--                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"> -->
+<!--                   <i class="fa fa-envelope-o"></i> -->
+<!--                   <span class="label label-success">4</span> -->
+<!--                 </a> -->
+<!--                 <ul class="dropdown-menu"> -->
+<!--                   <li class="header">You have 4 messages</li> -->
+<!--                   <li> -->
+<!--                     inner menu: contains the actual data -->
+<!--                     <ul class="menu"> -->
+<!--                       <li>start message -->
+<!--                         <a href="#"> -->
+<!--                           <div class="pull-left"> -->
+<!--                             <h:graphicImage  library="img" name="users/#{loginBean.authentication.principal.idUser}.jpg" alt="" styleClass="user-image"/> -->
+<!--                             <c:choose> -->
+<!-- 	                			<c:when test="#{not empty logonUser.photoDSContent}"> -->
+<!-- 	                				<p:graphicImage id="id_other_image" value="#{loginBean.authentication.principal.photoDSContent}"  styleClass="img-circle" cache="false"></p:graphicImage>	 -->
+<!-- 	                			</c:when> -->
+<!-- 	                			<c:otherwise> -->
+<!-- 	                				<h:graphicImage  library="img" name="photo.png" alt="" styleClass="img-circle"/> -->
+<!-- 	                			</c:otherwise> -->
+<!-- 	                		</c:choose> -->
+<!--                           </div> -->
+<!--                           <h4> -->
+<!--                             Support Team -->
+<!--                             <small><i class="fa fa-clock-o"></i> 5 mins</small> -->
+<!--                           </h4> -->
+<!--                           <p>Why not buy a new awesome theme?</p> -->
+<!--                         </a> -->
+<!--                       </li>end message -->
+<!--                     </ul> -->
+<!--                   </li> -->
+<!--                   <li class="footer"><a href="#">See All Messages</a></li> -->
+<!--                 </ul> -->
+<!--               </li> -->
+<!--               Notifications: style can be found in dropdown.less -->
+<!--               <li class="dropdown notifications-menu"> -->
+<!--                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"> -->
+<!--                   <i class="fa fa-bell-o"></i> -->
+<!--                   <span class="label label-warning">10</span> -->
+<!--                 </a> -->
+<!--                 <ul class="dropdown-menu"> -->
+<!--                   <li class="header">You have 10 notifications</li> -->
+<!--                   <li> -->
+<!--                     inner menu: contains the actual data -->
+<!--                     <ul class="menu"> -->
+<!--                       <li> -->
+<!--                         <a href="#"> -->
+<!--                           <i class="fa fa-users text-aqua"></i> 5 new members joined today -->
+<!--                         </a> -->
+<!--                       </li> -->
+<!--                     </ul> -->
+<!--                   </li> -->
+<!--                   <li class="footer"><a href="#">View all</a></li> -->
+<!--                 </ul> -->
+<!--               </li> -->
+<!--               Tasks: style can be found in dropdown.less -->
+<!--               <li class="dropdown tasks-menu"> -->
+<!--                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"> -->
+<!--                   <i class="fa fa-flag-o"></i> -->
+<!--                   <span class="label label-danger">9</span> -->
+<!--                 </a> -->
+<!--                 <ul class="dropdown-menu"> -->
+<!--                   <li class="header">You have 9 tasks</li> -->
+<!--                   <li> -->
+<!--                     inner menu: contains the actual data -->
+<!--                     <ul class="menu"> -->
+<!--                       <li>Task item -->
+<!--                         <a href="#"> -->
+<!--                           <h3> -->
+<!--                             Design some buttons -->
+<!--                             <small class="pull-right">20%</small> -->
+<!--                           </h3> -->
+<!--                           <div class="progress xs"> -->
+<!--                             <div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"> -->
+<!--                               <span class="sr-only">20% Complete</span> -->
+<!--                             </div> -->
+<!--                           </div> -->
+<!--                         </a> -->
+<!--                       </li>end task item -->
+<!--                     </ul> -->
+<!--                   </li> -->
+<!--                   <li class="footer"> -->
+<!--                     <a href="#">View all tasks</a> -->
+<!--                   </li> -->
+<!--                 </ul> -->
+<!--               </li> -->
               <!-- User Account: style can be found in dropdown.less -->
-              <c:set var="logonUSer" value="#{loginBean.authentication.principal}"/>
+
               
               
               <li class="dropdown user user-menu">
+              
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-					<h:graphicImage library="img" name="photo.png" alt="" styleClass="user-image" />
+<!-- 					<h:graphicImage library="img" name="photo.png" alt="" styleClass="user-image" /> -->
 					
-                  <span class="hidden-xs">#{logonUSer.userNameForSession}</span>
+<!-- 					<c:choose> -->
+<!-- 	                	<c:when test="#{not empty logonUser.photoDSContent}"> -->
+<!-- 	                		<p:graphicImage id="id_session_image" value="#{loginBean.authentication.principal.photoDSContent}"  styleClass="user-image" cache="false"></p:graphicImage>	 -->
+<!-- 	                	</c:when> -->
+<!-- 	                	<c:otherwise> -->
+<!-- 	                		<h:graphicImage  library="img" name="photo.png" alt="" styleClass="user-image"/> -->
+<!-- 	                	</c:otherwise> -->
+<!-- 	                </c:choose> -->
+					
+						
+						<span class="hidden-xs">#{logonUser.userNameForSession}</span>
+						<h:graphicImage  library="img" name="separador.gif"/>  <i class='glyphicon glyphicon-log-out'></i>
+
                 </a>
                 <ul class="dropdown-menu">
                   <!-- User image -->
                   <li class="user-header">
-                    <h:graphicImage library="img" name="users/#{loginBean.authentication.principal.idUser}.jpg" alt="" styleClass="img-circle"/>
+                    
+                    <c:choose>
+	                	<c:when test="#{not empty logonUser.photoDSContent}">
+	                		<p:graphicImage id="id_profile_image" value="#{loginBean.authentication.principal.photoDSContent}"  styleClass="img-circle" cache="false"></p:graphicImage>	
+	                	</c:when>
+	                	<c:otherwise>
+	                		<h:graphicImage  library="img" name="photo.png" alt="" styleClass="img-circle"/>
+	                	</c:otherwise>
+	                </c:choose>
+                    
+<!--                     <h:graphicImage library="img" name="users/#{loginBean.authentication.principal.idUser}.jpg" alt="" styleClass="img-circle"/> -->
                     <p>
-                      #{logonUSer.userNameForSession} - #{logonUSer.lstRoles[0].role}
+                      #{logonUser.userNameForSession} - #{logonUser.lstRoles[0].role}
                       
-                    <small><i class="fa fa-laptop"></i>  Última conexión:</small>
+                    	<small>
+                    		<i class="fa fa-laptop"></i>
+                    		<h:graphicImage  library="img" name="separador.gif"/> 
+                    		<h:outputText value="#{msg['header.last.conection']}"/> 
+						</small>
                       
-                       <small>
-	                      	<h:outputText value="#{loginBean.authentication.principal.fechaUltimoLogin}" >
+                       	<small>
+	                      	<h:outputText value="#{logonUser.fechaUltimoLogin}" >
 		                      	<f:convertDateTime pattern="#{msg['patron.fecha.larga.hora.corta']}" timeZone="GMT+2" />
 							</h:outputText>
                        </small>
@@ -146,12 +179,14 @@
                   <!-- Menu Footer-->
                   <li class="user-footer">
                     <div class="pull-left">
-                      <a href="#" class="btn btn-default btn-flat">Profile</a>
+                      <a href="#" class="btn btn-default btn-flat"><h:outputText value="#{msg['header.profile']}"/></a>
                     </div>
+                    
                     <div class="pull-right">
 <!--                       <a href="#" class="btn btn-default btn-flat">Sign out</a> -->
                       
-                      <h:commandButton id="logout" styleClass="btn btn-default btn-flat" action="#{loginBean.doLogout}" value="Sign out"></h:commandButton>
+                      <h:commandButton id="logout" styleClass="btn btn-info btn-flat" action="#{loginBean.doLogout}" value="#{msg['header.logout']}">
+                      </h:commandButton>
                     </div>
                   </li>
                 </ul>
