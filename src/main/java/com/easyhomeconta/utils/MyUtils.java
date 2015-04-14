@@ -3,7 +3,8 @@
  */
 package com.easyhomeconta.utils;
 
-import javax.servlet.http.Part;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 
 /**
  * Clase de utilidades
@@ -13,21 +14,16 @@ import javax.servlet.http.Part;
 public class MyUtils {
 
 	/**
-	 * Metodo que extrae el nombre del archivo de un objeto Part.
-	 * @param part
-	 * @return
+	 * Codifica el password mediante BCrypt 
+	 * @param password
+	 * @return password codificada
 	 */
-	public static String getFileNameFromPart(Part part) {
-        final String partHeader = part.getHeader("content-disposition");
-        for (String content : partHeader.split(";")) {
-            if (content.trim().startsWith("filename")) {
-                String fileName = content.substring(content.indexOf('=') + 1)
-                        .trim().replace("\"", "");
-                return fileName;
-            }
-        }
-        return null;
+	public static String codificarPasswordBcrypt(String password){
+		
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		String hashedPassword = passwordEncoder.encode(password);
+		
+		return hashedPassword ;
 	}
-
 	
 }

@@ -30,8 +30,11 @@
     </http>
  
 	<authentication-manager alias="authenticationManager">
-    	<!-- Gestión de usuarios mediante un proveedor de servicios de usuarios: -->
-    	<authentication-provider user-service-ref="userServiceImpl"/>
+		<!-- Gestión de usuarios mediante un proveedor de servicios de usuarios: -->
+    	<authentication-provider user-service-ref="userServiceImpl" >
+    		<!-- Desencriptacion de contraseña-->
+    		<password-encoder hash="bcrypt" />
+       	</authentication-provider>
 	</authentication-manager>
-
+	 	
 </beans:beans>

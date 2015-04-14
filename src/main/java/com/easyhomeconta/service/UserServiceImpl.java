@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.easyhomeconta.dao.UserDao;
 import com.easyhomeconta.model.Rol;
 import com.easyhomeconta.model.User;
+import com.easyhomeconta.utils.MyUtils;
 /**
  * 
  * @author Alberto
@@ -39,6 +40,9 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional
 	public void createUser(User user) {
+		//Encriptacion de contraseña
+		user.setPassword(MyUtils.codificarPasswordBcrypt(user.getPassword()));
+		
 		//Le insertamos fecha de creacion
 		user.setFechaCreacion(new Date());
 		
@@ -60,6 +64,12 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional
 	public void updateUser(User user) {
+
+		User oldUser=userDao.findById(user.getIdUser());
+		//Comparo la pass actual con la de la bd para ver si hay guardar la pass encriptada
+		if (!user.getPassword().equals(oldUser.getPassword()))
+			user.setPassword(MyUtils.codificarPasswordBcrypt(user.getPassword()));
+		
 		userDao.update(user);
 	}
 
@@ -99,4 +109,6 @@ public class UserServiceImpl implements UserService {
 		return user;
 	}
 
+	
+	
 }
