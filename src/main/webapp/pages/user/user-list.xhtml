@@ -91,7 +91,7 @@
 							                <h:outputText value=""/>
 							                <c:choose>
 							                	<c:when test="#{not empty userBean.selectedUser.photoDSContent}">
-							                		<p:graphicImage id="image" value="#{userBean.selectedUser.photoDSContent}" styleClass="user-image" width="128px;" cache="false"></p:graphicImage>	
+							                		<p:graphicImage id="image" value="#{userBean.selectedUser.photoDSContent}" styleClass="img-thumbnail" width="128px;" cache="false"></p:graphicImage>	
 							                	</c:when>
 							                	<c:otherwise>
 							                		<h:graphicImage  library="img" name="photo.png" alt="" styleClass="user-image"/>

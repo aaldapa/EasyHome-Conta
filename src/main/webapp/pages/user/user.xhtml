@@ -55,17 +55,15 @@
 					    		if (estado=='true'){
 					    			$(PrimeFaces.escapeClientId('form:id_campo_cambiar_foto')).val('false');
 					    			$(PrimeFaces.escapeClientId('form:id_fileUpload')).addClass('hide');
-					    			$(this).val('Cambiar foto');
+					    			$(this).val("#{msg['usuarios.form.photo.cambiar']}");
 					    		}
 					    		else{
 					    			$(PrimeFaces.escapeClientId('form:id_campo_cambiar_foto')).val('true');
 					    			$(PrimeFaces.escapeClientId('form:id_fileUpload')).removeClass('hide');
-					    			$(this).val('Cancelar');
+					    			$(this).val("#{msg['usuarios.form.photo.cancelar']}");
 					    			
 					    		}
-				    			
-								
-								//console.log('cambiado: '+$(PrimeFaces.escapeClientId('form:id_campo_cambiar_foto')).val());
+				    			//console.log('cambiado: '+$(PrimeFaces.escapeClientId('form:id_campo_cambiar_foto')).val());
 								//console.log('Invisible: '+$(PrimeFaces.escapeClientId('form:id_fileUpload')).hasClass('hide'));
 						  });
 				   	
@@ -80,52 +78,48 @@
 					<p:growl id="messages" showDetail="true" globalOnly="true"/>
 					<div class="box-body">
 						<div class="row">
-						    
-						    
-						    <div class="col-md-8 col-md-offset-2">
-						      
-						      	<h:inputHidden value="#{userBean.user.idUser}"></h:inputHidden>
+						    <div class="col-sm-4 col-xs-12">
+						    	<h:inputHidden value="#{userBean.user.idUser}"></h:inputHidden>
 						      	<h:inputHidden value="#{userBean.cambiarFoto}" id="id_campo_cambiar_foto"/>
 						
 								 <!-- Text input-->
-						          <div class="form-group">
-<!-- 						            <label class="col-sm-2 control-label" for="textinput"> -->
-<!-- 						            	<h:outputLabel value="Cargar foto"/> -->
-<!-- 						            </label> -->
-										<label class="col-sm-2 control-label" for="textinput">
-											<c:choose>
-							                	<c:when test="#{not empty userBean.user.photoDSContent}">
-							                		<p:graphicImage id="image" value="#{userBean.user.photoDSContent}"  width="95%" styleClass="user-image" cache="false"></p:graphicImage>	
-							                	</c:when>
-							                	<c:otherwise>
-							                		<h:graphicImage  library="img" name="photo.png" alt="" styleClass="user-image" width="95%"/>
-							                	</c:otherwise>
-							                </c:choose>
-						                 </label>
-						            <div class="col-sm-10">
-						            	<h:commandButton id="id_boton_cambiar_foto" class="btn btn-sm pull-right" value="Cambiar foto" type="button" />
+						          
+						          <div class="col-sm-offset-2 col-sm-9 ">
+						          	<div class="col-xs-offset-3 col-md-offset-1  col-xs-6 col-md-10">
+										<div class="form-group">
+												<c:choose>
+								                	<c:when test="#{not empty userBean.user.photoDSContent}">
+								                		<p:graphicImage id="image" value="#{userBean.user.photoDSContent}"  width="95%" styleClass="img-rounded img-responsive center-block" cache="false"></p:graphicImage>	
+								                	</c:when>
+								                	<c:otherwise>
+								                		<h:graphicImage  library="img" name="photo.png" alt="" styleClass="img-rounded img-responsive" width="95%"/>
+								                	</c:otherwise>
+								                </c:choose>
+										</div>
+						            </div>
+						          </div>
+						          
+						          <div class="col-sm-offset-2 col-sm-9 ">
+						          	<div class="col-xs-offset-3  col-xs-6">
+						            	<div class="form-group">
+							            	<h:commandButton id="id_boton_cambiar_foto" type="button" class="btn btn-default btn-sm center-block" value="#{msg['usuarios.form.photo.cambiar']}" />
+				 					     </div>	
+					            	</div>
+					            </div>
+					            
+					            <div class="col-xs-12">
+						            <div class="form-group">
 						            	<p:fileUpload id="id_fileUpload" 
 						            				value="#{userBean.imagen}"
 			 					         			label="Cambiar foto" 
 			 					         			mode="simple"
 			 					         			skinSimple="false"
 			 					         			styleClass="btn btn-primary hide"
-			 					         			 
-			 					         			/>	
-						            	
-<!-- 						            	<c:choose> -->
-<!-- 						            		<c:when test="#{not empty userBean.user.photoDSContent || not empty userBean.user.idUser}"> -->
-<!-- 						            		sssss		 -->
-<!-- 						            		</c:when> -->
-<!-- 						            		<c:otherwise> -->
-<!-- 						            		yyy -->
-<!-- 						               		</c:otherwise> -->
-						            	
-<!-- 						            	</c:choose> -->
-						            	
-						            </div>
-						          </div>	
-								
+			 					         			/>
+			 					     </div>	
+				            	</div>
+						    </div>
+						    <div class="col-sm-8 col-xs-12">
 								
 								<!-- Si se trata hemos entrado al formulario mediante edicion mostramos estos campos -->
 								<c:if test="#{not empty userBean.user.idUser}">
@@ -167,7 +161,7 @@
 						            	<h:outputLabel value="#{msg['usuarios.form.nombre']}"/>
 						            </label>
 						            <div class="col-sm-6">
-						              <h:inputText id="id_nombre" pt:placeholder="Nombre" class="form-control" label="Nombre" value="#{userBean.user.nombre}" required="true" requiredMessage="#{msg['error.campo.obligatorio']}"/>
+						              <h:inputText id="id_nombre" pt:placeholder="#{msg['usuarios.form.nombre']}" class="form-control" label="#{msg['usuarios.form.nombre']}" value="#{userBean.user.nombre}" required="true" requiredMessage="#{msg['error.campo.obligatorio']}"/>
 						            </div>
 						          </div>
 						
@@ -178,7 +172,7 @@
 						            	<h:outputLabel value="#{msg['usuarios.form.apel1']}"/>
 						            </label>
 						            <div class="col-sm-6">
-						             <h:inputText id="id_apel1" pt:placeholder="1º apellido" class="form-control" label="1º apellido" value="#{userBean.user.apellido1}" required="true" requiredMessage="#{msg['error.campo.obligatorio']}"/>
+						             <h:inputText id="id_apel1" pt:placeholder="#{msg['usuarios.form.apel1']}" class="form-control" label="#{msg['usuarios.form.apel1']}" value="#{userBean.user.apellido1}" required="true" requiredMessage="#{msg['error.campo.obligatorio']}"/>
 						            </div>
 						          </div>
 						          
@@ -188,7 +182,7 @@
 						            	<h:outputLabel value="#{msg['usuarios.form.apel2']}"/>
 						            </label>
 						            <div class="col-sm-6">
-						              <h:inputText pt:placeholder="2º apellido" class="form-control" label="2º apellido" value="#{userBean.user.apellido2}"/>
+						              <h:inputText pt:placeholder="#{msg['usuarios.form.apel2']}" class="form-control" label="#{msg['usuarios.form.apel2']}" value="#{userBean.user.apellido2}"/>
 						            </div>
 						          </div>
 						
