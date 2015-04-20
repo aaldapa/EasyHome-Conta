@@ -53,8 +53,10 @@
 			             <li>
 				        	<h:commandLink action="#{userBean.doListUsers}">
 					        	<i class="fa fa-users fa-fw"></i>
-					        	<h:graphicImage  library="img" name="separador.gif"/>
-					        	<h:outputText value="#{msg['leftmenu.usuarios']}"/>
+<!-- 					        	<h:graphicImage  library="img" name="separador.gif"/> -->
+					        	<span>
+					        		<h:outputText value="#{msg['leftmenu.usuarios']}"/>
+					        	</span>
 			 				</h:commandLink>
 				        </li>
 			        </sec:authorize>
