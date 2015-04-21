@@ -1,4 +1,4 @@
-body{
+ body{
     background: url("#{resource['/img/back.png']}");
 	background-color: #444;
     background: url("#{resource['/img/pinlayer2.png']}"),url("#{resource['/img/pinlayer1.png']}"),url("#{resource['/img/back.png']}");

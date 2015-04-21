@@ -167,7 +167,7 @@ public class UserController extends BasicManageBean implements Serializable{
      * Las peticiones Ajax de primefaces reciben objetos mas especificos relacionados con el evento que los dispara, por ejemplo  en este cas, seria SelectEvent
      */
     public void onRowSelect(AjaxBehaviorEvent event) {  
-    	log.info(event);
+    	log.info("Seleccion de fila");
     	setSelectedRow(true);
   }  
 
@@ -179,6 +179,7 @@ public class UserController extends BasicManageBean implements Serializable{
      * Las peticiones Ajax de primefaces reciben objetos mas especificos relacionados con el evento que los dispara, por ejemplo  en este cas, seria SelectEvent
      */
     public void onRowUnselect(AjaxBehaviorEvent event) {
+    	log.info("Deseleccion de fila");
     	selectedRow=false;
     } 
 	
