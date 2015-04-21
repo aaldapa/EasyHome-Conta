@@ -44,9 +44,7 @@
 		    		<div class="panel panel-default">
 					  	<div class="panel-heading">
 					    	<h3 class="panel-title ">
-<!-- 					    		EasyHome-Conta -->
 					    		<h:outputText value="#{msg['login.text.info']}" styleClass="text-right"/> 
-
 					    	</h3>
 					 	</div>
 					  	<div class="panel-body">
@@ -54,14 +52,12 @@
 					    	<h:form id="formulario">
 						    	<p:growl id="messages" showDetail="true" globalOnly="true" sticky="false"/>
 	
-	
 			                    <fieldset>
 			 					 	<div > 
-		 								<h:graphicImage class="center-block" library="img" name="logo.png" alt=""/>&nbsp; 
+		 								<h:graphicImage class="center-block profile-img" library="img" name="photo.png" alt=""/>&nbsp; 
 			 						</div> 
 								    	  	
 						    	  	<div class="form-group">
-<!-- 										<h:graphicImage class="profile-img" library="img" name="photo.png" alt=""/> -->
 										<h:message for="id_username" errorClass="has-error" infoClass="has-info"></h:message>
 										<div class="input-group">
 											<span class="input-group-addon">
@@ -107,8 +103,6 @@
 	        		        });
 	        			});
 
-	        				      		
-	          	
 	          });
 
        	</script>

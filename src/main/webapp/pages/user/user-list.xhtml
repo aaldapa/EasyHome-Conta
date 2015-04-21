@@ -18,17 +18,8 @@
 			<ui:param name="boxFooter" value="" />
 			
 			<!-- Para la inclusion de javascript -->
-			<ui:define name="scripts">
-				<h:outputScript library="primefaces" name="jquery/jquery.js" />
- 				<h:outputScript library="primefaces" name="jquery/jquery-plugins.js" />
-			
-			 	<script type="text/javascript">
-				   $(document).ready(function(){
-					   
-					});
-				</script>
-				
-			</ui:define>
+<!-- 			<ui:define name="scripts">				 -->
+<!-- 			</ui:define> -->
 			
 			<ui:define name="content">
 	        
@@ -84,40 +75,70 @@
 							   	</p:dataTable>
 							   
 							   	<!--  Capa emergente que muestra los datos del usuario -->
-							   	<p:dialog header="User Info" widgetVar="userDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
-							        <p:outputPanel id="userDetail" style="text-align:center;">
-							            <p:panelGrid columns="2" rendered="#{not empty userBean.selectedUser}">
-							                
-							                <h:outputText value=""/>
-							                <c:choose>
-							                	<c:when test="#{not empty userBean.selectedUser.photoDSContent}">
-							                		<p:graphicImage id="image" value="#{userBean.selectedUser.photoDSContent}" styleClass="img-thumbnail" width="128px;" cache="false"></p:graphicImage>	
-							                	</c:when>
-							                	<c:otherwise>
-							                		<h:graphicImage  library="img" name="photo.png" alt="" styleClass="user-image"/>
-							                	</c:otherwise>
-							                </c:choose> 				                
-							                
-							                
-							                <h:outputText value="#{msg['usuarios.listado.tabla.col.id']}" style="color:black"/>
-							                <h:outputText value="#{userBean.selectedUser.idUser}" />
-							                
-				       		                <h:outputText value="#{msg['usuarios.listado.tabla.col.nombre']}" />
-				       		                <h:outputText value="#{userBean.selectedUser.nombre}" />
-				       		                
-				       		                <h:outputText value="#{msg['usuarios.listado.tabla.col.apel1']}" />
-				       		                <h:outputText value="#{userBean.selectedUser.apellido1}" />
-				       		                
-				       		                <h:outputText value="#{msg['usuarios.listado.tabla.col.apel2']}" />
-				       		                <h:outputText value="#{userBean.selectedUser.apellido2}" />
-				       		                
-				       		                <h:outputText value="#{msg['usuarios.listado.tabla.col.conexion']}" style="color:black"/>
-							                <h:outputText value="#{userBean.selectedUser.fechaUltimoLogin}" >
-							                	<f:convertDateTime pattern="#{msg['patron.fecha.corta.hora.corta']}" timeZone="GMT+2" />
-							                </h:outputText>
-							                
-							                
-                							
+							   	<p:dialog header="#{msg['usuarios.listado.user.info']}" widgetVar="userDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+							        <p:outputPanel id="userDetail" style="text-align:center;" >
+							            <p:panelGrid rendered="#{not empty userBean.selectedUser}" >
+							                <p:row >
+            									<p:column  colspan="2">
+            										<c:choose>
+							                			<c:when test="#{not empty userBean.selectedUser.photoDSContent}">
+									                		<p:graphicImage id="image" value="#{userBean.selectedUser.photoDSContent}" styleClass="img-thumbnail" width="128px;" cache="false"></p:graphicImage>	
+									                	</c:when>
+									                	<c:otherwise>
+									                		<h:graphicImage  library="img" name="photo.png" alt="" styleClass="user-image"/>
+									                	</c:otherwise>
+									                </c:choose>
+            									
+            									</p:column>
+        									</p:row>
+							                <p:row>
+							                	<p:column>
+							                		<h:outputLabel value="#{msg['usuarios.listado.tabla.col.id']}"/>
+							                	</p:column>
+							                	
+							                	<p:column>
+							                		<h:outputText value="#{userBean.selectedUser.idUser}" />
+							                	</p:column>
+							                </p:row>
+							                <p:row>
+							                	<p:column>
+							                		<h:outputLabel value="#{msg['usuarios.listado.tabla.col.nombre']}"/>
+							                	</p:column>
+							                	
+							                	<p:column>
+							                		<h:outputText value="#{userBean.selectedUser.nombre}" />
+							                	</p:column>
+							                </p:row>
+							                  <p:row>
+							                	<p:column>
+							                		<h:outputLabel value="#{msg['usuarios.listado.tabla.col.apel1']}"/>
+							                	</p:column>
+							                	
+							                	<p:column>
+							                		<h:outputText value="#{userBean.selectedUser.apellido1}" />
+							                	</p:column>
+							                </p:row>
+							                  <p:row>
+							                	<p:column>
+							                		<h:outputLabel value="#{msg['usuarios.listado.tabla.col.apel2']}"/>
+							                	</p:column>
+							                	
+							                	<p:column>
+							                		<h:outputText value="#{userBean.selectedUser.apellido2}" />
+							                	</p:column>
+							                </p:row>
+							                  <p:row>
+							                	<p:column>
+							                		<h:outputLabel value="#{msg['usuarios.listado.tabla.col.conexion']}"/>
+							                	</p:column>
+							                	
+							                	<p:column>
+							                		<h:outputText value="#{userBean.selectedUser.fechaUltimoLogin}" > -->
+ 									                	<f:convertDateTime pattern="#{msg['patron.fecha.corta.hora.corta']}" timeZone="GMT+2" /> 
+		 							                </h:outputText>
+							                	</p:column>
+							                </p:row>
+               							
 							            </p:panelGrid>
 							        </p:outputPanel>
 						    	</p:dialog>
@@ -147,8 +168,18 @@
 			        </div><!-- /.box-footer-->
 				</h:form>
 		           
+   			<script type="text/javascript">
+			   $(document).ready(function(){
+					console.log('hola mundo desde abajo')			   
+				});
+			</script>	
+		           
 			</ui:define>
+			
     	</ui:composition>
+    	
+    	
+    	
     	
     </h:body>
 
