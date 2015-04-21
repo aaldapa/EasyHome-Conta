@@ -25,6 +25,7 @@
 	        
 	            <h:form id="id_form">
 					<div class="box-body">
+						
 						<div class="row">
 						  <div class="col-md-12">		
 								<p:dataTable id="id_data_table" var="user" value="#{userBean.lstUsers}" style="margin-bottom:20px" tableStyle="font-size: 90%;" styleClass="table table-bordered table-striped dataTable"
@@ -41,26 +42,26 @@
 									<f:ajax event="rowUnselect" listener="#{userBean.onRowUnselect}" render=":id_form"/>
 			
 									<f:facet name="header">
-							          #{msg['usuarios.listado.tabla.titulo']} (#{fn:length(userBean.lstUsers)})
+							          <h:outputText value="#{msg['usuarios.listado.tabla.titulo']} (#{fn:length(userBean.lstUsers)})"/>
 							       </f:facet>
 							 		
-							 		<p:column headerText="#{msg['usuarios.listado.tabla.col.id']}"  style="width:50px;text-align: center" priority="5">
-							           #{user.idUser}
+							 		<p:column headerText="#{msg['usuarios.listado.tabla.col.id']}"  width="50" priority="5">
+							           <h:outputText value="#{user.idUser}"/>
 							       	</p:column>
 							 
-							       <p:column headerText="#{msg['usuarios.listado.tabla.col.nombre']}" resizable="true" sortBy="#{user.nombre}" priority="1">
-							           #{user.nombre}
+							       <p:column headerText="#{msg['usuarios.listado.tabla.col.nombre']}" sortBy="#{user.nombre}" priority="1">
+							           <h:outputText value="#{user.nombre}"/>
 							       </p:column>
 							 
-							        <p:column headerText="#{msg['usuarios.listado.tabla.col.apel1']}" priority="2">
-							           #{user.apellido1}
+							        <p:column headerText="#{msg['usuarios.listado.tabla.col.apel1']}" priority="3">
+							           <h:outputText value="#{user.apellido1}"/>
 							       </p:column>
 							 
 							 		<p:column headerText="#{msg['usuarios.listado.tabla.col.apel2']}" priority="4">
-							           #{user.apellido2}
+							           <h:outputText value="#{user.apellido2}"/>
 							       </p:column>
 							       
-							       <p:column headerText="" style="width:50px;text-align: center" priority="3">
+							       <p:column headerText=""  width="50" priority="2">
 			             				<!-- Ejecuta un javascript que muestra los datos del usuario de la fila en una ventana modal -->
 			             				<p:commandButton update=":id_form:userDetail" oncomplete="PF('userDialog').show()" icon="ui-icon-search" title="#{msg['boton.ver']}">
 			                				<f:setPropertyActionListener value="#{user}" target="#{userBean.selectedUser}" />
@@ -85,7 +86,7 @@
 									                		<p:graphicImage id="image" value="#{userBean.selectedUser.photoDSContent}" styleClass="img-thumbnail" width="128px;" cache="false"></p:graphicImage>	
 									                	</c:when>
 									                	<c:otherwise>
-									                		<h:graphicImage  library="img" name="photo.png" alt="" styleClass="user-image"/>
+									                		<h:graphicImage  library="img" name="photo.png" alt="" styleClass="img-thumbnail"/>
 									                	</c:otherwise>
 									                </c:choose>
             									
@@ -154,10 +155,8 @@
     						El valor del atributo es modificado cada vez que se selecciona o deselecciona una fila de la tabla, por medio de una llamada ajax -->
     						<c:set var="isRowSelected" value="#{userBean.selectedRow}"/>
     					
-    						<h:commandLink id="id_boton_eliminar" styleClass="btn btn-default pull-right"	action="#{userBean.doDeleteUsers}"	onclick="return confirm('#{msg['usuarios.listado.botones.confirmacion']}')"
-    							icon="ui-icon-trash" title="#{msg['boton.eliminar']}" value="#{msg['boton.eliminar']}" rendered="#{isRowSelected}">
-    							<f:ajax execute="id_form" render="id_form:id_data_table" />
-    						</h:commandLink>
+    						<h:commandButton type="button" id="id_boton_eliminar" styleClass="btn btn-default pull-right" value="#{msg['boton.eliminar']}" onclick="mostrarModal();"
+    							rendered="#{isRowSelected}"/>
     						
     						<h:commandLink id="id_boton_editar" styleClass="btn btn-default pull-right"	action="#{userBean.doLoadForm}" title="#{msg['boton.editar']}" value="#{msg['boton.editar']}" 
     							rendered="#{isRowSelected}"/>
@@ -166,12 +165,45 @@
 				            	
 						</div> 
 			        </div><!-- /.box-footer-->
+			        
+					<!-- Ventana modal de confirmacion para eliminar un registro -->
+           
+		            <div class="modal" >
+		              <div class="modal-dialog">
+		                <div class="modal-content">
+		                  <div class="modal-header">
+		                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="ocultarModal();"><span aria-hidden="true">×</span></button>
+		                    <h4 class="modal-title"><h:outputLabel value="#{msg['modal.titulo']}"/></h4>
+		                  </div>
+		                  <div class="modal-body">
+		                    <p><h:outputText value="#{msg['usuarios.listado.botones.confirmacion']}"/></p>
+		                    <p><h:outputText value="#{msg['modal.confirmacion']}"/></p>
+		                  </div>
+		                  <div class="modal-footer">
+		                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal" onclick="ocultarModal();">
+		                    	<h:outputText value="#{msg['boton.cancelar']}"></h:outputText>
+
+							</button>
+		<!--                     <button type="button" class="btn btn-primary">Save changes</button> -->
+		                    <h:commandLink id="id_boton_eliminar2" styleClass="btn btn-primary"	action="#{userBean.doDeleteUsers}"	onclick="ocultarModal();"
+		    							icon="ui-icon-trash" title="#{msg['boton.eliminar']}" value="#{msg['boton.aceptar']}" rendered="#{isRowSelected}">
+		    							<f:ajax execute="id_form" render="id_form:id_data_table" />
+							</h:commandLink>
+		                  </div>
+		                </div><!-- /.modal-content -->
+		              </div><!-- /.modal-dialog -->
+		            </div><!-- /.modal -->        
+			        
+			        
 				</h:form>
+		           
+           
 		           
    			<script type="text/javascript">
 			   $(document).ready(function(){
-					console.log('hola mundo desde abajo')			   
+								   
 				});
+				
 			</script>	
 		           
 			</ui:define>

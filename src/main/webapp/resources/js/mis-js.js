@@ -24,3 +24,13 @@ function ocultarMessage(){
   	
 	
 }
+
+//Mostrar ventana modal
+function mostrarModal(){
+	$('.modal').show();
+}
+
+function ocultarModal(){
+	$('.modal').hide();
+}
+//Ocultar ventana modal
