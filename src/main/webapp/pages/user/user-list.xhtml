@@ -134,7 +134,7 @@
 							                	</p:column>
 							                	
 							                	<p:column>
-							                		<h:outputText value="#{userBean.selectedUser.fechaUltimoLogin}" > -->
+							                		<h:outputText value="#{userBean.selectedUser.fechaUltimoLogin}" >
  									                	<f:convertDateTime pattern="#{msg['patron.fecha.corta.hora.corta']}" timeZone="GMT+2" /> 
 		 							                </h:outputText>
 							                	</p:column>
@@ -155,7 +155,7 @@
     						El valor del atributo es modificado cada vez que se selecciona o deselecciona una fila de la tabla, por medio de una llamada ajax -->
     						<c:set var="isRowSelected" value="#{userBean.selectedRow}"/>
     					
-    						<h:commandButton type="button" id="id_boton_eliminar" styleClass="btn btn-default pull-right" value="#{msg['boton.eliminar']}" onclick="mostrarModal();"
+    						<h:commandButton type="button" id="id_boton_eliminar" styleClass="btn btn-default pull-right" title="#{msg['boton.eliminar']}" value="#{msg['boton.eliminar']}" onclick="mostrarModal();"
     							rendered="#{isRowSelected}"/>
     						
     						<h:commandLink id="id_boton_editar" styleClass="btn btn-default pull-right"	action="#{userBean.doLoadForm}" title="#{msg['boton.editar']}" value="#{msg['boton.editar']}" 

@@ -31,13 +31,12 @@
 					<p:growl id="messages" showDetail="true" globalOnly="true"/>
 					<div class="box-body">
 						<div class="row">
+						    <!-- Foto y carga de foto -->
 						    <div class="col-sm-4 col-xs-12">
 						    	<h:inputHidden value="#{userBean.user.idUser}"></h:inputHidden>
 						      	<h:inputHidden value="#{userBean.cambiarFoto}" id="id_campo_cambiar_foto"/>
 						
-								 <!-- Text input-->
-						          
-						          <div class="col-sm-offset-2 col-sm-9 ">
+								  <div class="col-md-offset-2 col-md-9 ">
 						          	<div class="col-xs-offset-3 col-md-offset-1  col-xs-6 col-md-10">
 										<div class="form-group">
 												<c:choose>
@@ -58,8 +57,9 @@
 							            	<h:commandButton id="id_boton_cambiar_foto" type="button" class="btn btn-default btn-sm center-block" value="#{msg['usuarios.form.photo.cambiar']}" />
 				 					     </div>	
 					            	</div>
-					            </div>
+					            </div><!-- /.col-sm-4-->
 					            
+					            <!-- Campos de texto -->
 					            <div class="col-xs-12">
 						            <div class="form-group">
 						            	<p:fileUpload id="id_fileUpload" 
@@ -70,8 +70,9 @@
 			 					         			styleClass="btn btn-primary hide"
 			 					         			/>
 			 					     </div>	
-				            	</div>
-						    </div>
+				            	</div><!-- /.col-xs-12-->
+						    </div><!-- /.col-sm-4 col-xs-12-->
+						    						    
 						    <div class="col-sm-8 col-xs-12">
 								
 								<!-- Si se trata hemos entrado al formulario mediante edicion mostramos estos campos -->
@@ -192,8 +193,8 @@
 			        <div class="box-footer">
  						
     					<div class="btn-toolbar">
-    						<h:commandLink action="#{userBean.doListUsers}" styleClass="btn btn-default pull-right" value="#{msg['boton.volver']}" immediate="true"/>
-   					 		<h:commandButton styleClass="btn btn-primary pull-right" value="#{msg['boton.guardar']}" action="#{userBean.doSaveUser}" update="id_data_table"/>
+    						<h:commandLink action="#{userBean.doListUsers}" styleClass="btn btn-default pull-right" value="#{msg['boton.volver']}" immediate="true" title="#{msg['boton.volver']}"/>
+   					 		<h:commandButton styleClass="btn btn-primary pull-right" value="#{msg['boton.guardar']}" action="#{userBean.doSaveUser}" update="id_data_table" title="#{msg['boton.guardar']}"/>
    					 	</div>
 		    			
 			        </div><!-- /.box-footer-->
