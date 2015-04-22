@@ -55,16 +55,20 @@ public class LoginController extends BasicManageBean implements Serializable {
 		super();
 	}
 	
+	/**
+	 * Gestion del login
+	 * @return
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	public String doLogin() throws ServletException, IOException{
 
 		try{
-			
-		    
+			//Autenticacion contra la base de datos.
 			authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(this.username, this.password));
 			SecurityContextHolder.getContext().setAuthentication(authentication);
-			
-		 
-		} catch (AuthenticationException e) {
+		} 
+		catch (AuthenticationException e) {
 	    	
 	    	//Recogemos el string del properties
 //	    	FacesContext context = FacesContext.getCurrentInstance();
