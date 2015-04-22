@@ -15,6 +15,7 @@
   </properties>
 	
   <dependencies>
+  	<!-- Logger -->
   	<dependency>
 	    <groupId>org.slf4j</groupId>
         <artifactId>slf4j-log4j12</artifactId>
@@ -27,7 +28,7 @@
         <artifactId>javax.servlet-api</artifactId>
         <version>3.0.1</version>
     </dependency>
-    
+    <!-- Tomcat -->
     <dependency>
 		<groupId>org.apache.tomcat</groupId>
 		<artifactId>tomcat-el-api</artifactId>
@@ -35,13 +36,6 @@
     	<type>jar</type>
     	<scope>provided</scope>
 	</dependency>
-	
-<!-- 	<dependency> -->
-<!-- 		<groupId>javax.el</groupId> -->
-<!-- 		<artifactId>javax.el-api</artifactId> -->
-<!-- 		<version>3.0.0</version> -->
-<!-- 	</dependency> -->
-	
     
     <!-- JSTL -->
     <dependency>
@@ -49,8 +43,7 @@
 		<artifactId>jstl</artifactId>
 		<version>1.2</version>
 	</dependency>
-    
-    
+        
   	<!-- Faces Implementation -->
     <dependency>
         <groupId>com.sun.faces</groupId>

@@ -34,27 +34,29 @@ public class MySessionListener implements HttpSessionListener {
 
 	private final Logger log = Logger.getLogger(MySessionListener.class);
 	
-	LogonService logonService;
-	
-	UserService userService;
+	private LogonService logonService;
+	private UserService userService;
 	
    @Override
    public void sessionCreated(HttpSessionEvent arg0) {
 	   
-	   log.info("Sesión creada");
+	   log.info("Una nueva sesión ha sido creada");
          
    }
 
    @Override
    public void sessionDestroyed(HttpSessionEvent arg0) {
-	   prepareLogoutActiveUser(arg0.getSession());
-	   log.info("La sesion ha caducado");
+	   User user=prepareLogoutActiveUser(arg0.getSession());
+	   if (user!=null)
+		   log.info("La sesion ha sido destruida");
+	   else
+		   log.info("Se ha destruido una sesion sin usuario logado");
    }
 
    /**
-    * Obtengo el usuario logado del SecurityContext de Spring Security and realizo las operaciones necesarias. 
+    * Obtengo el usuario logado del SecurityContext de Spring Security y realizo las operaciones necesarias. 
     */
-   private void prepareLogoutActiveUser (HttpSession httpSession) {
+   private User prepareLogoutActiveUser (HttpSession httpSession) {
 
 	   SecurityContextImpl securityCtx= (SecurityContextImpl) httpSession.getAttribute("SPRING_SECURITY_CONTEXT");
 	   	
@@ -74,8 +76,11 @@ public class MySessionListener implements HttpSessionListener {
 		     Date fechaUltimoLogin=logonService.findLastLoginByidUser(user.getIdUser()).getFecha();
 		     user.setFechaUltimoLogin(fechaUltimoLogin);
 		     userService.updateUser(user);
+		     
+		     return user;
 	    } 
 	    
+	    return null;
    }
    
    //Cargo el bean de forma manual para poder usar la implementacion

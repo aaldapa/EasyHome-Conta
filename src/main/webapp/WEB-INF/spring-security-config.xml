@@ -19,13 +19,15 @@
 	<http pattern="/resources/**" security="none"/>
 	
 	<http use-expressions="true"  access-denied-page="/access-denied.xhtml" auto-config="true">
-		<intercept-url pattern="/pages/login.xhtml" access="permitAll()" />
-<!-- 		<intercept-url pattern="/pages/login.xhtml" access="isAnonymous()" /> -->
-		
+<!-- 		<intercept-url pattern="/pages/login.xhtml" access="permitAll()" /> -->
+		<intercept-url pattern="/pages/login.xhtml" access="isAnonymous()" />
+	
 		<intercept-url pattern="/pages/user/**" access="hasRole('Administrador')"/>
 		<intercept-url pattern="/pages/**" access="authenticated" />
         <form-login login-page="/pages/login.xhtml"  />
-        <logout delete-cookies="JSESSIONID" />
+<!--         <logout invalidate-session="true" -->
+<!--             delete-cookies="true" -->
+<!--             logout-success-url="/"/> -->
 <!--         <session-management invalid-session-url="/session-expired.xhtml" /> -->
     </http>
  

@@ -58,14 +58,13 @@ public class LoginController extends BasicManageBean implements Serializable {
 	public String doLogin() throws ServletException, IOException{
 
 		try{
-			log.info("El usuario "+username+ " se ha logado en la aplicación");
+			
 		    
 			authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(this.username, this.password));
 			SecurityContextHolder.getContext().setAuthentication(authentication);
 			
 		 
 		} catch (AuthenticationException e) {
-	    	log.info("Login error: " + e.getMessage());
 	    	
 	    	//Recogemos el string del properties
 //	    	FacesContext context = FacesContext.getCurrentInstance();
@@ -78,15 +77,15 @@ public class LoginController extends BasicManageBean implements Serializable {
 	        
 	    	//Simplificado utilizando metodos en la superclase
 	    	addErrorMessage(getStringFromBundle("login.error.autenticacion"),getStringFromBundle("login.error.credenciales"));
-	    	
+	    	log.info("Intento de acceso a la aplicacion. Error: "+ e.getMessage());
 	        return null;
 		}
 
 		//Guardamos la entrada en la tabla de accesos
 		User userLogado=(User) authentication.getPrincipal();
-		//LogonInfo logonInfo=logonService.findLastLoginByidUser(userLogado.getIdUser());
-		//userLogado.setFechaUltimoLogin(logonInfo.getFecha());
 		logonService.createLogin(userLogado);
+		
+		log.info("El usuario "+userLogado.getUserNameForSession()+ " se ha logado en la aplicación");
 		
 		return "entrar";
 	}
@@ -98,8 +97,6 @@ public class LoginController extends BasicManageBean implements Serializable {
 	 
 	public String doLogout(){
 		
-		//Limpiamos en contexto de seguridad para resetear el login del usuario
-		SecurityContextHolder.clearContext();
 		
 		// Guardo en session el atributo logoutManual para preguntar por él en el MySessionListener, que se encarga de gestionar los cierres de sessiones
 //		FacesContext context = FacesContext.getCurrentInstance();
@@ -107,18 +104,9 @@ public class LoginController extends BasicManageBean implements Serializable {
 //		HttpSession httpSession = request.getSession(false);
 //		httpSession.setAttribute("logoutManual", true);
 		
-		try{
-				log.info("El usuario "+username + " abandona la aplicación");
-			    
-				authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(this.username, this.password));
-				SecurityContextHolder.getContext().setAuthentication(authentication);
-							 
-			} catch (AuthenticationException e) {
-		    	log.info("Logout error: " + e.getMessage());
-		        return null;
-			}
 
-			//Guardamos la salida en la tabla de accesos
+		//Guardamos la salida en la tabla de accesos
+		if (authentication!=null){
 			User userLogado=(User) authentication.getPrincipal();
 			logonService.createLogout(userLogado, LogonType.LOGOUT);
 			
@@ -126,6 +114,13 @@ public class LoginController extends BasicManageBean implements Serializable {
 			LogonInfo logonInfo=logonService.findLastLoginByidUser(userLogado.getIdUser());
 			userLogado.setFechaUltimoLogin(logonInfo.getFecha());
 			userService.updateUser(userLogado);
+			log.info("El usuario: "+userLogado.getUserNameForSession() + " abandona la aplicación");
+		}
+		else
+			log.info("Salida de la aplicacion con un usuario nulo");
+			
+		//Limpiamos en contexto de seguridad para resetear el login del usuario
+		SecurityContextHolder.clearContext();
 		
 		return "logout";
 	}
