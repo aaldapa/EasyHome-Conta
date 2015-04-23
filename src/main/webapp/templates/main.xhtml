@@ -5,6 +5,7 @@
 	  xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:sec="http://www.springframework.org/security/tags"
       xmlns:c="http://java.sun.com/jstl/core"> 
  
     <h:head>
@@ -74,10 +75,11 @@
         <!--Principal es cargado en session y contiene el user que se ha logado en la aplicacion -->
         <c:set var="logonUser" value="#{loginBean.authentication.principal}"/>
         
+
         <ui:include src="header.xhtml" />
         
        	<ui:include src="leftMenu.xhtml" />
-       
+
        
 	       <!-- Right side column. Contains the navbar and content of the page -->
 	      <div class="content-wrapper">
@@ -116,6 +118,7 @@
 	        
 	          
 	      </div><!-- /.content-wrapper -->
+	      
 	      <footer class="main-footer">
 	        <div class="pull-right hidden-xs">
 	          <b>Versión</b> 0.1
