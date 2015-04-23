@@ -80,9 +80,9 @@
   </listener>
   
   <!-- Por defecto 30 minutos --> 
-<!--   <session-config>  -->
-<!--   	<session-timeout>10</session-timeout>  -->
-<!--   </session-config> -->
+  <session-config> 
+  	<session-timeout>1</session-timeout> 
+  </session-config>
   
   <context-param>
     <param-name>javax.faces.STATE_SAVING_METHOD</param-name>

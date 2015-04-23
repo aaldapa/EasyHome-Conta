@@ -60,7 +60,7 @@ public abstract class GenericDaoImpl<T> implements GenericDao<T> {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<T> findAll() {
+	public List<T> findAllActiveUsers() {
 		final StringBuffer queryString = new StringBuffer("SELECT o from ");
         queryString.append(entityClass.getSimpleName()).append(" o ");
         

@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.apache.log4j.Logger;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,13 +29,12 @@ public class UserServiceImpl implements UserService {
 	
 	@Inject
 	private UserDao userDao;
-	
-	
+		
 	@Override
+	@PreAuthorize("hasAnyRole('Administrador')")
 	public List<User> findAllUsers() {
-		List<User> lstUsers=userDao.findAll();
-		return lstUsers;
-				
+		List<User> lstUsers=userDao.findAllActiveUsers();
+		return lstUsers;			
 	}
 	
 	@Override
@@ -52,7 +52,6 @@ public class UserServiceImpl implements UserService {
 		user.setEnabled(true);
 		user.setCredentialsNonExpired(true);
 		userDao.create(user);
-		
 	}
 
 	@Override
@@ -73,10 +72,7 @@ public class UserServiceImpl implements UserService {
 		userDao.update(user);
 	}
 
-	/**
-	 * Se sobre escribe el metodo de la interface UserDetailsService de la que extiende la interface
-	 * creada por mi UserService.
-	 */
+	
 	@Override
 	public UserDetails loadUserByUsername(String username)throws UsernameNotFoundException{
 		User usuario=userDao.loadUserByUsername(username);
@@ -89,9 +85,7 @@ public class UserServiceImpl implements UserService {
 		return lstRoles;
 	}
 
-	/**
-	 * Devuelve true si el username ya esta elegido y false en caso contrario.
-	 */
+
 	@Override
 	public Boolean isUsernameInDB(String username) {
 		List<User> lstUsers=userDao.findUsersbyUsername(username);
@@ -100,15 +94,11 @@ public class UserServiceImpl implements UserService {
 		else
 			return true;
 	}
-	/**
-	 * Devuelve el usuario con id pasado como parametro
-	 */
+	
 	@Override
 	public User getUserById(Integer id) {
 		User user=userDao.findById(id);
 		return user;
 	}
 
-	
-	
 }

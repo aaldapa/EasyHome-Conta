@@ -26,12 +26,9 @@ public class UserDaoImpl extends GenericDaoImpl<User> implements UserDao {
 	    return user;
 	}
 
-	/**
-	 * Sobre escribe el metodo generico para obtener todos los usuarios con sus roles cargados
-	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<User> findAll(){
+	public List<User> findAllActiveUsers(){
 		Query query = entityManager.createQuery("select u from User u where "
 				+ " u.enabled = :enabled"
 				+ " and u.accountNonExpired = :aExpired "

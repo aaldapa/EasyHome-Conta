@@ -34,6 +34,7 @@
 	
 	<http use-expressions="true"   auto-config="true">
 		<access-denied-handler error-page="/access-denied.xhtml" />
+		<intercept-url pattern="/error-500.xhtml" access="isAuthenticated()" />
 		<intercept-url pattern="/pages/login.xhtml" access="isAnonymous()" />
 		<intercept-url pattern="/pages/dashboard.xhtml" access="isAuthenticated()"/>
 		<intercept-url pattern="/pages/user/**" access="hasRole('Administrador')"/>
@@ -46,6 +47,7 @@
 <!--             delete-cookies="true" -->
 <!--             logout-success-url="/"/> -->
 <!--         <session-management invalid-session-url="/session-expired.xhtml" /> -->
+
     </http>
  
 	<authentication-manager alias="authenticationManager">

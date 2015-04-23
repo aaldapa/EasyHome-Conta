@@ -13,13 +13,48 @@ import com.easyhomeconta.model.User;
  * esta interface.
  */
 public interface UserService extends UserDetailsService{
-
+	
+	/**
+	 * Carga la lista de usuarios activos. Permiso de Administrador requerido
+	 * @return
+	 */
 	public List<User> findAllUsers();
+	
+	/**
+	 * Carga todos los roles existentes en bd.
+	 * @return
+	 */
 	public List<Rol> findAllRoles();
+	
+	/**
+	 * Da de alta en bd el usuario pasado como parametro
+	 * @param user
+	 */
 	public void createUser(User user);
+	
+	/**
+	 * Modifica los datos en bd del usuario pasado como parametro
+	 * @param user
+	 */
+	
 	public void updateUser(User user);
+	
+	/**
+	 * Elimina el usuario de la bd
+	 * @param id
+	 */
 	public void deleteUser(Integer id);
+	
+	/**
+	 * Comprueba si un username se encuentra en la base de datos
+	 * @param username
+	 * @return
+	 */
 	public Boolean isUsernameInDB(String username);
+		
+	/**
+	 * Devuelve el usuario con id pasado como parametro
+	 */
 	public User getUserById(Integer id);
 	
 }
