@@ -1,0 +1,61 @@
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		   http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		   http://www.springframework.org/schema/security
+		   http://www.springframework.org/schema/security/spring-security-3.2.xsd">
+
+  	<!--secured-annotations="enabled" habilita la anotacion @Security
+  		pre-post-annotations="enabled" habilita las anotaciones @PreAuthorize and @PostAuthorize,		 
+		para el codigo Java (Solamente en los metodos de las interfaces)
+		Las anotaciones pre-post son mas potentes porque permiten utilizar spEL expression 
+		ej: @PreAuthorize("#u.login == principal.username and hasRole('ROLE_USER')")
+		-->
+	<global-method-security pre-post-annotations="enabled" />  
+    
+
+	<!-- Ignora la seguridad para ese patron-->
+	<http pattern="/javax.faces.resource/**" security="none"  />
+	
+	<!--  Expression-Based Access Control
+	Expression					Description
+	hasRole([role])				Returns true if the current principal has the specified role.
+	hasAnyRole([role1,role2])	Returns true if the current principal has any of the supplied roles (given as a comma-separated list of strings)
+	principal					Allows direct access to the principal object representing the current user
+	authentication				Allows direct access to the current Authentication object obtained from the SecurityContext
+	permitAll					Always evaluates to true
+	denyAll						Always evaluates to false
+	isAnonymous()				Returns true if the current principal is an anonymous user
+	isRememberMe()				Returns true if the current principal is a remember-me user
+	isAuthenticated()			Returns true if the user is not anonymous
+	isFullyAuthenticated()		Returns true if the user is not an anonymous or a remember-me user
+	-->
+	
+	<http use-expressions="true"   auto-config="true">
+		<access-denied-handler error-page="/access-denied.xhtml" />
+		<intercept-url pattern="/error-500.xhtml" access="isAuthenticated()" />
+		<intercept-url pattern="/pages/login.xhtml" access="isAnonymous()" />
+		<intercept-url pattern="/pages/dashboard.xhtml" access="isAuthenticated()"/>
+		<intercept-url pattern="/pages/user/**" access="hasRole('Administrador')"/>
+	    <intercept-url pattern="/**" access="denyAll"/>
+	    
+	    <form-login login-page="/pages/login.xhtml"  />
+		
+	    
+<!--         <logout invalidate-session="true" -->
+<!--             delete-cookies="true" -->
+<!--             logout-success-url="/"/> -->
+<!--         <session-management invalid-session-url="/session-expired.xhtml" /> -->
+
+    </http>
+ 
+	<authentication-manager alias="authenticationManager">
+		<!-- Gestión de usuarios mediante un proveedor de servicios de usuarios: -->
+    	<authentication-provider user-service-ref="userServiceImpl" >
+    		<!-- Desencriptacion de contraseña-->
+    		<password-encoder hash="bcrypt" />
+       	</authentication-provider>
+	</authentication-manager>
+	 	
+</beans:beans>
