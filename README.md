@@ -17,4 +17,6 @@ Tecnologías utilizadas en el proyecto:
 - Seguridad: Spring Security 3.2.7 
 - Cifrado de passwords: Bcrypt
 - Sistema de logging: Log4j 1.2.16
+- Pruebas: Junit 4.12 + spring test
 - Otros : JSTL, Ajax,...
+

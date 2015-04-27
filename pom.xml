@@ -15,6 +15,19 @@
   </properties>
 	
   <dependencies>
+  	<!-- Testing Junit + Spring-->
+  	<dependency>
+		<groupId>junit</groupId>
+		<artifactId>junit</artifactId>
+		<version>4.12</version>
+	</dependency>
+  	
+  	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-test</artifactId>
+		<version>${spring.version}</version><!--$NO-MVN-MAN-VER$-->
+	</dependency>
+  	  	
   	<!-- Logger -->
   	<dependency>
 	   <groupId>log4j</groupId>
@@ -182,6 +195,14 @@
 	        	</configuration>
 	      </plugin>
 	 </plugins>
+     
+     <testResources>
+        <testResource>
+           <directory>src/main/webapp/WEB-INF</directory>
+	            <filtering>true</filtering>
+	     </testResource>
+     </testResources>
+     
      
      <finalName>EasyHome - Conta</finalName>
   </build>
