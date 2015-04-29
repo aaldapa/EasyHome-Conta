@@ -18,32 +18,27 @@
         </f:facet>
         <f:facet name="middle">
             
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" />
-            <h:outputScript name="./js/mis-js.js" target="head"/>
+            <!-- Favicon -->
+            
+            <link rel="shortcut icon" type="image/x-icon" href="#{resource['img/favicon.ico']}"/>
+            
+            
+          	
+          	<!-- Primefaces -->
           	<h:outputScript library="primefaces" name="jquery/jquery.js"  />
 			<h:outputScript library="primefaces" name="jquery/jquery-plugins.js"  />
 			
             
 			 <!-- Bootstrap 3.3.2 -->
 		    <h:outputStylesheet name="./bootstrap/css/bootstrap.css" target="head"/>
-		    <!-- Font Awesome Icons -->
-		    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-		    <!-- Ionicons -->
-		    <link href="http://code.ionicframework.com/ionicons/2.0.0/css/ionicons.min.css" rel="stylesheet" type="text/css" />
+
 		    <!-- Theme style -->
 		    <h:outputStylesheet name="./dist/css/AdminLTE.css" target="head"/>
+
 		    <!-- AdminLTE Skins. Choose a skin from the css/skins 
 		         folder instead of downloading all of them to reduce the load. -->
 		    <h:outputStylesheet name="./dist/css/skins/_all-skins.min.css" target="head"/>
-		    <h:outputStylesheet name="./css/mis-estilos.css" target="head"/>
-		    		    
 		    
-		    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-		    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-		    <!--[if lt IE 9]>
-		        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-		        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-		    <![endif]-->
 		    
 		    <!-- Bootstrap 3.3.2 JS -->
 		    <h:outputScript name="./bootstrap/js/bootstrap.min.js" target="head"/>
@@ -65,8 +60,17 @@
 			
         </f:facet>
         
-         <f:facet name="last">
-            <h:outputStylesheet name="css/font-awesome.css" />
+        <f:facet name="last">
+        	<!-- Mis estilos y javascripts -->
+        	<h:outputScript name="./js/mis-js.js" target="head"/>
+            <h:outputStylesheet name="./css/mis-estilos.css" target="head"/>
+        	
+        	<!-- Font Awesome Icons -->
+        	<h:outputStylesheet name="css/font-awesome.css" />
+		    <!-- Ionicons -->
+		    <h:outputStylesheet name="css/ionicons.css" />
+            
+            
         </f:facet>
  
     </h:head>
