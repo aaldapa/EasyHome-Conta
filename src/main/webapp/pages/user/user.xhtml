@@ -39,14 +39,14 @@
 								<div class="col-md-offset-2 col-md-9">
 									<div class="col-md-offset-1  col-md-10">			
 										<div class="form-group">
-												<c:choose>
-								                	<c:when test="#{not empty userBean.user.photoDSContent}">
-								                		<p:graphicImage id="image" value="#{userBean.user.photoDSContent}" styleClass="img-rounded img-responsive center-block" cache="false"></p:graphicImage>	
-								                	</c:when>
-								                	<c:otherwise>
-								                		<h:graphicImage  library="img" name="photo.png" alt="" styleClass="img-rounded img-responsive center-block" />
-								                	</c:otherwise>
-								                </c:choose>
+											<c:choose>
+							                	<c:when test="#{not empty userBean.user.photoDSContent}">
+							                		<p:graphicImage id="image" value="#{userBean.user.photoDSContent}" styleClass="img-rounded img-responsive center-block" cache="false"></p:graphicImage>	
+							                	</c:when>
+							                	<c:otherwise>
+							                		<h:graphicImage  library="img" name="photo.png" alt="" styleClass="img-rounded img-responsive center-block" />
+							                	</c:otherwise>
+							                </c:choose>
 										</div>
 						            </div>
 						        </div>
@@ -77,11 +77,10 @@
 						    						    
 						    <div class="col-sm-8 col-xs-12">
 								
-								<!-- Si se trata hemos entrado al formulario mediante edicion mostramos estos campos -->
-								<c:if test="#{not empty userBean.user.idUser}">
-								
-									<!-- Text inputs-->
-									<div class="form-group">
+								<!-- Text inputs-->
+								<div class="form-group">
+							        <!-- Si se trata hemos entrado al formulario mediante edicion mostramos estos campos -->
+									<c:if test="#{not empty userBean.user.idUser}">
 								        <label class="col-md-2 control-label">
 								        	<h:outputLabel value="#{msg['usuarios.form.fecha.alta']}"/>
 								       	</label>
@@ -91,27 +90,26 @@
 	       	             							<f:convertDateTime pattern="#{msg['patron.fecha.corta']}" />
 		 					          			</h:inputText>
 								                <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
-
+	
 								            </div>
 								        </div>
+								  	</c:if>
 								        
-<!-- 								        <label class="col-sm-3 control-label" for="textinput">Ult. acceso</label> -->
-<!-- 								        <div class="col-sm-4"> -->
-<!-- 								            <div class="input-group input-append"> -->
-<!-- 			 					         		<h:inputText class="form-control " value="#{userBean.user.ultimaConexion}" readonly="true"> -->
-<!-- 	       	             							<f:convertDateTime pattern="#{msg['patron.fecha.corta.hora']}" /> -->
-<!-- 		 					          			</h:inputText> -->
-<!-- 								                <span class="input-group-addon add-on"><span class="glyphicon glyphicon-log-in"></span></span> -->
-<!-- 								            </div> -->
-<!-- 								        </div> -->
+							        <label class="col-md-2 control-label">
+							        	<h:outputLabel value="#{msg['usuarios.form.familia']}"/>
+							       	</label>
+							        <div class="col-md-4">
+							            <div class="input-group input-append">
+							            	<h:selectOneListbox value="#{userBean.selectedFamilia}" styleClass="form-control" size="1">
+							            		<f:selectItem itemValue="0" itemLabel="#{msg['usuarios.form.familia.option']}" noSelectionOption="true"></f:selectItem>
+							            		<f:selectItems value="#{userBean.lstFamilias}" var="item" itemValue="#{item.value}" itemLabel="#{item.label}" ></f:selectItems>
+							            	</h:selectOneListbox>
 
-								    </div>
+							            </div>						            
+							        </div>
+							    </div>
 								
-								
-								</c:if>
-								    
-					                
-       						    <!-- Text input-->
+								<!-- Text input-->
 						          <div class="form-group">
 						            <h:message for="id_nombre" errorClass="has-error" infoClass="has-info"/>
 						            <label class="col-md-2 control-label" for="textinput">

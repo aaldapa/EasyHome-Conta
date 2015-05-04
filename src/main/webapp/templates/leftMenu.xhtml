@@ -30,7 +30,7 @@
 		            <div class="pull-left info">
 		            	
 		              <p> 
-						#{logonUser.userNameForSession}
+						<h:outputText value="#{logonUser.userNameForSession}"/> 
 		              </p>
 		
 		              <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
@@ -56,17 +56,57 @@
 						</li>
 		              </ul>
 		            </li>
-<!-- 		            <sec:authorize ifAllGranted="Administrador" > -->
+
+
+					<sec:authorize access="hasAnyRole('Administrador')"> 
+						<li class="treeview">
+			              <a href="#">
+			                <i class="fa fa-cogs fa-fw"></i> <span>Administracion</span> <i class="fa fa-angle-left pull-right"></i>
+			              </a>
+			              <ul class="treeview-menu">
+			                <li>
+			                	<h:commandLink action="#{familiaBean.doListFamilias}">
+					        		<i class="fa fa-users fa-fw"></i>
+					        		<span>
+						        		<h:outputText value="Familias"/>
+						        	</span>
+				 				</h:commandLink>
+			                </li>
+			                <li>
+			                	<h:commandLink action="#{userBean.doListUsers}">
+						        	<i class="fa fa-user fa-fw"></i>
+						        	<span>
+						        		<h:outputText value="#{msg['leftmenu.usuarios']}"/>
+						        	</span>
+				 				</h:commandLink>
+	
+							</li>
+			              </ul>
+			            </li>
+					</sec:authorize>
+
 					<sec:authorize access="hasAnyRole('Administrador')"> 
 			             <li>
-				        	<h:commandLink action="#{userBean.doListUsers}">
+				        	<h:commandLink action="#{familiaBean.doListFamilias}">
 					        	<i class="fa fa-users fa-fw"></i>
+					        	<span>
+					        		<h:outputText value="Familias"/>
+					        	</span>
+			 				</h:commandLink>
+				        </li>
+				        
+			             <li>
+				        	<h:commandLink action="#{userBean.doListUsers}">
+					        	<i class="fa fa-user fa-fw"></i>
 					        	<span>
 					        		<h:outputText value="#{msg['leftmenu.usuarios']}"/>
 					        	</span>
 			 				</h:commandLink>
 				        </li>
+				        
 			        </sec:authorize>
+			        
+			        
 		            <li class="treeview">
 		              <a href="#">
 		                <i class="fa fa-files-o"></i>

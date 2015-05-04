@@ -54,6 +54,39 @@ public class UserServiceImpl implements UserService {
 		userDao.create(user);
 	}
 
+	
+	@Override
+	@Transactional
+	public void saveUser(User user) {
+		
+		//Si no tiene id crea nuevo usuario
+		if (user.getIdUser()==null){
+			
+			//Encriptacion de contraseña
+			user.setPassword(MyUtils.codificarPasswordBcrypt(user.getPassword()));
+			
+			//Le insertamos fecha de creacion
+			user.setFechaCreacion(new Date());
+			
+			//Por defecto, creamos al usuario con los atributos a true
+			user.setAccountNonExpired(true);
+			user.setAccountNonLocked(true);
+			user.setEnabled(true);
+			user.setCredentialsNonExpired(true);
+			
+			userDao.create(user);
+		}
+		else{
+			User oldUser=userDao.findById(user.getIdUser());
+			//Comparo la pass actual con la de la bd para ver si hay guardar la pass encriptada
+			if (!user.getPassword().equals(oldUser.getPassword()))
+				user.setPassword(MyUtils.codificarPasswordBcrypt(user.getPassword()));
+			
+			userDao.update(user);
+		}
+		
+	}
+	
 	@Override
 	@Transactional
 	public void deleteUser(Integer id) {

@@ -21,6 +21,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -32,6 +33,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 /**
+ * Usuarios con acceso a la aplicacion
  * @author Alberto
  *
  */
@@ -45,6 +47,10 @@ public class User implements UserDetails{
 	@Column(name = "id_user", unique = true, nullable = false)
 	private Integer idUser;
 	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "id_familia", nullable = true)
+	private Familia familia;
+	
 	//Mapeo para NaN con Roles (Usamos EAGER para que los roles se carguen por defecto al hacer la query de usuarios y no tengamos que hacer una join en la select)
 	@ManyToMany(fetch=FetchType.EAGER)
 	  @JoinTable(
@@ -54,28 +60,31 @@ public class User implements UserDetails{
 	private List<Rol> lstRoles;
 	
 	@Temporal(TemporalType.DATE)
+	@Column(nullable=false)
 	private Date fechaCreacion;
 	
 	@OneToMany(mappedBy="user",cascade= CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<LogonInfo> lstAccess=new ArrayList<LogonInfo>();
 	
-	@Column(nullable=false)
+	@Column(nullable=false, length=40)
 	private String nombre;
 	
+	@Column(nullable=false, length=40)
 	private String apellido1;
+	
+	@Column(length=40)
 	private String apellido2;
 	
-	@Column(nullable=false, unique=true)
+	@Column(nullable=false, unique=true, length=20)
 	private String username;
 	
-	@Column(nullable=false)
+	@Column(nullable=false, length=20)
 	private String password;
 	
 	private Date fechaUltimoLogin;
 	
 	@Lob
 	private byte[] photo;
-	
 	
 	@Transient
 	private String userNameForSession;
@@ -233,7 +242,6 @@ public class User implements UserDetails{
 		this.photo = photo;
 	}
 
-	
 	public DefaultStreamedContent getPhotoDSContent(){
 		if (this.getPhoto()!=null){
 			InputStream is = new ByteArrayInputStream(this.getPhoto());
@@ -241,4 +249,13 @@ public class User implements UserDetails{
 		}
 			return null;
 	}
+	
+	public Familia getFamilia() {
+		return familia;
+	}
+
+	public void setFamilia(Familia familia) {
+		this.familia = familia;
+	}
+
 }

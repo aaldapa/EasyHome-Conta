@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.faces.bean.RequestScoped;
 import javax.faces.event.AjaxBehaviorEvent;
+import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -18,6 +19,7 @@ import org.primefaces.model.UploadedFile;
 
 import com.easyhomeconta.model.Rol;
 import com.easyhomeconta.model.User;
+import com.easyhomeconta.service.FamiliaService;
 import com.easyhomeconta.service.UserService;
 
 /**
@@ -35,9 +37,15 @@ public class UserController extends BasicManageBean implements Serializable{
 	@Inject
 	private UserService userService;
 	
+	@Inject
+	private FamiliaService familiaService;
+	
 	private List<User> lstUsers=new ArrayList<User>();	
 	private List<Rol> lstRoles=new ArrayList<Rol>();
-	
+
+	//Lista para el combo
+	private List<SelectItem> lstFamilias=new ArrayList<SelectItem>();
+	private Integer selectedFamilia;
 
 	private User selectedUser= new User();
 	private User user;
@@ -45,7 +53,7 @@ public class UserController extends BasicManageBean implements Serializable{
 	private Boolean selectedRow;
 		
 	private UploadedFile imagen;
-	private Boolean cambiarFoto=false;
+	private Boolean cambiarFoto;
 	
 	/**
 	 * Recibe el usuario al que pertenece el boton editar de la fila de la tabla y lo carga en el formulario 
@@ -54,6 +62,7 @@ public class UserController extends BasicManageBean implements Serializable{
 	 */
 	public String doLoadForm(User usuario){
 		setUser(usuario);
+		setCambiarFoto(false);
 		return "userForm";
 	}
 	
@@ -63,6 +72,8 @@ public class UserController extends BasicManageBean implements Serializable{
 	 */
 	public String doLoadForm(){
 		setUser(selectedUser);
+		//Por defecto, no se ha pulsado cambiar foto
+		setCambiarFoto(false);
 		//Cargo los roles
 		this.lstRoles=userService.findAllRoles();
 		//Setteo los roles que se van a mostrar en funcion de los que tiene el usuario
@@ -73,6 +84,9 @@ public class UserController extends BasicManageBean implements Serializable{
 			}
 		}
 		
+		//cargo el combo de familias
+		this.lstFamilias=familiaService.getFamiliasAllForCombo();
+		
 		return "userForm";
 	}
 	
@@ -82,8 +96,14 @@ public class UserController extends BasicManageBean implements Serializable{
 	 */
 	public String doNewForm(){
 		setUser(new User());
+		//Por defecto, no se ha pulsado cambiar foto
+		setCambiarFoto(false);
+		//cargo la lista de roles
 		this.lstRoles=userService.findAllRoles();
-		
+		//cargo la lisra de familias
+		this.lstFamilias=familiaService.getFamiliasAllForCombo();
+		//Coloco a 0 la familia del combo
+		this.selectedFamilia=new Integer("0");
 		return "userForm";
 	}
 	
@@ -119,16 +139,11 @@ public class UserController extends BasicManageBean implements Serializable{
 				user.getLstRoles().add(rol);
 		}
 		
-		
-		//Si el id es null significa que estamos creando un NUEVO USER 
+		//Si se trata de un nuevo usuario
 		if (user.getIdUser()==null){
 			
 			//Si el username introducido no existe en la bd 
 			if (!userService.isUsernameInDB(user.getUsername())){
-				gestionarRoles();
-				gestionarFoto();
-				//se crea un usuario nuevo
-				userService.createUser(user);
 				//Se inserta en el arrayList para que se vea en el datetable
 				lstUsers.add(user);
 			}
@@ -136,15 +151,15 @@ public class UserController extends BasicManageBean implements Serializable{
 				addInfoMessage(getStringFromBundle("usuarios.form.error.usuario.duplicado.sumary"),getStringFromBundle("usuarios.form.error.usuario.duplicado.detail"));
 				return null;
 			}
-			
-		}
-		//Si el id no es null es porque se ha cargado un usuario y se trata de una modificacion
-		else{
-			gestionarRoles();
-			gestionarFoto();
-			userService.updateUser(user);
 		}
 		
+		user.setFamilia(familiaService.getFamiliaById(selectedFamilia));
+		
+		gestionarRoles();
+		gestionarFoto();
+		userService.saveUser(user);
+
+
 		
 		return "userList";
 		
@@ -169,6 +184,12 @@ public class UserController extends BasicManageBean implements Serializable{
     public void onRowSelect(AjaxBehaviorEvent event) {  
     	log.info("Seleccion de fila");
     	setSelectedRow(true);
+
+    	//Seleccionamos la opcion de familia que tenga el usuario
+    	if (selectedUser.getFamilia()!=null)
+    		setSelectedFamilia(selectedUser.getFamilia().getIdFamilia());
+    	else
+    		setSelectedFamilia(new Integer ("0"));
   }  
 
     /**
@@ -181,6 +202,8 @@ public class UserController extends BasicManageBean implements Serializable{
     public void onRowUnselect(AjaxBehaviorEvent event) {
     	log.info("Deseleccion de fila");
     	selectedRow=false;
+    	//Familia seleccionada en el combo de familias = 0
+    	setSelectedFamilia(new Integer ("0"));
     } 
 	
 	/**
@@ -202,6 +225,22 @@ public class UserController extends BasicManageBean implements Serializable{
 		this.lstRoles = lstRoles;
 	}
 	
+	public List<SelectItem> getLstFamilias() {
+		return lstFamilias;
+	}
+
+	public void setLstFamilias(List<SelectItem> lstFamilias) {
+		this.lstFamilias = lstFamilias;
+	}
+
+	public Integer getSelectedFamilia() {
+		return selectedFamilia;
+	}
+
+	public void setSelectedFamilia(Integer selectedFamilia) {
+		this.selectedFamilia = selectedFamilia;
+	}
+
 	public List<User> getLstUsers() {
 		return lstUsers;
 	}

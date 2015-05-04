@@ -63,16 +63,18 @@ public class MySessionListener implements HttpSessionListener {
 	   	//Si el usuario no se ha logado en la aplicacion solo invalido la session.
 	    if (securityCtx != null) {
 	     
-		     // Obtengo la autenticacion del contexto seguro para capturar al usuario logado 
+		     //Cargo el service de user y guardo la fecha del ultimo login en la tabla users
+		     userService=getUserService(httpSession.getServletContext());
+
+	    	// Obtengo la autenticacion del contexto seguro para capturar el id del usuario logado.
 		     Authentication authentication = securityCtx.getAuthentication();
-		     User user=(User) authentication.getPrincipal();
-		   
+		     Integer idUsuarioLogado=((User) authentication.getPrincipal()).getIdUser();
+		     User user=userService.getUserById(idUsuarioLogado);
+		    
 		     // Cargo el service y guardo el cierre de session en base de datos.
 		     logonService=getLogonService(httpSession.getServletContext());
 		     logonService.createLogout(user,  LogonType.TIMEDOUT);
 		     
-		     //Cargo el service de user y guardo la fecha del ultimo login en la tabla users
-		     userService=getUserService(httpSession.getServletContext());
 		     Date fechaUltimoLogin=logonService.findLastLoginByidUser(user.getIdUser()).getFecha();
 		     user.setFechaUltimoLogin(fechaUltimoLogin);
 		     userService.updateUser(user);

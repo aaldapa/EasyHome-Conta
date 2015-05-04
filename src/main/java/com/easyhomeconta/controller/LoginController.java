@@ -111,14 +111,16 @@ public class LoginController extends BasicManageBean implements Serializable {
 
 		//Guardamos la salida en la tabla de accesos
 		if (authentication!=null){
-			User userLogado=(User) authentication.getPrincipal();
-			logonService.createLogout(userLogado, LogonType.LOGOUT);
+			Integer idUsuarioLogado=((User) authentication.getPrincipal()).getIdUser();
+			
+			User user=userService.getUserById(idUsuarioLogado);
+			logonService.createLogout(user, LogonType.LOGOUT);
 			
 			//Guardamos el logout en la tabla de users
-			LogonInfo logonInfo=logonService.findLastLoginByidUser(userLogado.getIdUser());
-			userLogado.setFechaUltimoLogin(logonInfo.getFecha());
-			userService.updateUser(userLogado);
-			log.info("El usuario: "+userLogado.getUserNameForSession() + " abandona la aplicación");
+			LogonInfo logonInfo=logonService.findLastLoginByidUser(user.getIdUser());
+			user.setFechaUltimoLogin(logonInfo.getFecha());
+			userService.updateUser(user);
+			log.info("El usuario: "+user.getUserNameForSession() + " abandona la aplicación");
 		}
 		else
 			log.info("Salida de la aplicacion con un usuario nulo");

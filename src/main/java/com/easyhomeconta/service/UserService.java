@@ -39,6 +39,13 @@ public interface UserService extends UserDetailsService{
 	
 	public void updateUser(User user);
 	
+	
+	/**
+	 * Crea o modifica el usuario en funcion de si el usuario pasado como parametro tiene o no id
+	 * @param user
+	 */
+	public void saveUser(User user);
+	
 	/**
 	 * Elimina el usuario de la bd
 	 * @param id

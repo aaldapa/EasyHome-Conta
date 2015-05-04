@@ -56,6 +56,11 @@
 			<to-view-id>/pages/user/user-list.xhtml</to-view-id>
 			<redirect/>
 		</navigation-case>
+		<navigation-case>
+			<from-outcome>familiaList</from-outcome>
+			<to-view-id>/pages/familia/familia-list.xhtml</to-view-id>
+			<redirect/>
+		</navigation-case>
 	</navigation-rule>
 	
 	<!-- Users -->

@@ -9,6 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -18,6 +19,7 @@ import javax.persistence.Query;
  * @author Alberto
  *
  */
+@Named
 public abstract class GenericDaoImpl<T> implements GenericDao<T> {
 
 
