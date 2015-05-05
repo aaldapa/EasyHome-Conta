@@ -25,6 +25,11 @@
     ID="familiaList::#pages#familia#familia-list.xhtml" NAME="output1"
     PATH="/pages/familia/familia-list.xhtml"
     TARGET="rules:#pages#familia#familia-list.xhtml" TITLE="familiaList" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="categoriaList::#pages#categoria#categoria-list.xhtml"
+    NAME="output2" PATH="/pages/categoria/categoria-list.xhtml"
+    TARGET="rules:#pages#categoria#categoria-list.xhtml"
+    TITLE="categoriaList" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#pages#user#user-list.xhtml"
@@ -42,4 +47,17 @@
   PATH="/pages/user/user.xhtml" SHAPE="448,129,0,0" model-entity="JSFProcessGroup"/>
  <PROCESS-ITEM NAME="rules:#pages#familia#familia-list.xhtml"
   PATH="/pages/familia/familia-list.xhtml" SHAPE="256,289,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#pages#categoria#categoria-list.xhtml"
+  PATH="/pages/categoria/categoria-list.xhtml" SHAPE="272,433,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#pages#categoria#categoria-list.xhtml:0"
+   NAME="item" PATH="/pages/categoria/categoria-list.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="categoriaForm::#pages#categoria#categoria.xhtml" NAME="output"
+    PATH="/pages/categoria/categoria.xhtml"
+    TARGET="rules:#pages#categoria#categoria.xhtml"
+    TITLE="categoriaForm" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#pages#categoria#categoria.xhtml"
+  PATH="/pages/categoria/categoria.xhtml" SHAPE="480,417,0,0" model-entity="JSFProcessGroup"/>
 </PROCESS>

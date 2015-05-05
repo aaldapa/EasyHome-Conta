@@ -24,6 +24,31 @@
           </a>
           <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
+
+
+			<sec:authorize access="hasAnyRole('Administrador')">
+	        	<li class="dropdown notifications-menu">
+	               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+	                 <i class="fa fa-fw fa-cogs"></i>
+	                 <span class="label label-success"><h:outputText value="#{msg['header.menu.admin']}"></h:outputText> </span>
+	               </a>
+		          <ul class="dropdown-menu">
+		            <li class="header"><h:outputLabel value="#{msg['header.menu.title']}"/></li>
+		            <li>
+		              <ul class="menu">
+		              	<li class=""><a href="#"><i class="fa fa-unlock-alt fa-fw"></i><span><h:outputText value="#{msg['header.menu.roles']}"/></span> </a></li>
+			            <li><h:commandLink action="#{familiaBean.doListFamilias}"><i class="fa fa-users fa-fw"></i><span><h:outputText value="#{msg['header.menu.familias']}"/></span></h:commandLink></li>
+			            <li><h:commandLink action="#{userBean.doListUsers}"><i class="fa fa-user fa-fw"></i><span><h:outputText value="#{msg['header.menu.users']}"/></span></h:commandLink></li>
+			            <li class="divider"></li>
+			            <li><a href="#"><i class="fa fa-university fa-fw"></i><h:outputText value="#{msg['header.menu.bancos']}"/></a></li>
+			            <li><a href="#"><i class="fa fa-money fa-fw"></i><h:outputText value="#{msg['header.menu.tipos.productos']}"/></a></li>
+		              </ul>
+		            </li>
+		          </ul>
+		       </li>
+	        </sec:authorize>
+        
+
 <!--               Messages: style can be found in dropdown.less -->
 <!--               <li class="dropdown messages-menu"> -->
 <!--                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"> -->
@@ -38,7 +63,7 @@
 <!--                       <li>start message -->
 <!--                         <a href="#"> -->
 <!--                           <div class="pull-left"> -->
-<!--                             <h:graphicImage  library="img" name="users/#{loginBean.authentication.principal.idUser}.jpg" alt="" styleClass="user-image"/> -->
+                            
 <!--                             <c:choose> -->
 <!-- 	                			<c:when test="#{not empty logonUser.photoDSContent}"> -->
 <!-- 	                				<p:graphicImage id="id_other_image" value="#{loginBean.authentication.principal.photoDSContent}"  styleClass="img-circle" cache="false"></p:graphicImage>	 -->
@@ -187,7 +212,7 @@
                     <div class="pull-right">
 <!--                       <a href="#" class="btn btn-default btn-flat">Sign out</a> -->
                       
-                      <h:commandButton id="logout" styleClass="btn btn-info btn-flat" action="#{loginBean.doLogout}" value="#{msg['header.logout']}">
+                      <h:commandButton id="logout" styleClass="btn btn-default btn-flat" action="#{loginBean.doLogout}" value="#{msg['header.logout']}">
                       </h:commandButton>
                     </div>
                   </li>

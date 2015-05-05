@@ -211,6 +211,7 @@ public class UserController extends BasicManageBean implements Serializable{
 	 * @param usuario
 	 */
 	private void deleteUser(User usuario){
+		selectedRow=false;
 		//Borro el usuario de la base de datos
 		userService.deleteUser(usuario.getIdUser());
 		//Elimino el usuario de la tabla		

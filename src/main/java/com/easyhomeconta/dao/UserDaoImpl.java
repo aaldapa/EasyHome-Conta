@@ -28,7 +28,7 @@ public class UserDaoImpl extends GenericDaoImpl<User> implements UserDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<User> findAllActiveUsers(){
+	public List<User> findAllActive(){
 		Query query = entityManager.createQuery("select u from User u where "
 				+ " u.enabled = :enabled"
 				+ " and u.accountNonExpired = :aExpired "

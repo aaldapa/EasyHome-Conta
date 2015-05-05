@@ -95,6 +95,7 @@ public class FamiliaController extends BasicManageBean implements Serializable{
 	 */
 	public void doDeleteItem(){		
 		log.info("eliminar item");
+		selectedRow=false;
 		familiaService.deleteFamilia(selectedfamilia.getIdFamilia());
 		
 		lstFamilias.remove(selectedfamilia);

@@ -39,6 +39,7 @@ public class Rol implements GrantedAuthority {
 	@Column(name="descripcion", length=255)
 	private String descripcion;
 	
+	//Utilizo el atributo como un elemento de maniobra para la representacion del objeto en una jsf
 	@Transient
 	private Boolean selected;
 	
@@ -96,6 +97,14 @@ public class Rol implements GrantedAuthority {
 		return rolAbr;
 	}
 
+	public Boolean getSelected() {
+		return selected;
+	}
+
+	public void setSelected(Boolean selected) {
+		this.selected = selected;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -106,6 +115,8 @@ public class Rol implements GrantedAuthority {
 		result = prime * result
 				+ ((lstUsuarios == null) ? 0 : lstUsuarios.hashCode());
 		result = prime * result + ((role == null) ? 0 : role.hashCode());
+		result = prime * result
+				+ ((selected == null) ? 0 : selected.hashCode());
 		return result;
 	}
 
@@ -138,15 +149,21 @@ public class Rol implements GrantedAuthority {
 				return false;
 		} else if (!role.equals(other.role))
 			return false;
+		if (selected == null) {
+			if (other.selected != null)
+				return false;
+		} else if (!selected.equals(other.selected))
+			return false;
 		return true;
 	}
 
-	public Boolean getSelected() {
-		return selected;
+	@Override
+	public String toString() {
+		return "Rol [idRol=" + idRol + ", lstUsuarios=" + lstUsuarios
+				+ ", role=" + role + ", descripcion=" + descripcion
+				+ ", selected=" + selected + "]";
 	}
-
-	public void setSelected(Boolean selected) {
-		this.selected = selected;
-	}
+	
+	
 	
 }

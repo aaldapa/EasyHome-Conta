@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">  
+      
+    <h:body>	
+    	
+    	<ui:composition template="../../templates/main.xhtml">
+			<!-- Parametros para el paso de titulos, cabeceras, etc -->
+			<ui:param name="headerTitle1" value="#{msg['categorias.listado.titulo']}" />
+			<ui:param name="headerTitle2" value="" />
+			<ui:param name="boxTitle" value="#{msg['categoria.form.subtitulo']}" />
+			<ui:param name="boxFooter" value="" />
+			
+			<!-- Para la inclusion de javascript -->
+			<ui:define name="scripts"></ui:define>
+			
+			<ui:define name="content">
+				
+				<h:form id="id_form" styleClass="form-horizontal"  role="form">	
+					<p:growl id="messages" showDetail="true" globalOnly="true"/>
+
+					<div class="box-body">
+						<div class="row">
+							<h:inputHidden value="#{categoriaBean.categoria.idCategoria}" />
+							 <div class="col-md-12">		
+							 	<!-- Text inputs-->
+					          	<div class="form-group">
+					            
+						            <h:outputLabel styleClass="col-md-1 control-label" for="id_nombre" value="#{msg['categoria.form.nombre']}"/>
+						            
+						            
+						            <div class="col-md-3 form-group-inline">
+						              <h:message for="id_nombre" errorClass="has-error control-label" infoClass="has-info control-label" />
+						              <h:inputText id="id_nombre" pt:placeholder="#{msg['categoria.form.nombre']}" class="form-control" label="#{msg['categoria.form.nombre']}" value="#{categoriaBean.categoria.nombre}" required="true" requiredMessage="#{msg['error.campo.obligatorio']}"/>
+						            </div>
+									
+						            <h:outputLabel styleClass="col-md-2 control-label" for="id_descripcion" value="#{msg['categoria.form.descripcion']}"/>
+						            
+						            <div class="col-md-6">
+						               <h:inputTextarea id="id_descripcion" pt:placeholder="#{msg['categoria.form.descripcion']}" class="form-control" label="#{msg['categoria.form.descripcion']}" value="#{categoriaBean.categoria.descripcion}"/>
+						            </div>
+						        </div>
+							</div>
+						
+						</div><!-- /.row -->
+					</div><!-- /.box-body -->
+					
+					<!-- Para la botonera -->
+			        <div class="box-footer">
+ 						
+    					<div class="btn-toolbar">
+    						<h:commandLink action="#{categoriaBean.doListItems}" styleClass="btn btn-default pull-right" value="#{msg['boton.volver']}" immediate="true" title="#{msg['boton.volver']}"/>
+   					 		<h:commandButton styleClass="btn btn-primary pull-right" value="#{msg['boton.guardar']}" action="#{categoriaBean.doSaveItem}" title="#{msg['boton.guardar']}"/>
+    					</div>
+		    			
+			        </div><!-- /.box-footer-->
+		    	</h:form>
+		    	
+		    	<script type="text/javascript">
+				   $(document).ready(function(){
+						//Gestion de mensajes de error
+					   	estilarMessages();
+						$('.fa-times-circle-o').on('click', ocultarMessage);
+				   });
+				 </script>  
+				
+		    	
+			</ui:define>
+    	</ui:composition>
+    	
+    </h:body>
+
+</html>

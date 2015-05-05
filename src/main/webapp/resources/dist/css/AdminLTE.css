@@ -930,6 +930,14 @@ a:focus {
   border-color: #dd4b39 !important;
   box-shadow: none;
 }
+
+/*Modificacion del css para mostrar los errores en campos de texto que comparten form-group*/
+.form-group-inline.has-error .form-control {
+  border-color: #dd4b39 !important;
+  box-shadow: none;
+}
+
+
 /* Input group */
 .input-group .input-group-addon {
   border-radius: 0px;

@@ -48,12 +48,12 @@ public class UserDaoTest extends AbstractTransactionalJUnit4SpringContextTests{
 	}
 
 	/**
-	 * Test method for {@link com.easyhomeconta.dao.UserDaoImpl#findAllActiveUsers()}.
+	 * Test method for {@link com.easyhomeconta.dao.UserDaoImpl#findAllActive()}.
 	 */
 	@Test
 	public void testFindAllActiveUsers() {
 		
-		List<User> lstUser=userDao.findAllActiveUsers();
+		List<User> lstUser=userDao.findAllActive();
 		//Existen usuarios activos
 		assertTrue(lstUser.size()>0);
 		

@@ -111,7 +111,7 @@
 								
 								<!-- Text input-->
 						          <div class="form-group">
-						            <h:message for="id_nombre" errorClass="has-error" infoClass="has-info"/>
+						            <h:message for="id_nombre" errorClass="has-error control-label" infoClass="has-info control-label"/>
 						            <label class="col-md-2 control-label" for="textinput">
 						            	<h:outputLabel value="#{msg['usuarios.form.nombre']}"/>
 						            </label>
@@ -122,7 +122,7 @@
 						
 						          <!-- Text input-->
 						          <div class="form-group">
-						            <h:message for="id_apel1" errorClass="has-error" infoClass="has-info"/>
+						            <h:message for="id_apel1" errorClass="has-error control-label" infoClass="has-info control-label"/>
 						            <label class="col-md-2 control-label" for="textinput">
 						            	<h:outputLabel value="#{msg['usuarios.form.apel1']}"/>
 						            </label>
@@ -170,8 +170,8 @@
 						            	<h:outputLabel value="#{msg['usuarios.form.username']}"/>
 						            </label>
 						            
-						            <div class="col-md-4">
-						              <h:message for="id_username" errorClass="has-error" infoClass="has-info"/>
+						            <div class="col-md-4 form-group-inline">
+						              <h:message for="id_username" errorClass="has-error control-label" infoClass="has-info control-label"/>
 						              <h:inputText id="id_username" pt:placeholder="#{msg['usuarios.form.username']}" class="form-control" label="#{msg['usuarios.form.username']}" value="#{userBean.user.username}" required="true" requiredMessage="#{msg['error.campo.obligatorio']}"/>
 						            </div>
 									
@@ -179,8 +179,8 @@
 						            <label class="col-md-2 control-label" for="textinput">
 						            	<h:outputLabel value="#{msg['usuarios.form.password']}"/>
 						            </label>
-						            <div class="col-md-4">
-						               <h:message for="id_password" errorClass="has-error" infoClass="has-info"/>
+						            <div class="col-md-4 form-group-inline">
+						               <h:message for="id_password" errorClass="has-error control-label" infoClass="has-info control-label"/>
 						               <h:inputSecret id="id_password" pt:placeholder="#{msg['usuarios.form.password']}" class="form-control" label="#{msg['usuarios.form.password']}" value="#{userBean.user.password}" redisplay="true" required="true" requiredMessage="#{msg['error.campo.obligatorio']}"/>
 						            </div>
 						          </div>

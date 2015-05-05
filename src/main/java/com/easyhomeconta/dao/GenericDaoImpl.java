@@ -51,8 +51,7 @@ public abstract class GenericDaoImpl<T> implements GenericDao<T> {
 
 	@Override
 	public void delete(final Object id) {
-		entityManager.remove(entityManager.getReference(entityClass, id));
-		
+		entityManager.remove(entityManager.getReference(entityClass, id));	
 	}
 
 	@Override
@@ -62,7 +61,7 @@ public abstract class GenericDaoImpl<T> implements GenericDao<T> {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<T> findAllActiveUsers() {
+	public List<T> findAllActive() {
 		final StringBuffer queryString = new StringBuffer("SELECT o from ");
         queryString.append(entityClass.getSimpleName()).append(" o ");
         
