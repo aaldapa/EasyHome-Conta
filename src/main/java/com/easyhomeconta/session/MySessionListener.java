@@ -16,10 +16,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
-import com.easyhomeconta.model.Enumeraciones.LogonType;
 import com.easyhomeconta.model.User;
 import com.easyhomeconta.service.LogonService;
 import com.easyhomeconta.service.UserService;
+import com.easyhomeconta.utils.Enumeraciones.LogonType;
 
 /**
  * HttpSessionListener es un listener que se ejecuta cada vez que ocurre algo referente a la session.

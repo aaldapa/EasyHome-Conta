@@ -68,4 +68,49 @@ public class Familia implements Serializable{
 		this.lstUsers = lstUsers;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((idFamilia == null) ? 0 : idFamilia.hashCode());
+		result = prime * result
+				+ ((lstUsers == null) ? 0 : lstUsers.hashCode());
+		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Familia other = (Familia) obj;
+		if (idFamilia == null) {
+			if (other.idFamilia != null)
+				return false;
+		} else if (!idFamilia.equals(other.idFamilia))
+			return false;
+		if (lstUsers == null) {
+			if (other.lstUsers != null)
+				return false;
+		} else if (!lstUsers.equals(other.lstUsers))
+			return false;
+		if (nombre == null) {
+			if (other.nombre != null)
+				return false;
+		} else if (!nombre.equals(other.nombre))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Familia [idFamilia=" + idFamilia + ", nombre=" + nombre
+				+ ", lstUsers=" + lstUsers + "]";
+	}
+
 }

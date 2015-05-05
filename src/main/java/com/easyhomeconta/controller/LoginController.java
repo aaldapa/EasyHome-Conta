@@ -18,11 +18,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import com.easyhomeconta.model.Enumeraciones.LogonType;
 import com.easyhomeconta.model.LogonInfo;
 import com.easyhomeconta.model.User;
 import com.easyhomeconta.service.LogonService;
 import com.easyhomeconta.service.UserService;
+import com.easyhomeconta.utils.Enumeraciones.LogonType;
 
 /**
  * Controlador para el Login

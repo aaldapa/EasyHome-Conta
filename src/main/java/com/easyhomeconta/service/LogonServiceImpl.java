@@ -9,8 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.easyhomeconta.dao.LogonInfoDao;
 import com.easyhomeconta.model.LogonInfo;
-import com.easyhomeconta.model.Enumeraciones.LogonType;
 import com.easyhomeconta.model.User;
+import com.easyhomeconta.utils.Enumeraciones.LogonType;
 
 @Named
 public class LogonServiceImpl implements LogonService {
