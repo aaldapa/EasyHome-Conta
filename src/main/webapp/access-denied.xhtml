@@ -11,10 +11,16 @@
    		<h:body style="background-color:#ecf0f5;min-height: 1068px;">
   			
   		<ui:composition template="/templates/main.xhtml">
+  			<!-- Parametros para el paso de titulos, cabeceras, etc -->
+			<ui:param name="headerTitle1" value="" />
+			<ui:param name="headerTitle2" value="" />
+			<ui:param name="boxTitle" value="Página de error 404" />
+			<ui:param name="boxFooter" value="" />
+  			
   			<ui:define name="content">	
         <!-- Main content -->
         <div class="content">
-
+			
           <div class="error-page">
             <h2 class="headline text-blue"> 404</h2>
             <div class="error-content">
