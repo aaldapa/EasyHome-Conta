@@ -42,7 +42,7 @@ public interface GenericDao <T> extends Serializable{
      * Metodo que devuelve todas las entidades
      * @return
      */
-    public List<T> findAllActive();
+    public List<T> findAll();
     
     /**
      * Metodo que devuelve el numero de registros totales para una entidad

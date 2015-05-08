@@ -18,7 +18,7 @@ public interface UserDao extends GenericDao<User> {
      * Devuelve tan solo los usuarios activos de la base de datos.
      * @return
      */
-    public List<User> findAllActive();
+    public List<User> findAll();
     
     /**
      * Devuelve una lista con todos los roles de la tabla Roles.

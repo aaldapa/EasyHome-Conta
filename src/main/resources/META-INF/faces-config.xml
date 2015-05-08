@@ -72,6 +72,11 @@
 			<redirect/>
 		</navigation-case>
 		<navigation-case>
+			<from-outcome>tipoProductoList</from-outcome>
+			<to-view-id>/pages/tipoproducto/tipo-producto-list.xhtml</to-view-id>
+			<redirect/>
+		</navigation-case>
+		<navigation-case>
 			<from-outcome>categoriaList</from-outcome>
 			<to-view-id>/pages/categoria/categoria-list.xhtml</to-view-id>
 			<redirect/>
@@ -84,6 +89,16 @@
 		<navigation-case>
 			<from-outcome>userForm</from-outcome>
 			<to-view-id>/pages/user/user.xhtml</to-view-id>
+			<redirect/>
+		</navigation-case>
+	</navigation-rule>
+	
+	<!-- Tipo producto -->
+	<navigation-rule>
+		<from-view-id>/pages/tipoproducto/tipo-producto-list.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>tipoProductoForm</from-outcome>
+			<to-view-id>/pages/tipoproducto/tipo-producto.xhtml</to-view-id>
 			<redirect/>
 		</navigation-case>
 	</navigation-rule>

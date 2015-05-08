@@ -41,7 +41,7 @@
 			            <li><h:commandLink action="#{userBean.doListUsers}"><i class="fa fa-user fa-fw"></i><span><h:outputText value="#{msg['header.menu.users']}"/></span></h:commandLink></li>
 			            <li class="divider"></li>
 			            <li><a href="#"><i class="fa fa-university fa-fw"></i><h:outputText value="#{msg['header.menu.bancos']}"/></a></li>
-			            <li><a href="#"><i class="fa fa-money fa-fw"></i><h:outputText value="#{msg['header.menu.tipos.productos']}"/></a></li>
+			             <li><h:commandLink action="#{tProductoBean.doListItems}"><i class="fa fa-money fa-fw"></i><h:outputText value="#{msg['header.menu.tipos.productos']}"/></h:commandLink> </li>
 		              </ul>
 		            </li>
 		          </ul>

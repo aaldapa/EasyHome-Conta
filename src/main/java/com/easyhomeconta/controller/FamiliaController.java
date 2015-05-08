@@ -86,9 +86,7 @@ public class FamiliaController extends BasicManageBean implements Serializable{
 		//Para familias nuevas añadimos la familia a la tabla
 		if (isNuevoFamilia)			
 			lstFamilias.add(familia);
-
 	}
-	
 	
 	/**
 	 * Eliminar un item seleccionado

@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@PreAuthorize("hasAnyRole('Administrador')")
 	public List<User> findAllUsers() {
-		List<User> lstUsers=userDao.findAllActive();
+		List<User> lstUsers=userDao.findAll();
 		return lstUsers;			
 	}
 	

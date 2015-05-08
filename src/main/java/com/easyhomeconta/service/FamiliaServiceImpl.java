@@ -32,7 +32,7 @@ public class FamiliaServiceImpl implements FamiliaService {
 	@Override
 	public List<SelectItem> getFamiliasAllForCombo() {
 		
-		List<Familia> lstFamilias=familiaDao.findAllActive();
+		List<Familia> lstFamilias=familiaDao.findAll();
 		List<SelectItem>lstFamiliasCombo=new ArrayList<SelectItem>();
 		
 		for(Familia fam:lstFamilias)
@@ -50,7 +50,7 @@ public class FamiliaServiceImpl implements FamiliaService {
 	@Override
 	public List<FamiliaBean> getLstFamiliasAllBean() {
 		 
-		List<Familia> lstFamilias=familiaDao.findAllActive();
+		List<Familia> lstFamilias=familiaDao.findAll();
 		List<FamiliaBean> lstFamiliasBean=new ArrayList<FamiliaBean>();
 		
 		//Cargo la lista con las familias parseadas a beans
