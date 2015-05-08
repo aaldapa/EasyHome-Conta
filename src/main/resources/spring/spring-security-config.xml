@@ -37,6 +37,7 @@
 		<intercept-url pattern="/error-500.xhtml" access="isAuthenticated()" />
 		<intercept-url pattern="/pages/login.xhtml" access="isAnonymous()" />
 		<intercept-url pattern="/pages/dashboard.xhtml" access="isAuthenticated()"/>
+		<intercept-url pattern="/pages/user/user-profile.xhtml" access="isAuthenticated()"/>
 		<intercept-url pattern="/pages/user/**" access="hasRole('Administrador')"/>
 		<intercept-url pattern="/pages/familia/**" access="hasRole('Administrador')"/>
 		<intercept-url pattern="/pages/categoria/**" access="isAuthenticated()"/>

@@ -173,9 +173,8 @@
 	                	</c:otherwise>
 	                </c:choose>
                     
-<!--                     <h:graphicImage library="img" name="users/#{loginBean.authentication.principal.idUser}.jpg" alt="" styleClass="img-circle"/> -->
                     <p>
-                      #{logonUser.userNameForSession} - #{logonUser.lstRoles[0].role}
+                      <h:outputText value="#{logonUser.userNameForSession} - #{logonUser.lstRoles[0].role}"/> 
                       
                     	<small>
                     		<i class="fa fa-laptop"></i>
@@ -206,7 +205,9 @@
                   <!-- Menu Footer-->
                   <li class="user-footer">
                     <div class="pull-left">
-                      <a href="#" class="btn btn-default btn-flat"><h:outputText value="#{msg['header.profile']}"/></a>
+                       <h:commandButton id="profile" styleClass="btn btn-default btn-flat" action="#{userBean.doUserProfile}" value="#{msg['header.profile']}"/>
+                      
+
                     </div>
                     
                     <div class="pull-right">

@@ -17,6 +17,8 @@
 			<ui:param name="headerTitle2" value="" />
 			<ui:param name="boxTitle" value="#{msg['usuarios.form.subtitulo']}" />
 			<ui:param name="boxFooter" value="" />
+			<ui:param name="boxClass" value="box-primary" />
+			<ui:param name="boxTitleClass" value="" />
 			
 			<!-- Para la inclusion de javascript -->
 			<ui:define name="scripts">
@@ -28,8 +30,8 @@
 			<ui:define name="content">
 				
 				<h:form id="form" styleClass="form-horizontal"  role="form" enctype="multipart/form-data">	
-					<p:growl id="messages" showDetail="true" globalOnly="true"/>
 					<div class="box-body">
+						<p:messages showDetail="true" globalOnly="true" autoUpdate="true" closable="true"/>
 						<div class="row">
 						    <!-- Foto y carga de foto -->
 							<div class="col-md-4">

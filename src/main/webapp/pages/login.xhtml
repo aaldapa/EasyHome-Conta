@@ -41,8 +41,12 @@
     	
 		<div class="container">
 		    <div class="row vertical-offset-100">
+		    	<div class="col-md-offset-3 col-md-6">
+		    		<p:messages showDetail="true" globalOnly="true" autoUpdate="true" closable="true"/>
+		    	</div>
 		    	
 		    	<div class="col-md-offset-4 col-md-4">
+		    	
 		    		<div class="panel panel-default">
 					  	<div class="panel-heading">
 					    	<h3 class="panel-title ">
@@ -52,26 +56,25 @@
 					  	<div class="panel-body">
 					    	
 					    	<h:form id="formulario">
-						    	<p:growl id="messages" showDetail="true" globalOnly="true" sticky="false"/>
-	
+
 			                    <fieldset>
 			 					 	<div > 
 		 								<h:graphicImage class="center-block profile-img" library="img" name="photo.png" alt=""/>&nbsp; 
 			 						</div> 
 								    	  	
 						    	  	<div class="form-group">
-										<h:message for="id_username" errorClass="has-error" infoClass="has-info"></h:message>
+										<h:message for="id_username" errorClass="has-error control-label" infoClass="has-info control-label"></h:message>
 										<div class="input-group">
-											<span class="input-group-addon">
+											<span class="input-group-addon control-label">
 												<i class="glyphicon glyphicon-user"></i>
 											</span> 
 											<h:inputText id="id_username" styleClass="form-control" pt:placeholder="#{msg['login.placeholder.user']}"  label="#{msg['login.placeholder.user']}" value="#{loginBean.username}" required="true" requiredMessage="#{msg['error.campo.obligatorio']}"/>
 										</div>
 						    		</div>
-						    		<div class="form-group">
-						    			<h:message for="id_password" errorClass="has-error" infoClass="has-info"/>
+						    		<div class="form-group ">
+						    			<h:message for="id_password" errorClass="has-error control-label" infoClass="has-info control-label"/>
 						    			<div class="input-group">
-											<span class="input-group-addon">
+											<span class="input-group-addon ">
 												<i class="glyphicon glyphicon-lock"></i>
 											</span>
 						    				<h:inputSecret id="id_password" styleClass="form-control" pt:placeholder="#{msg['login.placeholder.pass']}"  label="#{msg['login.placeholder.pass']}" value="#{loginBean.password}" required="true" requiredMessage="#{msg['error.campo.obligatorio']}"/>

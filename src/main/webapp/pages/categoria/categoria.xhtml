@@ -17,6 +17,8 @@
 			<ui:param name="headerTitle2" value="" />
 			<ui:param name="boxTitle" value="#{msg['categoria.form.subtitulo']}" />
 			<ui:param name="boxFooter" value="" />
+			<ui:param name="boxClass" value="box-primary" />
+			<ui:param name="boxTitleClass" value="" />
 			
 			<!-- Para la inclusion de javascript -->
 			<ui:define name="scripts"></ui:define>
@@ -24,9 +26,9 @@
 			<ui:define name="content">
 				
 				<h:form id="id_form" styleClass="form-horizontal"  role="form">	
-					<p:growl id="messages" showDetail="true" globalOnly="true"/>
-
+					
 					<div class="box-body">
+						<p:messages showDetail="true" globalOnly="true" autoUpdate="true" closable="true"/>
 						<div class="row">
 							<h:inputHidden value="#{categoriaBean.categoria.idCategoria}" />
 							 <div class="col-md-12">		

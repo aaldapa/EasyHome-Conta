@@ -53,11 +53,11 @@ public interface UserService extends UserDetailsService{
 	public void deleteUser(Integer id);
 	
 	/**
-	 * Comprueba si un username se encuentra en la base de datos
-	 * @param username
+	 * Comprueba si un username es valido para el usuario del formulario
+	 * @param user
 	 * @return
 	 */
-	public Boolean isUsernameInDB(String username);
+	public Boolean isUsernameValido(User user);
 		
 	/**
 	 * Devuelve el usuario con id pasado como parametro

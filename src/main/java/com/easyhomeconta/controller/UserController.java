@@ -16,6 +16,7 @@ import javax.inject.Named;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.primefaces.model.UploadedFile;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.easyhomeconta.model.Rol;
 import com.easyhomeconta.model.User;
@@ -56,6 +57,16 @@ public class UserController extends BasicManageBean implements Serializable{
 	private Boolean cambiarFoto;
 	
 	/**
+	 * Carga la lista con todos los usuarios y devuelve el outcome userList para mostrar la pagina del listado.
+	 * Se utiliza en la llamada desde el menu y desde el volver del formulario 
+	 * @return
+	 */
+	public String doListUsers(){
+		lstUsers=userService.findAllUsers();
+		return "userList";
+	}
+	
+	/**
 	 * Recibe el usuario al que pertenece el boton editar de la fila de la tabla y lo carga en el formulario 
 	 * @param usuario
 	 * @return
@@ -86,6 +97,8 @@ public class UserController extends BasicManageBean implements Serializable{
 		
 		//cargo el combo de familias
 		this.lstFamilias=familiaService.getFamiliasAllForCombo();
+		//Coloco el valor del combo
+		this.selectedFamilia=new Integer(user.getFamilia()!=null?user.getFamilia().getIdFamilia():0);
 		
 		return "userForm";
 	}
@@ -127,52 +140,75 @@ public class UserController extends BasicManageBean implements Serializable{
 	 */
 	public String doSaveUser(){		
 		
-		//Pregunto si la imagen que se ha seleccionado es valida (si se ha seleccionado alguna), si no lo es muestro mensajes
-		if (!isValidImage())
-			return null;
+//		//Pregunto si la imagen que se ha seleccionado es valida (si se ha seleccionado alguna), si no lo es muestro mensajes
+//		if (!isValidImage())
+//			return null;
+//		
+//		//Elimino todos los posibles roles que pudiese tener el usuario para dar de alta los que esten ahora checkeados
+//		user.setLstRoles(new ArrayList<Rol>());
+//				
+//		for (Rol rol:lstRoles){
+//			if (rol.getSelected())
+//				user.getLstRoles().add(rol);
+//		}
+//		
+//		//Si es un usuario nuevo lo añado a la datatable
+//		if (user.getIdUser()==null)
+//			lstUsers.add(user);				
+//		
+//		//Validacion de username
+//		if (!userService.isUsernameValido(user)){
+//			addInfoMessage(getStringFromBundle("usuarios.form.error.usuario.duplicado.sumary"),getStringFromBundle("usuarios.form.error.usuario.duplicado.detail"));
+//			return null;
+//		}
+//
+//		user.setFamilia(familiaService.getFamiliaById(selectedFamilia));
+//		
+//		gestionarRoles();
+//		gestionarFoto();
+//		userService.saveUser(user);
+//
+//		return "userList";
 		
-		//Elimino todos los posibles roles que pudiese tener el usuario para dar de alta los que esten ahora checkeados
-		user.setLstRoles(new ArrayList<Rol>());
-				
-		for (Rol rol:lstRoles){
-			if (rol.getSelected())
-				user.getLstRoles().add(rol);
-		}
-		
-		//Si se trata de un nuevo usuario
-		if (user.getIdUser()==null){
-			
-			//Si el username introducido no existe en la bd 
-			if (!userService.isUsernameInDB(user.getUsername())){
-				//Se inserta en el arrayList para que se vea en el datetable
-				lstUsers.add(user);
-			}
-			else{
-				addInfoMessage(getStringFromBundle("usuarios.form.error.usuario.duplicado.sumary"),getStringFromBundle("usuarios.form.error.usuario.duplicado.detail"));
-				return null;
-			}
-		}
-		
-		user.setFamilia(familiaService.getFamiliaById(selectedFamilia));
-		
-		gestionarRoles();
-		gestionarFoto();
-		userService.saveUser(user);
-
-
-		
-		return "userList";
-		
+		return saveUser("userList");
 	}
+	
+	public String doUserProfile(){
+		//Capturo el id del usuario logado
+		Integer idUserLogado=((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getIdUser();
+		//Cargo el usuario con los datos de la base de datos
+		user=userService.getUserById(idUserLogado);
+		
+		//Por defecto, no se ha pulsado cambiar foto
+		setCambiarFoto(false);
+		//Cargo los roles
+		this.lstRoles=userService.findAllRoles();
+		//Setteo los roles que se van a mostrar en funcion de los que tiene el usuario
+		for (Rol rolBean: lstRoles){
+			for(Rol rol:user.getLstRoles()){
+				if (rol.getIdRol().compareTo(rolBean.getIdRol())==0)
+					rolBean.setSelected(true);
+			}
+		}
+		
+		log.info("Usuario: "+user.getUserNameForSession()+" .Familia: "+(user.getFamilia()!=null?user.getFamilia().getNombre():"SIN FAMILIA"));
+		
+		//cargo el combo de familias
+		this.lstFamilias=familiaService.getFamiliasAllForCombo();
+
+		//Coloco el valor del combo
+		this.selectedFamilia=new Integer(user.getFamilia()!=null?user.getFamilia().getIdFamilia():0);
+		
+		return "userProfile";
+	}
+	
 	/**
-	 * Carga la lista con todos los usuarios y devuelve el outcome userList para mostrar la pagina del listado.
-	 * Se utiliza en la llamada desde el menu y desde el volver del formulario 
-	 * @return
+	 * Guarda las modifiaciones en el expediente del usuario logado
 	 */
-	public String doListUsers(){
-		lstUsers=userService.findAllUsers();
-		return "userList";
+	public String doSaveProfile(){
+		return saveUser(null);
 	}
+	
 	
 	/**
 	 * Al seleccionar una fila de la tabla llamamos a este metodo, que sirve para settear un atributo que es evaluado por los botones 
@@ -204,9 +240,9 @@ public class UserController extends BasicManageBean implements Serializable{
     	selectedRow=false;
     	//Familia seleccionada en el combo de familias = 0
     	setSelectedFamilia(new Integer ("0"));
-    } 
-	
-	/**
+    }    
+    
+    /**
 	 * Elimina el usuario de la tabla y de la base de datos
 	 * @param usuario
 	 */
@@ -217,6 +253,41 @@ public class UserController extends BasicManageBean implements Serializable{
 		//Elimino el usuario de la tabla		
 		lstUsers.remove(usuario);
 	}
+	
+	
+	private String saveUser(String outcome){
+		
+		//Pregunto si la imagen que se ha seleccionado es valida (si se ha seleccionado alguna), si no lo es muestro mensajes
+		if (!isValidImage())
+			return null;
+		
+		//Validacion de username
+		if (!userService.isUsernameValido(user)){
+			addErrorMessage(getStringFromBundle("usuarios.form.error.usuario.duplicado.sumary"),getStringFromBundle("usuarios.form.error.usuario.duplicado.detail"));
+			return null;
+		}
+		
+		log.info("Id de familia guardada:"+selectedFamilia+". Formulario:"+(outcome!=null?"Usuario":"Expediente"));
+
+		if (selectedFamilia!=null)
+			user.setFamilia(familiaService.getFamiliaById(selectedFamilia));
+		
+		gestionarRoles();
+		gestionarFoto();
+		
+		//Si es un usuario nuevo lo añado a la datatable
+		if (user.getIdUser()==null)
+			lstUsers.add(user);
+		
+		userService.saveUser(user);
+		
+		if (outcome==null)
+			addInfoMessage(getStringFromBundle("usuarios.form.save.success.sumary"),getStringFromBundle("usuarios.form.save.success.detail"));
+		
+		return outcome;
+		
+	}
+	
 	
 	public List<Rol> getLstRoles() {
 		return lstRoles;
@@ -330,7 +401,7 @@ public class UserController extends BasicManageBean implements Serializable{
 		user.setLstRoles(new ArrayList<Rol>());
 						
 		for (Rol rol:lstRoles){
-			if (rol.getSelected())
+			if (rol.getSelected()!=null && rol.getSelected())
 				user.getLstRoles().add(rol);
 		}
 	}

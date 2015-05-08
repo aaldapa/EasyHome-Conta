@@ -120,12 +120,21 @@ public class UserServiceImpl implements UserService {
 
 
 	@Override
-	public Boolean isUsernameInDB(String username) {
-		List<User> lstUsers=userDao.findUsersbyUsername(username);
-		if (lstUsers.isEmpty())
-			return false;
-		else
+	public Boolean isUsernameValido(User user) {
+		List<User> lstUsers=userDao.findUsersbyUsername(user.getUsername());		 
+		
+		//Si es usuario nuevo
+		if (user.getIdUser()==null)
+			//si no se encuentra ocupado devolvemos true
+			return lstUsers.isEmpty();
+		else {
+			//Si es un usuario existente comparo el username que tiene en base de datos antes
+			User userBd=userDao.findById(user.getIdUser());
+			if (userBd.getUsername().compareTo(user.getUsername())!=0)
+				return lstUsers.isEmpty();
+			
 			return true;
+		}
 	}
 	
 	@Override
@@ -133,5 +142,4 @@ public class UserServiceImpl implements UserService {
 		User user=userDao.findById(id);
 		return user;
 	}
-
 }

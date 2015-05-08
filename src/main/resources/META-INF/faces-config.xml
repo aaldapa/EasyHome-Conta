@@ -48,6 +48,16 @@
 			</navigation-case>
 	</navigation-rule>
 	
+	<!-- Logout -->
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+			<navigation-case>
+				<from-outcome>userProfile</from-outcome>
+				<to-view-id>/pages/user/user-profile.xhtml</to-view-id>
+				<redirect/>
+			</navigation-case>
+	</navigation-rule>
+	
 	<!-- Menu --> 
 	<navigation-rule>
 		<from-view-id>*</from-view-id>

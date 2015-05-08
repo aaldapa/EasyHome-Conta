@@ -1,6 +1,5 @@
 package com.easyhomeconta.service.test;
 
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -116,22 +115,6 @@ public class UserServiceTest extends AbstractTransactionalJUnit4SpringContextTes
 		assertTrue(lstRoles.size()>0);
 	}
 
-	/**
-	 Pruebo que exista el usuario con ese username
-	 */
-	@Test
-	public void testIsUsernameInDB() {
-		assertTrue(userService.isUsernameInDB("Alberto"));
-	}
-	
-	/**
-	 * Pruebo que no exista ningun usuario con este username 
-	 */
-	@Test
-	public void testIsUsernameInDB1() {
-		assertFalse(userService.isUsernameInDB("AlbertoPrueba"));
-	}
-	
 	@Test
 	public void testGetUserById() {
 		assertNotNull(userService.getUserById(new Integer (1)));
