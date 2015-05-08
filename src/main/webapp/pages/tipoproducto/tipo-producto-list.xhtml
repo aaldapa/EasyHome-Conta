@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+       xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">  
+      
+    <h:body>	
+    	
+    	<ui:composition template="../../templates/main.xhtml">
+			<!-- Parametros para el paso de titulos, cabeceras, etc -->
+			<ui:param name="headerTitle1" value="#{msg['tipoproductos.listado.titulo']}" />
+			<ui:param name="headerTitle2" value="" />
+			<ui:param name="boxTitle" value="#{msg['tipoproductos.listado.subtitulo']}" />
+			<ui:param name="boxFooter" value="" />
+			<ui:param name="boxClass" value="box-primary" />
+			<ui:param name="boxTitleClass" value="" />
+			
+			<!-- Para la inclusion de javascript -->
+			<ui:define name="scripts"></ui:define>
+			
+			<ui:define name="content">
+				
+				<h:form id="id_form" styleClass="form-horizontal"  role="form">	
+					
+					<div class="box-body">
+						<p:messages showDetail="true" globalOnly="true" autoUpdate="true" closable="true"/>
+						<div class="row">
+							 <div class="col-md-12">		
+							 	<p:dataTable id="id_data_table" var="item" value="#{tProductoBean.lstTipoProductos}" style="margin-bottom:20px" tableStyle="font-size: 90%;" 
+							   		sortBy="#{item.idTipoProducto}"
+							   		reflow="true"
+							   		draggableColumns="true" 
+							   		selectionMode="single" selection="#{tProductoBean.selectedItem}" rowKey="#{item.idTipoProducto}" 
+							   		paginator="true" paginatorPosition="bottom" rows="5" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="2,5,10"
+							   		
+							   	>
+									<!-- Al seleccionar una fila de la tabla realizar llama via ajax al metodo del listener	-->   	
+									<f:ajax event="rowSelect" listener="#{tProductoBean.onRowSelect}" render=":id_form"/>
+									<!-- Al deseleccionar una fila de la tabla realizar llama via ajax al metodo del listener	-->
+									<f:ajax event="rowUnselect" listener="#{tProductoBean.onRowUnselect}" render=":id_form"/>
+			
+									<f:facet name="header">
+							          <h:outputText value="#{msg['tipoproductos.listado.tabla.titulo']} (#{fn:length(tProductoBean.lstTipoProductos)})"/>
+							       </f:facet>
+							 		
+							 		<p:column headerText="#{msg['tipoproductos.listado.tabla.col.id']}"  width="50" priority="4">
+							           <h:outputText value="#{item.idTipoProducto}"/>
+							       	</p:column>
+							 
+							       <p:column headerText="#{msg['tipoproductos.listado.tabla.col.nombre']}" sortBy="#{item.nombre}" priority="1" width="25%">
+							           <h:outputText value="#{item.nombre}"/>
+							       </p:column>
+							 
+							        <p:column headerText="#{msg['tipoproductos.listado.tabla.col.operable']}" priority="2" width="15%" >
+					          			<h:selectBooleanCheckbox value="#{item.operable}" disabled="true"/>
+							           		
+										<h:outputText value=" #{msg['tipoproductos.listado.tabla.col.operable.si']}" rendered="#{selected}" />
+							           	<h:outputText value=" #{msg['tipoproductos.listado.tabla.col.operable.no']}" rendered="#{!selected}" />
+							          
+							       </p:column>
+							       
+							       <p:column headerText="#{msg['tipoproductos.listado.tabla.col.notas']}" priority="3">
+							           <h:outputText value="#{item.notas}"/>
+							       </p:column>
+							 
+							   	</p:dataTable>
+							</div>
+						</div><!-- /.row -->
+					</div><!-- /.box-body -->
+					
+					<!-- Para la botonera -->
+			        <div class="box-footer">
+ 						
+    					<div class="btn-toolbar">
+    						<!-- Gracias al atributo rendered los botones de editar y eliminar se muestran siempre que el atributo selectedRow es true. 
+    						El valor del atributo es modificado cada vez que se selecciona o deselecciona una fila de la tabla, por medio de una llamada ajax -->
+    						<c:set var="isRowSelected" value="#{tProductoBean.selectedRow}"/>
+    					
+    						<h:commandButton type="button" id="id_boton_eliminar" styleClass="btn btn-default pull-right" title="#{msg['boton.eliminar']}" value="#{msg['boton.eliminar']}" onclick="mostrarModal();"
+    							rendered="#{isRowSelected}"/>
+    						
+    						<h:commandLink id="id_boton_editar" styleClass="btn btn-default pull-right"	action="#{tProductoBean.doLoadForm}" title="#{msg['boton.editar']}" value="#{msg['boton.editar']}" 
+    							rendered="#{isRowSelected}"/>
+    						
+    						<h:commandButton action="#{tProductoBean.doNewForm}" styleClass="btn btn-primary pull-right" title="#{msg['boton.nuevo']}" value="#{msg['boton.nuevo']}"/>
+    					</div>
+		    			
+			        </div><!-- /.box-footer-->
+			        
+			        <!-- Ventana modal de confirmacion para eliminar un registro -->
+           
+		            <div class="modal" >
+		              <div class="modal-dialog">
+		                <div class="modal-content">
+		                  <div class="modal-header">
+		                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="ocultarModal();"><span aria-hidden="true">×</span></button>
+		                    <h4 class="modal-title"><h:outputLabel value="#{msg['modal.titulo']}"/></h4>
+		                  </div>
+		                  <div class="modal-body">
+		                    <p><h:outputText value="#{msg['tipoproductos.listado.botones.confirmacion']}"/></p>
+		                    <p><h:outputText value="#{msg['modal.confirmacion']}"/></p>
+		                  </div>
+		                  <div class="modal-footer">
+			                   <button type="button" class="btn btn-default pull-left" data-dismiss="modal" onclick="ocultarModal();">
+			                    	<h:outputText value="#{msg['boton.cancelar']}"></h:outputText>
+								</button>
+								
+			                    <h:commandLink id="id_boton_eliminar2" styleClass="btn btn-primary"	action="#{tProductoBean.doDeleteItem}"	onclick="ocultarModal();"
+			    						title="#{msg['boton.eliminar']}" value="#{msg['boton.aceptar']}" rendered="#{isRowSelected}">
+	    							<f:ajax execute="id_form" render="@form" />
+								</h:commandLink>
+		                  </div>
+		                </div><!-- /.modal-content -->
+		              </div><!-- /.modal-dialog -->
+		            </div><!-- /.modal -->        
+			        
+			        
+		    	</h:form>
+		    	
+		    	<script type="text/javascript">
+				   $(document).ready(function(){
+						//Gestion de mensajes de error
+					   	estilarMessages();
+						$('.fa-times-circle-o').on('click', ocultarMessage);
+				   });
+				 </script>
+				
+		    	
+			</ui:define>
+    	</ui:composition>
+    	
+    </h:body>
+
+</html>
