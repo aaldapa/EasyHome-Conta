@@ -2,6 +2,8 @@ package com.easyhomeconta.service;
 
 import java.util.List;
 
+import javax.faces.model.SelectItem;
+
 import com.easyhomeconta.beans.TipoProductoBean;
 
 /**
@@ -17,6 +19,13 @@ public interface TipoProductoService {
 	 * @return
 	 */
 	public List<TipoProductoBean> getLstTipoProductosActivos();
+
+	
+	/**
+	 * Lista para representar los tipos de producto en un combo
+	 * @return
+	 */
+	public List<SelectItem> getLstTipoProductosActivosForCombo();
 	
 	/**
 	 * Modifica o crea una nuevo tipo de producto en base de datos  en funcion de si

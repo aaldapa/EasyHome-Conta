@@ -495,7 +495,7 @@ fieldset[disabled] .datepicker table tr td.selected.disabled:hover.active {
 .open .dropdown-toggle.datepicker table tr td.active.disabled,
 .open .dropdown-toggle.datepicker table tr td.active.disabled:hover {
   color: #ffffff;
-  background: rgba(0,0,0,0.5);
+  background: #357ebd;
   border-color: #285e8e;
 }
 .datepicker table tr td.active:active,

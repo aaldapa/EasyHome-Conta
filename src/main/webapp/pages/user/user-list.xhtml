@@ -35,8 +35,10 @@
 							   		reflow="true"
 							   		draggableColumns="true" 
 							   		selectionMode="single" selection="#{userBean.selectedUser}" rowKey="#{user.idUser}" 
-							   		paginator="true" paginatorPosition="bottom" rows="5" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="2,5,10"
-							   		
+							   		paginator="true" paginatorPosition="bottom" rows="#{msg['tabla.filas.medium']}" rowsPerPageTemplate="#{msg['tabla.filas.small']},#{msg['tabla.filas.medium']},#{msg['tabla.filas.large']}"
+							   		paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
+							   		currentPageReportTemplate="#{msg['tabla.pie']}"
+							   		emptyMessage="#{msg['tabla.filas.mensaje.no.records']}"
 							   	>
 									<!-- Al seleccionar una fila de la tabla realizar llama via ajax al metodo del listener	-->   	
 									<f:ajax event="rowSelect" listener="#{userBean.onRowSelect}" render=":id_form"/>
@@ -44,8 +46,8 @@
 									<f:ajax event="rowUnselect" listener="#{userBean.onRowUnselect}" render=":id_form"/>
 			
 									<f:facet name="header">
-							          <h:outputText value="#{msg['usuarios.listado.tabla.titulo']} (#{fn:length(userBean.lstUsers)})"/>
-							       </f:facet>
+							          <h:outputText value="#{msg['usuarios.listado.tabla.titulo']}"/>
+							        </f:facet>
 							 		
 							 		<p:column headerText="#{msg['usuarios.listado.tabla.col.id']}"  width="50" priority="5">
 							           <h:outputText value="#{user.idUser}"/>

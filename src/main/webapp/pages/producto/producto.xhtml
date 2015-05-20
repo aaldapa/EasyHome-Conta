@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">  
+      
+    <h:body>	
+    	
+    	<ui:composition template="../../templates/main.xhtml">
+			<!-- Parametros para el paso de titulos, cabeceras, etc -->
+			<ui:param name="headerTitle1" value="#{msg['productos.listado.titulo']}" />
+			<ui:param name="headerTitle2" value="" />
+			<ui:param name="boxTitle" value="#{msg['producto.form.subtitulo']}" />
+			<ui:param name="boxFooter" value="" />
+			<ui:param name="boxClass" value="box-primary" />
+			<ui:param name="boxTitleClass" value="" />
+			
+			<!-- Para la inclusion de scripts -->
+			<ui:define name="scripts">
+			 	<h:outputScript name="./plugins/datepicker/bootstrap-datepicker.js" />
+			 	<h:outputScript name="./plugins/datepicker/locales/bootstrap-datepicker.es.js" />
+			 	<h:outputStylesheet name="./plugins/datepicker/datepicker3.css" />
+			</ui:define>
+			
+			<ui:define name="content">
+				
+				<h:form id="id_form" styleClass="form-horizontal"  role="form">	
+					
+					<div class="box-body">
+						<p:messages showDetail="true" globalOnly="true" autoUpdate="true" closable="true"/>
+						<div class="row">
+							 <div class="col-md-12">		
+								
+								<!-- Text inputs combos-->
+								<div class="form-group">
+									<h:outputLabel class="col-md-2 col-xs-1 control-label" value="#{msg['producto.form.banco']}"/>
+							        <div class="col-md-3 col-xs-5 form-group-inline">
+							            <h:message for="id_banco" errorClass="has-error control-label" infoClass="has-info control-label" />
+							            <div class="input-group input-append ">
+							            	<h:selectOneListbox id="id_banco" value="#{productoBean.producto.idBanco}" styleClass="form-control" size="1" required="true" requiredMessage="#{msg['error.campo.obligatorio']}">
+							            		<f:selectItem itemValue="" itemLabel="#{msg['combo.selection.option']}" noSelectionOption="true"></f:selectItem>
+							            		<f:selectItems value="#{productoBean.lstBancos}" var="item" itemValue="#{item.value}" itemLabel="#{item.label}" ></f:selectItems>
+							            	</h:selectOneListbox>
+							            </div>						            
+							        </div>
+								        
+							       <h:outputLabel class="col-md-2 col-xs-1 control-label" value="#{msg['producto.form.tipo']}"/>
+							        <div class="col-md-3 col-xs-5 form-group-inline">
+							        	<h:message for="id_tipo" errorClass="has-error control-label" infoClass="has-info control-label" />
+							            <div class="input-group input-append">
+							            	<h:selectOneListbox id="id_tipo" value="#{productoBean.producto.idTipoProducto}" styleClass="form-control" size="1" required="true" requiredMessage="#{msg['error.campo.obligatorio']}">
+							            		<f:selectItem itemValue="" itemLabel="#{msg['combo.selection.option']}" noSelectionOption="true"></f:selectItem>
+							            		<f:selectItems value="#{productoBean.lstTProductos}" var="item" itemValue="#{item.value}" itemLabel="#{item.label}" ></f:selectItems>
+							            	</h:selectOneListbox>
+							            </div>						            
+							        </div>
+							    </div>
+								
+								<!-- Text inputs fechas-->
+								<div class="form-group">
+							        <h:outputLabel styleClass="col-md-2 control-label" for="id_nombre" value="#{msg['producto.form.apertura']}"/>
+							        <div class="col-md-2 form-group-inline">
+							        	<h:message for="id_apertura" errorClass="has-error control-label" infoClass="has-info control-label" />
+							            <div class="input-group input-append">
+							            	<h:inputText id="id_apertura" class="form-control date" value="#{productoBean.producto.fechaApertura}" required="true" requiredMessage="#{msg['error.campo.obligatorio']}">
+       	             							<f:convertDateTime pattern="#{msg['patron.fecha.corta']}" />
+	 					          			</h:inputText>
+							                <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+							            </div>
+							        </div>
+								  	
+								  	<h:outputLabel styleClass="col-md-offset-1  col-md-2 control-label" for="id_nombre" value="#{msg['producto.form.vencimiento']}"/>
+							        <div class="col-md-2 ">
+							            <div class="input-group input-append">
+							            	<h:inputText id="id_vencimiento" class="form-control date" value="#{productoBean.producto.fechaVencimiento}" >
+       	             							<f:convertDateTime pattern="#{msg['patron.fecha.corta']}" />
+	 					          			</h:inputText>
+							                <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+							            </div>
+							        </div>
+							    </div>
+								
+								<!-- Text inputs nombre-->
+					          	<div class="form-group">
+					            
+						            <h:outputLabel styleClass="col-md-2 control-label" for="id_nombre" value="#{msg['producto.form.nombre']}"/>
+						            <div class="col-md-4 form-group-inline">
+						              <h:message for="id_nombre" errorClass="has-error control-label" infoClass="has-info control-label" />
+						              <h:inputText id="id_nombre" pt:placeholder="#{msg['producto.form.nombre']}" class="form-control" label="#{msg['producto.form.nombre']}" value="#{productoBean.producto.nombre}" required="true" requiredMessage="#{msg['error.campo.obligatorio']}"/>
+						            </div>
+									
+						            <h:outputLabel styleClass="col-md-1 control-label" for="id_numero" value="#{msg['producto.form.numero']}"/>
+						            <div class="col-md-4">
+						               <h:inputText id="id_numero" pt:placeholder="#{msg['producto.form.numero']}" class="form-control" label="#{msg['producto.form.numero']}" value="#{productoBean.producto.numero}" />
+						            </div>
+						        </div>
+						        
+						        <!-- Text inputs titular-->
+					          	<div class="form-group">
+					            
+						            <h:outputLabel styleClass="col-md-2 control-label" for="id_titular" value="#{msg['producto.form.titular']}"/>
+						            <div class="col-md-4 form-group-inline">
+						              <h:message for="id_titular" errorClass="has-error control-label" infoClass="has-info control-label" />
+						              <h:inputText id="id_titular" pt:placeholder="#{msg['producto.form.titular']}" class="form-control" label="#{msg['producto.form.titular']}" value="#{productoBean.producto.titular}" required="true" requiredMessage="#{msg['error.campo.obligatorio']}"/>
+						            </div>
+									
+						            <h:outputLabel styleClass="col-md-1 control-label" for="id_cotitular" value="#{msg['producto.form.cotitular']}"/>
+						            <div class="col-md-4">
+						               <h:inputText id="id_cotitular" pt:placeholder="#{msg['producto.form.cotitular']}" class="form-control" label="#{msg['producto.form.cotitular']}" value="#{productoBean.producto.cotitular}" />
+						            </div>
+						        </div>
+						        
+						        <!-- Text inputs importe-->
+					          	<div class="form-group">
+					            
+						            <h:outputLabel styleClass="col-md-2 control-label" for="id_importe" value="#{msg['producto.form.importe']}"/>
+						            <div class="col-md-2 form-group-inline">
+						            	<h:message for="id_importe" errorClass="has-error control-label" infoClass="has-info control-label" />
+						            	<div class="input-group">
+						            		<h:inputText id="id_importe" pt:placeholder="#{msg['producto.form.importe']}" class="form-control" label="#{msg['producto.form.importe']}" value="#{productoBean.producto.importe}">
+						            			<f:convertNumber  maxFractionDigits="2"  for="id_importe"/>
+						            		</h:inputText>
+						              		<span class="input-group-addon"><i class="fa fa-euro"></i></span>
+						            	</div>
+						            </div>
+									
+									<h:outputLabel styleClass="col-md-2 control-label" for="id_rentabilidad" value="#{msg['producto.form.rentabilidad']}"/>
+						            <div class="col-md-2 form-group-inline">
+						            	<h:message for="id_rentabilidad" errorClass="has-error control-label" infoClass="has-info control-label" />
+						            	<div class="input-group">
+						            		<h:inputText id="id_rentabilidad" pt:placeholder="#{msg['producto.form.rentabilidad']}" class="form-control" label="#{msg['producto.form.rentabilidad']}" value="#{productoBean.producto.rentabilidad}" validatorMessage="#{msg['error.campo.numerico']}">
+						            			<f:convertNumber minFractionDigits="2" maxFractionDigits="2" maxIntegerDigits="2" />
+						            		</h:inputText>
+						              		<span class="input-group-addon">%</span>
+						            	</div>
+						            </div>
+						            
+						            <h:outputLabel styleClass="col-md-1 control-label" for="id_cancelacion" value="#{msg['producto.form.cancelacion']}"/>
+						            <div class="col-md-2 form-group-inline">
+						            	<h:message for="id_cancelacion" errorClass="has-error control-label" infoClass="has-info control-label" />
+						            	<div class="input-group">
+						            		<h:inputText id="id_cancelacion" pt:placeholder="#{msg['producto.form.cancelacion']}" class="form-control" label="#{msg['producto.form.cancelacion']}" value="#{productoBean.producto.rentabilidadCancelacion}" validatorMessage="#{msg['error.campo.numerico']}">
+						            			<f:convertNumber minFractionDigits="2" />
+						            		</h:inputText>
+						              		<span class="input-group-addon">%</span>
+						            	</div>
+						            </div>
+						        </div>
+						        
+						        <!-- Text inputs notas-->
+						        <div class="form-group">
+					              
+					              <h:outputLabel styleClass="col-md-2 control-label" for="id_notas" value="#{msg['producto.form.compartido']}" rendered="#{not empty productoBean.familiares}"/>
+					              <h:outputLabel styleClass="col-md-2 control-label" for="id_notas" value="" rendered="#{empty productoBean.familiares}"/>
+					              
+						          	<div class="col-md-3 checkbox">
+						              <c:if test="#{not empty productoBean.familiares}">
+						              	<label>
+						              	<h:selectManyCheckbox value="#{productoBean.producto.idsPermisos}" layout="pageDirection" disabled="#{not productoBean.producto.owner}">
+						              		<f:selectItems value="#{productoBean.familiares}" var="item" itemValue="#{item.value}">
+						              			<h:outputText value="#{item.label}"/> 
+						              		</f:selectItems>
+						              	</h:selectManyCheckbox>
+						              	</label>
+						              </c:if>
+						            </div>
+					                
+						            <h:outputLabel styleClass="col-md-1 control-label" for="id_notas" value="#{msg['producto.form.notas']}"/> 
+						            <div class="col-md-5 ">
+						              <h:inputTextarea id="id_notas" pt:placeholder="#{msg['producto.form.notas']}" class="form-control" label="#{msg['producto.form.notas']}" value="#{productoBean.producto.descripcion}"/>
+						            </div>
+						            
+						        </div>
+						        
+							</div>
+						</div><!-- /.row -->
+					</div><!-- /.box-body -->
+					
+					<!-- Para la botonera -->
+			        <div class="box-footer">
+ 						
+    					<div class="btn-toolbar">
+    						<h:commandLink action="#{productoBean.doListItems}" styleClass="btn btn-default pull-right" value="#{msg['boton.volver']}" immediate="true" title="#{msg['boton.volver']}"/>
+   					 		<h:commandButton styleClass="btn btn-primary pull-right" value="#{msg['boton.guardar']}" action="#{productoBean.doSaveItem}" title="#{msg['boton.guardar']}"/>
+    					</div>
+		    			
+			        </div><!-- /.box-footer-->
+		    	</h:form>
+		    	
+		    	<script type="text/javascript">
+				   $(document).ready(function(){
+						//Gestion de mensajes de error
+					   	estilarMessages();
+						$('.fa-times-circle-o').on('click', ocultarMessage);
+
+					   $('.date').datepicker({
+ 						  	format:'dd-mm-yyyy',
+ 						  	language: 'es',
+ 						  	weekStart:1,
+ 						 	autoclose:true,
+ 						  	todayHighlight:true,
+ 						  	showOnFocus:true,
+ 						  	keyboardNavigation:false,
+ 						  	forceParse:true
+					  	});
+					});
+
+				</script>
+
+				
+		    	
+			</ui:define>
+    	</ui:composition>
+    	
+    </h:body>
+
+</html>

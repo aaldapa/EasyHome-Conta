@@ -6,13 +6,13 @@ package com.easyhomeconta.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.springframework.transaction.annotation.Transactional;
 
 import com.easyhomeconta.beans.TipoProductoBean;
-import com.easyhomeconta.dao.GenericDaoImpl;
 import com.easyhomeconta.dao.TipoProductoDao;
 import com.easyhomeconta.model.TipoProducto;
 import com.easyhomeconta.utils.Enumeraciones.SiNo;
@@ -21,10 +21,8 @@ import com.easyhomeconta.utils.Enumeraciones.SiNo;
  * @author Alberto
  *
  */
-@SuppressWarnings("serial")
 @Named
-public class TipoProductoServiceImpl extends GenericDaoImpl<TipoProducto> implements
-		TipoProductoService {
+public class TipoProductoServiceImpl implements TipoProductoService {
 
 	@Inject
 	private TipoProductoDao tipoProductoDao;
@@ -43,6 +41,16 @@ public class TipoProductoServiceImpl extends GenericDaoImpl<TipoProducto> implem
 		return lstBeans;
 	}
 
+	
+	@Override
+	public List<SelectItem> getLstTipoProductosActivosForCombo() {
+		List<SelectItem> lstItems=new ArrayList<SelectItem>();
+		List<TipoProducto> lstTProductos=tipoProductoDao.findTiposProductoActivo();
+		for(TipoProducto tp:lstTProductos)
+			lstItems.add(new SelectItem(tp.getIdTipoProducto(),tp.getNombre()));
+		return lstItems;
+	}
+	
 	@Override
 	@Transactional
 	public TipoProductoBean saveTipoProducto(TipoProductoBean bean) {
@@ -69,7 +77,11 @@ public class TipoProductoServiceImpl extends GenericDaoImpl<TipoProducto> implem
 		tipoProductoDao.update(tipoProducto);
 	}
 
-	
+	/**
+	 * Parsea de entidad al bean de maniobra para trabajar en la capa de presentacion
+	 * @param tipoProducto
+	 * @return
+	 */
 	private TipoProductoBean parseEntityToBean(TipoProducto tipoProducto){
 		TipoProductoBean bean=new TipoProductoBean();
 		bean.setIdTipoProducto(tipoProducto.getIdTipoProducto());
@@ -81,6 +93,11 @@ public class TipoProductoServiceImpl extends GenericDaoImpl<TipoProducto> implem
 		
 	}
 	
+	/**
+	 * Parse de bean a Entidad para trabajar directamente con metodos del Dao
+	 * @param bean
+	 * @return
+	 */
 	private TipoProducto parseBeanToEntity(TipoProductoBean bean){
 		TipoProducto tipoProducto=new TipoProducto();
 		tipoProducto.setIdTipoProducto(bean.getIdTipoProducto());
@@ -90,5 +107,6 @@ public class TipoProductoServiceImpl extends GenericDaoImpl<TipoProducto> implem
 		
 		return tipoProducto;
 	}
+
 }
 

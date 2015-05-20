@@ -58,7 +58,7 @@
 			</navigation-case>
 	</navigation-rule>
 	
-	<!-- Menu --> 
+	<!-- Entradas de Menus --> 
 	<navigation-rule>
 		<from-view-id>*</from-view-id>
 		<navigation-case>
@@ -81,6 +81,31 @@
 			<to-view-id>/pages/categoria/categoria-list.xhtml</to-view-id>
 			<redirect/>
 		</navigation-case>
+		<navigation-case>
+			<from-outcome>productoList</from-outcome>
+			<to-view-id>/pages/producto/producto-list.xhtml</to-view-id>
+			<redirect/>
+		</navigation-case>
+	</navigation-rule>
+	
+	<!-- Categorias -->
+	<navigation-rule>
+		<from-view-id>/pages/categoria/categoria-list.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>categoriaForm</from-outcome>
+			<to-view-id>/pages/categoria/categoria.xhtml</to-view-id>
+			<redirect/>
+		</navigation-case>
+	</navigation-rule>
+	
+	<!-- Productos -->
+	<navigation-rule>
+		<from-view-id>/pages/producto/producto-list.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>productoForm</from-outcome>
+			<to-view-id>/pages/producto/producto.xhtml</to-view-id>
+			<redirect/>
+		</navigation-case>
 	</navigation-rule>
 	
 	<!-- Users -->
@@ -99,16 +124,6 @@
 		<navigation-case>
 			<from-outcome>tipoProductoForm</from-outcome>
 			<to-view-id>/pages/tipoproducto/tipo-producto.xhtml</to-view-id>
-			<redirect/>
-		</navigation-case>
-	</navigation-rule>
-	
-	<!-- Categorias -->
-	<navigation-rule>
-		<from-view-id>/pages/categoria/categoria-list.xhtml</from-view-id>
-		<navigation-case>
-			<from-outcome>categoriaForm</from-outcome>
-			<to-view-id>/pages/categoria/categoria.xhtml</to-view-id>
 			<redirect/>
 		</navigation-case>
 	</navigation-rule>

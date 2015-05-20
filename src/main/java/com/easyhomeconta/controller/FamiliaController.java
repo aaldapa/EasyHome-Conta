@@ -12,6 +12,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.apache.log4j.Logger;
+import org.springframework.dao.DataIntegrityViolationException;
 
 import com.easyhomeconta.beans.FamiliaBean;
 import com.easyhomeconta.service.FamiliaService;
@@ -94,9 +95,15 @@ public class FamiliaController extends BasicManageBean implements Serializable{
 	public void doDeleteItem(){		
 		log.info("eliminar item");
 		selectedRow=false;
-		familiaService.deleteFamilia(selectedfamilia.getIdFamilia());
+		try{
+			familiaService.deleteFamilia(selectedfamilia.getIdFamilia());
+			lstFamilias.remove(selectedfamilia);
+		}catch(DataIntegrityViolationException e){
+			selectedRow=true;
+			addErrorMessage(getStringFromBundle("familias.listado.error.eliminar.familia.activa.summary"),getStringFromBundle("familias.listado.error.eliminar.familia.activa.detail"));
+		}
 		
-		lstFamilias.remove(selectedfamilia);
+		
 	}
 	
 	/**

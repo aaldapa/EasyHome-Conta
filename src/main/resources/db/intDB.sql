@@ -1,5 +1,5 @@
 --password 123 (codificada)
-INSERT INTO user_roles(id_user, id_rol) VALUES (1,2);INSERT INTO `easyhome-conta`.`users`
+INSERT INTO `easyhome-conta`.`users`
             (`id_user`,
              `cuenta_no_expirada`,
              `cuenta_no_bloqueada`,

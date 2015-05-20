@@ -49,22 +49,14 @@
        	  			  	</h:outputLink>		              
 		            </li>
 		        
-		         	<li class="treeview #{ubicacionActiva=='categoria' ? 'active': ''}">
-		         		<h:commandLink action="#{categoriaBean.doListItems}"><i class="fa flaticon-categories"></i><span><h:outputText value="#{msg['leftmenu.categorias']}"/></span></h:commandLink>
-		         	</li>
-		            
-		        	
-		        	
-		        
-		            <li class="treeview #{ubicacionActiva=='familia' ? 'active': ''}">
+		         	<li class="treeview #{ubicacionActiva=='familia' ? 'active': ''}">
 		              <a href="#">
-		                <i class="fa flaticon-savings"></i><i class="fa fa-angle-left pull-right"></i><span>Productos</span>
+		                <i class="fa flaticon-savings"></i><i class="fa fa-angle-left pull-right"></i><span>Mis productos</span>
 		                
 		              </a>
 		              <ul class="treeview-menu">
 		                <li class="active"><a href="../layout/top-nav.html"><i class="fa fa-circle-o"></i> Cuentas</a></li>
 		                <li><a href="#"><i class="fa fa-circle-o"></i> Depositos</a></li>
-		                <li><a href="#"><i class="fa fa-circle-o"></i> Planes de jubilacion</a></li>
 		                <li><a href="#"><i class="fa fa-circle-o"></i> Otros</a></li>
 		              </ul>
 		            </li>
@@ -72,7 +64,7 @@
 		            
 		            <li >
 		              <a href="#">
-		                <i class="fa flaticon-currency13"></i><span>Presupuestos</span>
+		                <i class="fa flaticon-currency13"></i><span>Mis presupuestos</span>
 		              </a>
 		            </li>
 		            

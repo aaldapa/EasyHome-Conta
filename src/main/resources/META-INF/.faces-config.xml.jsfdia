@@ -65,6 +65,16 @@
     NAME="output2" PATH="/pages/tipoproducto/tipo-producto-list.xhtml"
     TARGET="rules:#pages#tipoproducto#tipo-producto-list.xhtml"
     TITLE="tipoProductoList" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="categoriaList::#pages#categoria#categoria-list.xhtml"
+    NAME="output3" PATH="/pages/categoria/categoria-list.xhtml"
+    TARGET="rules:#pages#categoria#categoria-list.xhtml"
+    TITLE="categoriaList" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="productoList::#pages#producto#producto-list.xhtml"
+    NAME="output4" PATH="/pages/producto/producto-list.xhtml"
+    TARGET="rules:#pages#producto#producto-list.xhtml"
+    TITLE="productoList" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#pages#user#user-profile.xhtml"
@@ -84,4 +94,16 @@
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#pages#tipoproducto#tipo-producto.xhtml"
   PATH="/pages/tipoproducto/tipo-producto.xhtml" SHAPE="480,641,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#pages#producto#producto-list.xhtml"
+  PATH="/pages/producto/producto-list.xhtml" SHAPE="304,833,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#pages#producto#producto-list.xhtml:0"
+   NAME="item" PATH="/pages/producto/producto-list.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="productoForm::#pages#producto#producto.xhtml" NAME="output"
+    PATH="/pages/producto/producto.xhtml"
+    TARGET="rules:#pages#producto#producto.xhtml" TITLE="productoForm" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#pages#producto#producto.xhtml"
+  PATH="/pages/producto/producto.xhtml" SHAPE="512,817,0,0" model-entity="JSFProcessGroup"/>
 </PROCESS>

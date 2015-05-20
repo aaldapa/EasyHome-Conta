@@ -25,6 +25,24 @@
           <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
 
+        	<li class="dropdown notifications-menu">
+	               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+	                 <i class="fa fa-wrench"></i>
+	                 <span class="label label-info"><h:outputText value="#{msg['header.menu.config']}"></h:outputText> </span>
+	               </a>
+		          <ul class="dropdown-menu">
+		            <li class="header"><h:outputLabel value="#{msg['header.menu.title2']}"/></li>
+		            <li style="position: relative; overflow: hidden; width: auto; height: 100px;">
+		              <ul class="menu">
+		            
+			            <li>
+		         			<h:commandLink action="#{categoriaBean.doListItems}"><i class="fa flaticon-categories"></i><span><h:outputText value="#{msg['header.menu.categorias']}"/></span></h:commandLink>
+		         		</li>
+			            <li><h:commandLink action="#{productoBean.doListItems}"><span class="fa flaticon-savings"></span><span><h:outputText value="#{msg['header.menu.productos']}"/></span></h:commandLink></li>
+		              </ul>
+		            </li>
+		          </ul>
+		       </li>
 
 			<sec:authorize access="hasAnyRole('Administrador')">
 	        	<li class="dropdown notifications-menu">
@@ -46,8 +64,7 @@
 		            </li>
 		          </ul>
 		       </li>
-	        </sec:authorize>
-        
+	        </sec:authorize>        
 
 <!--               Messages: style can be found in dropdown.less -->
 <!--               <li class="dropdown messages-menu"> -->

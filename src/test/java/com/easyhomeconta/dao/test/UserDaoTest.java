@@ -19,6 +19,7 @@ import org.springframework.test.context.junit4.AbstractTransactionalJUnit4Spring
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.easyhomeconta.dao.UserDao;
+import com.easyhomeconta.model.Producto;
 import com.easyhomeconta.model.Rol;
 import com.easyhomeconta.model.User;
 
@@ -143,7 +144,9 @@ public class UserDaoTest extends AbstractTransactionalJUnit4SpringContextTests{
 	 */
 	@Test
 	public void testFindById() {
-		userDao.findById(new Integer (1));
+		User user=userDao.findById(new Integer (1));
+		for (Producto p:user.getLstProductos())
+			log.info("id Prod. :" +p.getIdProducto());
 	}
 
 	/**

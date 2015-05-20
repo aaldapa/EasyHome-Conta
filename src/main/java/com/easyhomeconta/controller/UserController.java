@@ -13,7 +13,6 @@ import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.primefaces.model.UploadedFile;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -40,7 +39,7 @@ public class UserController extends BasicManageBean implements Serializable{
 	
 	@Inject
 	private FamiliaService familiaService;
-	
+
 	private List<User> lstUsers=new ArrayList<User>();	
 	private List<Rol> lstRoles=new ArrayList<Rol>();
 
@@ -138,38 +137,7 @@ public class UserController extends BasicManageBean implements Serializable{
 	/**
 	 * Guarda un usuario en base de datos y vuelve al listado
 	 */
-	public String doSaveUser(){		
-		
-//		//Pregunto si la imagen que se ha seleccionado es valida (si se ha seleccionado alguna), si no lo es muestro mensajes
-//		if (!isValidImage())
-//			return null;
-//		
-//		//Elimino todos los posibles roles que pudiese tener el usuario para dar de alta los que esten ahora checkeados
-//		user.setLstRoles(new ArrayList<Rol>());
-//				
-//		for (Rol rol:lstRoles){
-//			if (rol.getSelected())
-//				user.getLstRoles().add(rol);
-//		}
-//		
-//		//Si es un usuario nuevo lo añado a la datatable
-//		if (user.getIdUser()==null)
-//			lstUsers.add(user);				
-//		
-//		//Validacion de username
-//		if (!userService.isUsernameValido(user)){
-//			addInfoMessage(getStringFromBundle("usuarios.form.error.usuario.duplicado.sumary"),getStringFromBundle("usuarios.form.error.usuario.duplicado.detail"));
-//			return null;
-//		}
-//
-//		user.setFamilia(familiaService.getFamiliaById(selectedFamilia));
-//		
-//		gestionarRoles();
-//		gestionarFoto();
-//		userService.saveUser(user);
-//
-//		return "userList";
-		
+	public String doSaveUser(){
 		return saveUser("userList");
 	}
 	
@@ -254,7 +222,11 @@ public class UserController extends BasicManageBean implements Serializable{
 		lstUsers.remove(usuario);
 	}
 	
-	
+	/**
+	 * Guarda el formulario de usuario / expediente, tanto si se trata de una modificacion como si se trata de un usuario nuevo.
+	 * @param outcome
+	 * @return
+	 */
 	private String saveUser(String outcome){
 		
 		//Pregunto si la imagen que se ha seleccionado es valida (si se ha seleccionado alguna), si no lo es muestro mensajes
@@ -269,23 +241,41 @@ public class UserController extends BasicManageBean implements Serializable{
 		
 		log.info("Id de familia guardada:"+selectedFamilia+". Formulario:"+(outcome!=null?"Usuario":"Expediente"));
 
-		if (selectedFamilia!=null)
-			user.setFamilia(familiaService.getFamiliaById(selectedFamilia));
-		
-		gestionarRoles();
-		gestionarFoto();
-		
 		//Si es un usuario nuevo lo añado a la datatable
 		if (user.getIdUser()==null)
 			lstUsers.add(user);
 		
-		userService.saveUser(user);
+		userService.saveUser(user, selectedFamilia,cambiarFoto, imagen, lstRoles);
 		
+		//Si venimos del expediente al modificar mostramos mensaje de que se ha modificado el expediente con exito porque no se viaja a ninguna pagina
 		if (outcome==null)
 			addInfoMessage(getStringFromBundle("usuarios.form.save.success.sumary"),getStringFromBundle("usuarios.form.save.success.detail"));
 		
 		return outcome;
 		
+	}	
+	
+	/**
+	 * Validacion de archivo subido. Debe de ser una imagen inferior a 55K
+	 * @return
+	 */
+	private Boolean isValidImage(){
+		Boolean isValid=true;
+		
+		//Validamos tamaño máximo y formatos admitidos		
+		if (imagen.getSize()>0){
+		
+			if (imagen.getSize()>55000){
+				addErrorMessage(getStringFromBundle("usuarios.form.error.imagen.sumary"), getStringFromBundle("usuarios.form.error.imagen.size.detail"));
+				isValid=false;
+			}
+			if (!imagen.getContentType().startsWith("image")){
+				addErrorMessage(getStringFromBundle("usuarios.form.error.imagen.sumary"), getStringFromBundle("usuarios.form.error.imagen.formato.detail"));
+				isValid=false;
+			}
+		}
+		
+		return isValid;
 	}
 	
 	
@@ -359,73 +349,6 @@ public class UserController extends BasicManageBean implements Serializable{
 
 	public void setCambiarFoto(Boolean cambiarFoto) {
 		this.cambiarFoto = cambiarFoto;
-	}
-
-	/**
-	 * Gestiona la carga de la fotografia en el User dependiendo de si se ha seleccionado foto o no 
-	 * y de si se trata de un usuario nuevo o una modificacion.
-	 */
-	private void gestionarFoto(){
-		
-		byte[] imagenArrayBytes=null;
-		
-		
-		//Si hemos cargado el cambio de foto
-		if (cambiarFoto){
-			//Si se carga foto
-			if (imagen.getSize()!=0){
-				try{
-					imagenArrayBytes=IOUtils.toByteArray(imagen.getInputstream());
-				}catch(Exception e){
-					log.error(e.getMessage());
-				}
-			}
-		}
-		//Si no hemos cargado el cambio de foto, 
-		else{
-			//Si estamos realizando una MODIFICACION del USUARIO 
-			if (user.getIdUser()!=null)
-				//Debemos de cargar la imagen que ya teneia guardada en BD 
-				imagenArrayBytes=userService.getUserById(user.getIdUser()).getPhoto();
-		}
-		
-		user.setPhoto(imagenArrayBytes);
-	}
-	
-	/**
-	 * Gestiona los roles borrando primero todos los existentes anteriormente
-	 * y añadiendo despues los seleccionados.
-	 */
-	private void gestionarRoles(){
-		//Elimino todos los posibles roles que pudiese tener el usuario para dar de alta los que esten ahora checkeados
-		user.setLstRoles(new ArrayList<Rol>());
-						
-		for (Rol rol:lstRoles){
-			if (rol.getSelected()!=null && rol.getSelected())
-				user.getLstRoles().add(rol);
-		}
-	}
-	/**
-	 * Validacion de archivo subido. Debe de ser una imagen inferior a 55K
-	 * @return
-	 */
-	private Boolean isValidImage(){
-		Boolean isValid=true;
-		
-		//Validamos tamaño máximo y formatos admitidos		
-		if (imagen.getSize()>0){
-		
-			if (imagen.getSize()>55000){
-				addErrorMessage(getStringFromBundle("usuarios.form.error.imagen.sumary"), getStringFromBundle("usuarios.form.error.imagen.size.detail"));
-				isValid=false;
-			}
-			if (!imagen.getContentType().startsWith("image")){
-				addErrorMessage(getStringFromBundle("usuarios.form.error.imagen.sumary"), getStringFromBundle("usuarios.form.error.imagen.formato.detail"));
-				isValid=false;
-			}
-		}
-		
-		return isValid;
 	}
 	
 }

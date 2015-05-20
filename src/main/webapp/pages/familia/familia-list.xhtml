@@ -18,6 +18,8 @@
 			<ui:param name="headerTitle2" value="" />
 			<ui:param name="boxTitle" value="#{msg['familias.listado.subtitulo']}"  />
 			<ui:param name="boxFooter" value="" />
+			<ui:param name="boxClass" value="box-primary" />
+			<ui:param name="boxTitleClass" value="" />
 			
 			<!-- Para la inclusion de javascript -->
 			<ui:define name="scripts"></ui:define>
@@ -33,10 +35,13 @@
 							<div class="col-md-12">		
 								<p:dataTable id="id_data_table" value="#{familiaBean.lstFamilias}" var="item" style="margin-bottom:20px" tableStyle="font-size: 90%;"
 									sortBy="#{item.idFamilia}"
-								   		reflow="true"
-								   		draggableColumns="true" 
-								   		selectionMode="single" selection="#{familiaBean.selectedfamilia}" rowKey="#{item.idFamilia}" 
-								   		paginator="true" paginatorPosition="bottom" rows="5" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="2,5,10"
+							   		reflow="true"
+							   		draggableColumns="true" 
+							   		selectionMode="single" selection="#{familiaBean.selectedfamilia}" rowKey="#{item.idFamilia}" 
+							   		paginator="true" paginatorPosition="bottom" rows="#{msg['tabla.filas.medium']}" rowsPerPageTemplate="#{msg['tabla.filas.small']},#{msg['tabla.filas.medium']},#{msg['tabla.filas.large']}"
+							   		paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
+							   		currentPageReportTemplate="#{msg['tabla.pie']}"
+							   		emptyMessage="#{msg['tabla.filas.mensaje.no.records']}"
 								>
 								
 									<!-- Al seleccionar una fila de la tabla realizar llama via ajax al metodo del listener	-->   	
@@ -45,7 +50,7 @@
 									<f:ajax event="rowUnselect" listener="#{familiaBean.onRowUnselect}" render="@form"/>
 								
 									<f:facet name="header">
-							    	    <h:outputText value="#{msg['familias.listado.tabla.titulo']} (#{fn:length(familiaBean.lstFamilias)})"/>
+							    	    <h:outputText value="#{msg['familias.listado.tabla.titulo']}"/>
 								    </f:facet>
 								
 									<p:column headerText="#{msg['familias.listado.tabla.col.id']}"  width="50" priority="2">

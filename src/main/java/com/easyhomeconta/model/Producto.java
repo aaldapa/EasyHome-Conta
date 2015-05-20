@@ -80,12 +80,16 @@ public class Producto implements Serializable{
 	@Temporal(TemporalType.DATE)
 	private Date fechaVencimiento;
 	
+	//ID del usuario prodietario o creador del producto
+	@Column(nullable = false)
+	private Integer idUserOwner;
+	
 	@Enumerated(EnumType.STRING)
 	@Column(columnDefinition = "ENUM('S','N') default 'N'", nullable=false, length=1) 
 	private SiNo baja;
 
 	//Mapeo NaN con usuarios
-	@ManyToMany(mappedBy="lstProductos")
+	@ManyToMany(cascade=CascadeType.ALL ,mappedBy="lstProductos")
 	private List<User> lstUsuarios;
 
 	@OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, mappedBy = "producto")
@@ -99,7 +103,7 @@ public class Producto implements Serializable{
 			String nombre, String descripcion, String titular,
 			String cotitular, Float rentabilidad,
 			Float rentabilidadCancelacion, String numero, BigDecimal importe,
-			Date fechaApertura, Date fechaVencimiento, SiNo baja,
+			Date fechaApertura, Date fechaVencimiento, Integer idUserOwner, SiNo baja,
 			List<User> lstUsuarios, List<Operacion> lstOperaciones) {
 		super();
 		this.idProducto = idProducto;
@@ -115,6 +119,7 @@ public class Producto implements Serializable{
 		this.importe = importe;
 		this.fechaApertura = fechaApertura;
 		this.fechaVencimiento = fechaVencimiento;
+		this.idUserOwner=idUserOwner;
 		this.baja = baja;
 		this.lstUsuarios = lstUsuarios;
 		this.lstOperaciones = lstOperaciones;
@@ -224,6 +229,14 @@ public class Producto implements Serializable{
 		this.fechaVencimiento = fechaVencimiento;
 	}
 
+	public Integer getIdUserOwner() {
+		return idUserOwner;
+	}
+
+	public void setIdUserOwner(Integer idUserOwner) {
+		this.idUserOwner = idUserOwner;
+	}
+
 	public SiNo getBaja() {
 		return baja;
 	}
@@ -265,6 +278,8 @@ public class Producto implements Serializable{
 				+ ((fechaVencimiento == null) ? 0 : fechaVencimiento.hashCode());
 		result = prime * result
 				+ ((idProducto == null) ? 0 : idProducto.hashCode());
+		result = prime * result
+				+ ((idUserOwner == null) ? 0 : idUserOwner.hashCode());
 		result = prime * result + ((importe == null) ? 0 : importe.hashCode());
 		result = prime * result
 				+ ((lstOperaciones == null) ? 0 : lstOperaciones.hashCode());
@@ -325,6 +340,11 @@ public class Producto implements Serializable{
 				return false;
 		} else if (!idProducto.equals(other.idProducto))
 			return false;
+		if (idUserOwner == null) {
+			if (other.idUserOwner != null)
+				return false;
+		} else if (!idUserOwner.equals(other.idUserOwner))
+			return false;
 		if (importe == null) {
 			if (other.importe != null)
 				return false;
@@ -383,8 +403,9 @@ public class Producto implements Serializable{
 				+ ", rentabilidadCancelacion=" + rentabilidadCancelacion
 				+ ", numero=" + numero + ", importe=" + importe
 				+ ", fechaApertura=" + fechaApertura + ", fechaVencimiento="
-				+ fechaVencimiento + ", baja=" + baja + ", lstUsuarios="
-				+ lstUsuarios + ", lstOperaciones=" + lstOperaciones + "]";
+				+ fechaVencimiento + ", idUserOwner=" + idUserOwner + ", baja="
+				+ baja + ", lstUsuarios=" + lstUsuarios + ", lstOperaciones="
+				+ lstOperaciones + "]";
 	}
-	
+
 }

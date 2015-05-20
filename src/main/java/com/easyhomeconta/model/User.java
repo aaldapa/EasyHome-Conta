@@ -48,7 +48,7 @@ public class User implements UserDetails{
 	@Column(name = "id_user", unique = true, nullable = false)
 	private Integer idUser;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne
 	@JoinColumn(name = "id_familia", nullable = true)
 	private Familia familia;
 
@@ -68,7 +68,7 @@ public class User implements UserDetails{
 	@Column(nullable=false, unique=true, length=20)
 	private String username;
 	
-	@Column(nullable=false, length=20)
+	@Column(nullable=false)
 	private String password;
 	
 	private Date fechaUltimoLogin;
@@ -100,7 +100,7 @@ public class User implements UserDetails{
 	private List<Rol> lstRoles;
 	
 	//Mapeo para NaN con Roles (Usamos EAGER para que los roles se carguen por defecto al hacer la query de usuarios y no tengamos que hacer una join en la select)
-	@ManyToMany(fetch=FetchType.EAGER)
+	@ManyToMany (cascade=CascadeType.ALL)//(fetch=FetchType.EAGER)
 	@JoinTable(
 	      name="USER_PRODUCTOS",
 	      joinColumns={@JoinColumn(name="id_user")},

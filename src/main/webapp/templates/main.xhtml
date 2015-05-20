@@ -106,7 +106,8 @@
 			        <section class="content">
 						
 			          <!-- Default box -->
-			          <div class="box #{boxClass}">
+<!-- 			          <div class="box #{boxClass} box-solid"> -->
+					<div class="box #{boxClass}">
 			            <div class="box-header with-border">
 			              <h3 class="box-title #{boxTitleClass}">#{boxTitle}</h3>
 			              <div class="box-tools pull-right">
@@ -127,10 +128,19 @@
 	      
 	      <footer class="main-footer">
 	        <div class="pull-right hidden-xs">
-	          <b>Versión</b> 0.1
+ 	          <b><h:outputText value="#{msg['footer.version.text']} "/></b> <h:outputText value="#{msg['footer.version.number']}"/>
 	        </div>
-	        <strong>Copyright © 2015. EasyHome-Conta.</strong> Desarrollado por Alberto Cuesta Gutiérrez.
+			<strong>
+				<h:outputText value="#{msg['footer.copyright']}"/>
+			</strong>
+			<h:outputText value=" #{msg['footer.autor']}"/>
 	      </footer> 
+          
+          <script type="text/javascript">
+			$(document).ready(function(){
+				console.log('Hola pavo');
+		   });
+		 </script>
           
     </h:body>
 </html>

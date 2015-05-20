@@ -33,4 +33,14 @@ public interface UserDao extends GenericDao<User> {
      * @return
      */
      public List<User> findUsersbyUsername(String username);
+     
+     /**
+      * Lista con los usuarios a los que le pertenece un producto concreto.
+      * @param idProducto
+      * @return
+      */
+     public List<User> findUsersByProducto(Integer idProducto);
+     
+     public void deleteUser(User user);
+     
 }

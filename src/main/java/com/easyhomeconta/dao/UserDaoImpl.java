@@ -7,6 +7,7 @@ import javax.persistence.Query;
 
 import com.easyhomeconta.model.Rol;
 import com.easyhomeconta.model.User;
+import com.easyhomeconta.utils.Enumeraciones.SiNo;
 /**
  * 
  * @author Alberto
@@ -60,5 +61,25 @@ public class UserDaoImpl extends GenericDaoImpl<User> implements UserDao {
 	    return lstUsers;
 
 	}
-	
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<User> findUsersByProducto(Integer idProducto) {
+		
+		Query query=entityManager.createQuery(" select u from User u "
+				+ " join fetch u.lstProductos as p" 
+				+ " where p.idProducto = :idProducto"
+				+ " and p.baja = :baja");
+		
+		query.setParameter("idProducto", idProducto);
+		query.setParameter("baja", SiNo.N);
+		List<User> lstUsers=(List<User>)query.getResultList();
+		
+		return lstUsers;
+	}
+
+	@Override
+	public void deleteUser(User user) {
+		entityManager.remove(user);
+	}
 }

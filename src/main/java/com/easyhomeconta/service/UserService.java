@@ -2,6 +2,9 @@ package com.easyhomeconta.service;
 
 import java.util.List;
 
+import javax.faces.model.SelectItem;
+
+import org.primefaces.model.UploadedFile;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import com.easyhomeconta.model.Rol;
@@ -39,12 +42,15 @@ public interface UserService extends UserDetailsService{
 	
 	public void updateUser(User user);
 	
-	
 	/**
 	 * Crea o modifica el usuario en funcion de si el usuario pasado como parametro tiene o no id
 	 * @param user
+	 * @param selectedFamilia. Familia seleccionada para realizar comprobacion antes de guardar
+	 * @param cambiarFoto. Boleano que indica si se ha pulsado el boton de cambiarFoto y por tanto hay que cambiar la existente
+	 * @param imagen. Imagen cargada desde la vista
+	 * @param lstRoles. Lista de roles para el usuario seleccionados en la vista.
 	 */
-	public void saveUser(User user);
+	public void saveUser(User user,Integer selectedFamilia, Boolean cambiarFoto, UploadedFile imagen, List<Rol> lstRoles);
 	
 	/**
 	 * Elimina el usuario de la bd
@@ -63,5 +69,12 @@ public interface UserService extends UserDetailsService{
 	 * Devuelve el usuario con id pasado como parametro
 	 */
 	public User getUserById(Integer id);
+	
+	/**
+	 * Devuelve la lista de familiares que tiene un usuario (excluido el) para renderizarla en un selectedItems
+	 * @param idUsuario
+	 * @return
+	 */
+	public List<SelectItem> getFamiliaresForCombo(Integer idUsuario);
 	
 }

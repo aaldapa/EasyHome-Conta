@@ -18,8 +18,6 @@ import com.easyhomeconta.model.Categoria;
 @Named
 public class CategoriaDaoImpl extends GenericDaoImpl<Categoria> implements
 		CategoriaDao {
-
-	
 	
 	@SuppressWarnings("unchecked")
 	@Override

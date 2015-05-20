@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-       xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions"
       xmlns:c="http://java.sun.com/jsp/jstl/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:f="http://java.sun.com/jsf/core"
@@ -37,8 +37,10 @@
 							   		reflow="true"
 							   		draggableColumns="true" 
 							   		selectionMode="single" selection="#{tProductoBean.selectedItem}" rowKey="#{item.idTipoProducto}" 
-							   		paginator="true" paginatorPosition="bottom" rows="5" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="2,5,10"
-							   		
+							   		paginator="true" paginatorPosition="bottom" rows="#{msg['tabla.filas.medium']}" rowsPerPageTemplate="#{msg['tabla.filas.small']},#{msg['tabla.filas.medium']},#{msg['tabla.filas.large']}"
+							   		paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
+							   		currentPageReportTemplate="#{msg['tabla.pie']}"
+							   		emptyMessage="#{msg['tabla.filas.mensaje.no.records']}"
 							   	>
 									<!-- Al seleccionar una fila de la tabla realizar llama via ajax al metodo del listener	-->   	
 									<f:ajax event="rowSelect" listener="#{tProductoBean.onRowSelect}" render=":id_form"/>
@@ -46,8 +48,9 @@
 									<f:ajax event="rowUnselect" listener="#{tProductoBean.onRowUnselect}" render=":id_form"/>
 			
 									<f:facet name="header">
-							          <h:outputText value="#{msg['tipoproductos.listado.tabla.titulo']} (#{fn:length(tProductoBean.lstTipoProductos)})"/>
-							       </f:facet>
+<!-- 							          <h:outputText value="#{msg['tipoproductos.listado.tabla.titulo']} (#{fn:length(tProductoBean.lstTipoProductos)})"/> -->
+										<h:outputText value="#{msg['tipoproductos.listado.tabla.titulo']}"/>	
+							        </f:facet>
 							 		
 							 		<p:column headerText="#{msg['tipoproductos.listado.tabla.col.id']}"  width="50" priority="4">
 							           <h:outputText value="#{item.idTipoProducto}"/>
@@ -60,8 +63,8 @@
 							        <p:column headerText="#{msg['tipoproductos.listado.tabla.col.operable']}" priority="2" width="15%" >
 					          			<h:selectBooleanCheckbox value="#{item.operable}" disabled="true"/>
 							           		
-										<h:outputText value=" #{msg['tipoproductos.listado.tabla.col.operable.si']}" rendered="#{selected}" />
-							           	<h:outputText value=" #{msg['tipoproductos.listado.tabla.col.operable.no']}" rendered="#{!selected}" />
+										<h:outputText value=" #{msg['tipoproductos.listado.tabla.col.operable.si']}" rendered="#{!selected}" />
+							           	<h:outputText value=" #{msg['tipoproductos.listado.tabla.col.operable.no']}" rendered="#{selected}" />
 							          
 							       </p:column>
 							       
