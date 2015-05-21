@@ -53,9 +53,9 @@
   PATH="/pages/categoria/categoria.xhtml" SHAPE="480,417,0,0" model-entity="JSFProcessGroup"/>
  <PROCESS-ITEM NAME="rules:*:2" PATH="*" SHAPE="32,241,0,0" model-entity="JSFProcessGroup">
   <PROCESS-ITEM ID="rules:*:2" NAME="item" PATH="*" model-entity="JSFProcessItem">
-   <PROCESS-ITEM-OUTPUT ID="userList::#pages#user#user-list.xhtml"
-    NAME="output" PATH="/pages/user/user-list.xhtml"
-    TARGET="rules:#pages#user#user-list.xhtml" TITLE="userList" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="rolList::#pages#rol#rol-list.xhtml"
+    NAME="output" PATH="/pages/rol/rol-list.xhtml"
+    TARGET="rules:#pages#rol#rol-list.xhtml" TITLE="rolList" model-entity="JSFProcessItemOutput"/>
    <PROCESS-ITEM-OUTPUT
     ID="familiaList::#pages#familia#familia-list.xhtml" NAME="output1"
     PATH="/pages/familia/familia-list.xhtml"
@@ -106,4 +106,6 @@
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#pages#producto#producto.xhtml"
   PATH="/pages/producto/producto.xhtml" SHAPE="512,817,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#pages#rol#rol-list.xhtml"
+  PATH="/pages/rol/rol-list.xhtml" SHAPE="304,833,0,0" model-entity="JSFProcessGroup"/>
 </PROCESS>
