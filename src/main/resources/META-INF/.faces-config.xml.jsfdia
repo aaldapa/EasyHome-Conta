@@ -60,16 +60,14 @@
     ID="familiaList::#pages#familia#familia-list.xhtml" NAME="output1"
     PATH="/pages/familia/familia-list.xhtml"
     TARGET="rules:#pages#familia#familia-list.xhtml" TITLE="familiaList" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="bancoList::#pages#banco#banco-list.xhtml"
+    NAME="output2" PATH="/pages/banco/banco-list.xhtml"
+    TARGET="rules:#pages#banco#banco-list.xhtml" TITLE="bancoList" model-entity="JSFProcessItemOutput"/>
    <PROCESS-ITEM-OUTPUT
     ID="tipoProductoList::#pages#tipoproducto#tipo-producto-list.xhtml"
-    NAME="output2" PATH="/pages/tipoproducto/tipo-producto-list.xhtml"
+    NAME="output3" PATH="/pages/tipoproducto/tipo-producto-list.xhtml"
     TARGET="rules:#pages#tipoproducto#tipo-producto-list.xhtml"
     TITLE="tipoProductoList" model-entity="JSFProcessItemOutput"/>
-   <PROCESS-ITEM-OUTPUT
-    ID="categoriaList::#pages#categoria#categoria-list.xhtml"
-    NAME="output3" PATH="/pages/categoria/categoria-list.xhtml"
-    TARGET="rules:#pages#categoria#categoria-list.xhtml"
-    TITLE="categoriaList" model-entity="JSFProcessItemOutput"/>
    <PROCESS-ITEM-OUTPUT
     ID="productoList::#pages#producto#producto-list.xhtml"
     NAME="output4" PATH="/pages/producto/producto-list.xhtml"
@@ -108,4 +106,15 @@
   PATH="/pages/producto/producto.xhtml" SHAPE="512,817,0,0" model-entity="JSFProcessGroup"/>
  <PROCESS-ITEM NAME="rules:#pages#rol#rol-list.xhtml"
   PATH="/pages/rol/rol-list.xhtml" SHAPE="304,833,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#pages#banco#banco-list.xhtml"
+  PATH="/pages/banco/banco-list.xhtml" SHAPE="304,833,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#pages#banco#banco-list.xhtml:0" NAME="item"
+   PATH="/pages/banco/banco-list.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="bancoForm::#pages#banco#banco.xhtml"
+    NAME="output" PATH="/pages/banco/banco.xhtml"
+    TARGET="rules:#pages#banco#banco.xhtml" TITLE="bancoForm" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#pages#banco#banco.xhtml"
+  PATH="/pages/banco/banco.xhtml" SHAPE="512,1041,0,0" model-entity="JSFProcessGroup"/>
 </PROCESS>

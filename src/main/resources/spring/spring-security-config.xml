@@ -41,6 +41,7 @@
 		<intercept-url pattern="/pages/rol/**" access="hasRole('Administrador')"/>
 		<intercept-url pattern="/pages/familia/**" access="hasRole('Administrador')"/>
 		<intercept-url pattern="/pages/user/**" access="hasRole('Administrador')"/>
+		<intercept-url pattern="/pages/banco/**" access="hasRole('Administrador')"/>
 		<intercept-url pattern="/pages/tipoproducto/**" access="hasRole('Administrador')"/>
 		<intercept-url pattern="/pages/categoria/**" access="hasRole('Usuario')"/>
 		<intercept-url pattern="/pages/producto/**" access="hasRole('Usuario')"/>

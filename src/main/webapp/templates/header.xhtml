@@ -26,23 +26,20 @@
             <ul class="nav navbar-nav">
 
         	<li class="dropdown notifications-menu">
-	               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-	                 <i class="fa fa-wrench"></i>
-	                 <span class="label label-info"><h:outputText value="#{msg['header.menu.config']}"></h:outputText> </span>
-	               </a>
-		          <ul class="dropdown-menu">
-		            <li class="header"><h:outputLabel value="#{msg['header.menu.title2']}"/></li>
-		            <li style="position: relative; overflow: hidden; width: auto; height: 100px;">
-		              <ul class="menu">
-		            
-			            <li>
-		         			<h:commandLink action="#{categoriaBean.doListItems}"><i class="fa flaticon-categories"></i><span><h:outputText value="#{msg['header.menu.categorias']}"/></span></h:commandLink>
-		         		</li>
-			            <li><h:commandLink action="#{productoBean.doListItems}"><span class="fa flaticon-savings"></span><span><h:outputText value="#{msg['header.menu.productos']}"/></span></h:commandLink></li>
-		              </ul>
-		            </li>
-		          </ul>
-		       </li>
+               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                 <i class="fa fa-wrench"></i>
+                 <span class="label label-info"><h:outputText value="#{msg['header.menu.config']}"></h:outputText> </span>
+               </a>
+	          <ul class="dropdown-menu">
+	            <li class="header"><h:outputLabel value="#{msg['header.menu.title2']}"/></li>
+	            <li style="position: relative; overflow: hidden; width: auto; height: 100px;">
+	              <ul class="menu">
+		            <li><h:commandLink action="#{categoriaBean.doListItems}"><i class="fa flaticon-categories"></i><span><h:outputText value="#{msg['header.menu.categorias']}"/></span></h:commandLink></li>
+		            <li><h:commandLink action="#{productoBean.doListItems}"><span class="fa flaticon-savings"></span><span><h:outputText value="#{msg['header.menu.productos']}"/></span></h:commandLink></li>
+	              </ul>
+	            </li>
+	          </ul>
+	       </li>
 
 			<sec:authorize access="hasAnyRole('Administrador')">
 	        	<li class="dropdown notifications-menu">
@@ -59,7 +56,7 @@
 			            <li><h:commandLink action="#{familiaBean.doListFamilias}"><i class="fa fa-users fa-fw"></i><span><h:outputText value="#{msg['header.menu.familias']}"/></span></h:commandLink></li>
 			            <li><h:commandLink action="#{userBean.doListUsers}"><i class="fa fa-user fa-fw"></i><span><h:outputText value="#{msg['header.menu.users']}"/></span></h:commandLink></li>
 			            <li class="divider"></li>
-			            <li><a href="#"><i class="fa fa-university fa-fw"></i><h:outputText value="#{msg['header.menu.bancos']}"/></a></li>
+			            <li><h:commandLink action="#{bancoBean.doListItems}"><i class="fa fa-university fa-fw"></i><span><h:outputText value="#{msg['header.menu.bancos']}"/></span></h:commandLink></li>
 			             <li><h:commandLink action="#{tProductoBean.doListItems}"><i class="fa fa-money fa-fw"></i><h:outputText value="#{msg['header.menu.tipos.productos']}"/></h:commandLink> </li>
 		              </ul>
 		            </li>

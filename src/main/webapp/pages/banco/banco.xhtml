@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">  
+      
+    <h:body>	
+    	
+    	<ui:composition template="../../templates/main.xhtml">
+			<!-- Parametros para el paso de titulos, cabeceras, etc -->
+			<ui:param name="headerTitle1" value="#{msg['bancos.listado.titulo']}" />
+			<ui:param name="headerTitle2" value="" />
+			<ui:param name="boxTitle" value="#{msg['banco.form.subtitulo']}" />
+			<ui:param name="boxFooter" value="" />
+			<ui:param name="boxClass" value="box-primary" />
+			<ui:param name="boxTitleClass" value="" />
+			
+			<!-- Para la inclusion de javascript -->
+			<ui:define name="scripts"></ui:define>
+			
+			<ui:define name="content">
+				
+				<h:form id="form" styleClass="form-horizontal"  role="form" enctype="multipart/form-data">	
+					<h:inputHidden value="#{bancoBean.banco.idBanco}"/>
+					<div class="box-body">
+						<p:messages showDetail="true" globalOnly="true" autoUpdate="true" closable="true"/>
+						<div class="row alineacion-vertical">
+							
+							<h:inputHidden value="#{bancoBean.cambiarFoto}" id="id_campo_cambiar_foto"/>
+							 <!-- Foto y carga de foto -->
+							<div class="col-md-4">
+						    	<div class="col-md-offset-2 col-md-9">
+									<div class="col-md-offset-1  col-md-10">			
+										<div class="form-group">
+											<c:choose>
+							                	<c:when test="#{not empty bancoBean.banco.photoDSContent}">
+							                		<p:graphicImage id="image" value="#{bancoBean.banco.photoDSContent}" styleClass="img-rounded img-responsive center-block" cache="false"></p:graphicImage>	
+							                	</c:when>
+							                	<c:otherwise>
+							                		<h:graphicImage  library="img" name="no-imagen.jpg" alt="" styleClass="img-rounded img-responsive center-block" />
+							                	</c:otherwise>
+							                </c:choose>
+										</div>
+						            </div>
+						        </div>
+						          
+
+								<div class="col-md-offset-2 col-md-9 ">
+
+									<div class="col-md-offset-1 col-md-10 ">
+						            	<div class="form-group">
+							            	<h:commandButton id="id_boton_cambiar_foto" type="button" class="btn btn-default btn-sm center-block" value="#{msg['banco.form.logo']}" />
+				 					     </div>	
+					            	</div>
+					            </div>
+					            
+					            <!-- Campos de texto -->
+					            <div class="col-md-12">
+						            <div class="form-group">
+						            	<p:fileUpload id="id_fileUpload" 
+						            				value="#{bancoBean.banco.imagen}"
+			 					         			label="#{msg['banco.form.logo']}" 
+			 					         			mode="simple"
+			 					         			skinSimple="false"
+			 					         			styleClass="btn btn-primary hide center-block"
+				         				/>
+			 					     </div>	
+				            	</div><!-- /.col-md-12-->
+						    </div><!-- /.col-md-4-->
+						    <div class="col-md-8">
+						    
+						    <!-- Text input-->
+						          <div class="form-group">
+						            <h:message for="id_nombre" errorClass="has-error control-label" infoClass="has-info control-label"/>
+						            <label class="col-md-1 control-label" for="textinput">
+						            	<h:outputLabel value="#{msg['banco.form.nombre']}"/>
+						            </label>
+						            <div class="col-md-9">
+						              <h:inputText id="id_nombre" pt:placeholder="#{msg['banco.form.nombre']}" class="form-control" label="#{msg['banco.form.nombre']}" value="#{bancoBean.banco.nombre}" required="true" requiredMessage="#{msg['error.campo.obligatorio']}"/>
+						            </div>
+						          </div>
+						    </div>
+						    
+						    
+						</div><!-- /.row -->
+					</div><!-- /.box-body -->
+					
+					<!-- Para la botonera -->
+			        <div class="box-footer">
+ 						
+    					<div class="btn-toolbar">
+    						<h:commandLink action="#{bancoBean.doListItems}" styleClass="btn btn-default pull-right" value="#{msg['boton.volver']}" immediate="true" title="#{msg['boton.volver']}"/>
+   					 		<h:commandButton styleClass="btn btn-primary pull-right" value="#{msg['boton.guardar']}" action="#{bancoBean.doSaveItem}" title="#{msg['boton.guardar']}"/>
+    					</div>
+		    			
+			        </div><!-- /.box-footer-->
+		    	</h:form>
+		    	
+		    	<script type="text/javascript">
+				   $(document).ready(function(){
+					   /*Al pulsar el boton se muestra/oculta el componente para subir fotos,
+						 ademas se cambia el texto del boton y el el valor de una variable de control que determina si se desea subir imagen*/ 
+						$(PrimeFaces.escapeClientId('form:id_boton_cambiar_foto')).on('click', function(){
+						    var estado=$(PrimeFaces.escapeClientId('form:id_campo_cambiar_foto')).val();
+						    console.log('Estado actual: '+estado);
+						    
+				    		if (estado=='true'){
+				    			$(PrimeFaces.escapeClientId('form:id_campo_cambiar_foto')).val('false');
+				    			$(PrimeFaces.escapeClientId('form:id_fileUpload')).addClass('hide');
+				    			$(this).val("#{msg['banco.form.logo']}");
+				    		}
+				    		else{
+				    			$(PrimeFaces.escapeClientId('form:id_campo_cambiar_foto')).val('true');
+				    			$(PrimeFaces.escapeClientId('form:id_fileUpload')).removeClass('hide');
+				    			$(this).val("#{msg['boton.cancelar']}");
+				    			
+				    		}
+			    			//console.log('cambiado: '+$(PrimeFaces.escapeClientId('form:id_campo_cambiar_foto')).val());
+							//console.log('Invisible: '+$(PrimeFaces.escapeClientId('form:id_fileUpload')).hasClass('hide'));
+					  	});
+				   });
+				 </script>
+				
+		    	
+			</ui:define>
+    	</ui:composition>
+    	
+    </h:body>
+
+</html>

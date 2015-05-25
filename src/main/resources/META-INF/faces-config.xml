@@ -66,14 +66,19 @@
 			<to-view-id>/pages/rol/rol-list.xhtml</to-view-id>
 			<redirect/>
 		</navigation-case>
+				<navigation-case>
+			<from-outcome>familiaList</from-outcome>
+			<to-view-id>/pages/familia/familia-list.xhtml</to-view-id>
+			<redirect/>
+		</navigation-case>
 		<navigation-case>
 			<from-outcome>userList</from-outcome>
 			<to-view-id>/pages/user/user-list.xhtml</to-view-id>
 			<redirect/>
 		</navigation-case>
 		<navigation-case>
-			<from-outcome>familiaList</from-outcome>
-			<to-view-id>/pages/familia/familia-list.xhtml</to-view-id>
+			<from-outcome>bancoList</from-outcome>
+			<to-view-id>/pages/banco/banco-list.xhtml</to-view-id>
 			<redirect/>
 		</navigation-case>
 		<navigation-case>
@@ -121,6 +126,16 @@
 		<navigation-case>
 			<from-outcome>userForm</from-outcome>
 			<to-view-id>/pages/user/user.xhtml</to-view-id>
+			<redirect/>
+		</navigation-case>
+	</navigation-rule>
+	
+	<!-- Bancos -->
+	<navigation-rule>
+		<from-view-id>/pages/banco/banco-list.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>bancoForm</from-outcome>
+			<to-view-id>/pages/banco/banco.xhtml</to-view-id>
 			<redirect/>
 		</navigation-case>
 	</navigation-rule>

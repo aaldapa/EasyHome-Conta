@@ -13,13 +13,11 @@ public class FamiliaBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	
-	
 	private Integer idFamilia;
 	private String nombre;
 	
 	public FamiliaBean() {
-		// TODO Auto-generated constructor stub
+		super();
 	}
 	
 	public FamiliaBean(Integer idFamilia, String nombre) {

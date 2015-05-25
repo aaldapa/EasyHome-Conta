@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">  
+      
+    <h:body>	
+    	
+    	<ui:composition template="../../templates/main.xhtml">
+			<!-- Parametros para el paso de titulos, cabeceras, etc -->
+			<ui:param name="headerTitle1" value="#{msg['bancos.listado.titulo']}" />
+			<ui:param name="headerTitle2" value="" />
+			<ui:param name="boxTitle" value="#{msg['bancos.listado.subtitulo']}" />
+			<ui:param name="boxFooter" value="" />
+			<ui:param name="boxClass" value="box-primary" />
+			<ui:param name="boxTitleClass" value="" />
+			
+			<!-- Para la inclusion de javascript -->
+			<ui:define name="scripts"></ui:define>
+			
+			<ui:define name="content">
+				
+				<h:form id="id_form" styleClass="form-horizontal"  role="form">	
+					
+					<div class="box-body">
+						<p:messages showDetail="true" globalOnly="true" autoUpdate="true" closable="true"/>
+						<div class="row">
+							 <div class="col-md-12">		
+							 	<p:dataTable id="id_data_table" var="item" value="#{bancoBean.lstItems}" style="margin-bottom:20px" tableStyle="font-size: 90%;" 
+							   		sortBy="#{item.idBanco}"
+							   		reflow="true"
+							   		draggableColumns="true" 
+							   		selectionMode="single" selection="#{bancoBean.selectedItem}" rowKey="#{item.idBanco}" 
+							   		paginator="true" paginatorPosition="bottom" rows="#{msg['tabla.filas.medium']}" rowsPerPageTemplate="#{msg['tabla.filas.small']},#{msg['tabla.filas.medium']},#{msg['tabla.filas.large']}"
+							   		paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
+							   		currentPageReportTemplate="#{msg['tabla.pie']}"
+							   		emptyMessage="#{msg['tabla.filas.mensaje.no.records']}"
+							   	>
+									<!-- Al seleccionar una fila de la tabla realizar llama via ajax al metodo del listener	-->   	
+									<f:ajax event="rowSelect" listener="#{bancoBean.onRowSelect}" render=":id_form"/>
+									<!-- Al deseleccionar una fila de la tabla realizar llama via ajax al metodo del listener	-->
+									<f:ajax event="rowUnselect" listener="#{bancoBean.onRowUnselect}" render=":id_form"/>
+			
+									<f:facet name="header">
+										<h:outputText value="#{msg['bancos.listado.tabla.titulo']}"/>	
+							        </f:facet>
+							 		
+							 		<p:column headerText="#{msg['bancos.listado.tabla.col.id']}"  width="50" priority="3">
+							           <h:outputText value="#{item.idBanco}"/>
+							       	</p:column>
+							 
+							 		<p:column headerText="#{msg['bancos.listado.tabla.col.logo']}" priority="2" width="20%">
+				                		<p:graphicImage value="#{bancoBean.image}" var="imageID" alt="Img" styleClass="img-rounded img-responsive center-block"  width="100" height="100" cache="false"
+				                		rendered="#{not empty item.logoBanco}">
+              										<f:param name="imageID" value="#{item.idBanco}" />
+          										</p:graphicImage>		
+<!-- 				                		<h:graphicImage  library="img" name="no-imagen.jpg" alt="" styleClass="img-rounded img-responsive center-block"  -->
+<!-- 				                		rendered="#{empty item.logoBanco}"/> -->
+							       	</p:column>
+							 									 
+							       <p:column headerText="#{msg['bancos.listado.tabla.col.nombre']}" sortBy="#{item.nombre}" priority="1">
+							           <h:outputText value="#{item.nombre}"/>
+							       </p:column>
+							       
+							   	</p:dataTable>
+							</div>
+						</div><!-- /.row -->
+					</div><!-- /.box-body -->
+					
+					<!-- Para la botonera -->
+			        <div class="box-footer">
+ 						
+    					<div class="btn-toolbar">
+    						<!-- Gracias al atributo rendered los botones de editar y eliminar se muestran siempre que el atributo selectedRow es true. 
+    						El valor del atributo es modificado cada vez que se selecciona o deselecciona una fila de la tabla, por medio de una llamada ajax -->
+    						<c:set var="isRowSelected" value="#{bancoBean.selectedRow}"/>
+    					
+    						<h:commandButton type="button" id="id_boton_eliminar" styleClass="btn btn-default pull-right" title="#{msg['boton.eliminar']}" value="#{msg['boton.eliminar']}" onclick="mostrarModal();"
+    							rendered="#{isRowSelected}"/>
+    						
+    						<h:commandLink id="id_boton_editar" styleClass="btn btn-default pull-right"	action="#{bancoBean.doLoadForm}" title="#{msg['boton.editar']}" value="#{msg['boton.editar']}" 
+    							rendered="#{isRowSelected}"/>
+    						
+    						 <h:commandButton action="#{bancoBean.doNewForm}" styleClass="btn btn-primary pull-right" title="#{msg['boton.nuevo']}" value="#{msg['boton.nuevo']}"/>
+
+<!-- 						<ui:repeat value="#{bancoBean.images}" var="imageID"> -->
+<!-- 							#{imageID}<p:graphicImage value="#{bancoBean.image}"> -->
+<!-- 								<f:param name="imageID" value="#{imageID}" id_="image_id"/> -->
+<!-- 							</p:graphicImage> -->
+<!-- 						</ui:repeat> -->
+					</div>
+			        </div><!-- /.box-footer-->
+			        
+			        <!-- Ventana modal de confirmacion para eliminar un registro -->
+		            <div class="modal" >
+		              <div class="modal-dialog">
+		                <div class="modal-content">
+		                  <div class="modal-header">
+		                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="ocultarModal();"><span aria-hidden="true">×</span></button>
+		                    <h4 class="modal-title"><h:outputLabel value="#{msg['modal.titulo']}"/></h4>
+		                  </div>
+		                  <div class="modal-body">
+		                    <p><h:outputText value="#{msg['bancos.listado.botones.confirmacion']}"/></p>
+		                    <p><h:outputText value="#{msg['modal.confirmacion']}"/></p>
+		                  </div>
+		                  <div class="modal-footer">
+			                   <button type="button" class="btn btn-default pull-left" data-dismiss="modal" onclick="ocultarModal();">
+			                    	<h:outputText value="#{msg['boton.cancelar']}"></h:outputText>
+								</button>
+								
+			                    <h:commandLink id="id_boton_eliminar2" styleClass="btn btn-primary"	action="#{bancoBean.doDeleteItem}"	onclick="ocultarModal();"
+			    						title="#{msg['boton.eliminar']}" value="#{msg['boton.aceptar']}" rendered="#{isRowSelected}">
+	    							<f:ajax execute="id_form" render="@form" />
+								</h:commandLink>
+		                  </div>
+		                </div><!-- /.modal-content -->
+		              </div><!-- /.modal-dialog -->
+		            </div><!-- /.modal -->        
+			        
+		    	</h:form>
+		    	
+			</ui:define>
+    	</ui:composition>
+    	
+    </h:body>
+
+</html>

@@ -6,7 +6,6 @@ package com.easyhomeconta.service;
 import java.util.List;
 
 import com.easyhomeconta.beans.ProductoBean;
-import com.easyhomeconta.model.Producto;
 
 /**
  * @author Alberto
@@ -30,13 +29,6 @@ public interface ProductoService {
 	 * @return
 	 */
 	public ProductoBean saveProducto(ProductoBean bean, Integer idUser);
-	
-	/**
-	 * Guarda en bd el producto que recibe
-	 * @param producto
-	 * @return
-	 */
-	public Producto updateProducto(Producto producto);
 	
 	/**
 	 * Da de baja el producto al que pertenezca el id pasado como parametro
