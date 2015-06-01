@@ -45,6 +45,7 @@
 		<intercept-url pattern="/pages/tipoproducto/**" access="hasRole('Administrador')"/>
 		<intercept-url pattern="/pages/categoria/**" access="hasRole('Usuario')"/>
 		<intercept-url pattern="/pages/producto/**" access="hasRole('Usuario')"/>
+		<intercept-url pattern="/pages/cuenta/**" access="hasRole('Usuario')"/>
 		
 	    <intercept-url pattern="/**" access="denyAll"/>
 	    

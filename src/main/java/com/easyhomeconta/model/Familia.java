@@ -9,7 +9,6 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -36,7 +35,7 @@ public class Familia implements Serializable{
 	private String nombre;
 
 	//Lista de usuarios que componen la familia
-	@OneToMany( fetch = FetchType.LAZY, mappedBy = "familia")
+	@OneToMany(mappedBy = "familia")
 	private List<User> lstUsers= new ArrayList<User>();
 	
 	public Familia() {

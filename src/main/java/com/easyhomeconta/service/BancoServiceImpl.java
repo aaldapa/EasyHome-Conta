@@ -12,7 +12,7 @@ import org.apache.log4j.Logger;
 import org.primefaces.model.UploadedFile;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.easyhomeconta.beans.BancoBean;
+import com.easyhomeconta.beans.BancoForm;
 import com.easyhomeconta.dao.BancoDao;
 import com.easyhomeconta.model.Banco;
 import com.easyhomeconta.utils.Enumeraciones.SiNo;
@@ -42,12 +42,12 @@ public class BancoServiceImpl implements BancoService {
 	}
 
 	@Override
-	public List<BancoBean> getLstBancosActivos() {
+	public List<BancoForm> getLstBancosActivos() {
 		 List<Banco>lstBancos=bancoDao.findLstBancosActivos();
-		 List<BancoBean> lstBeans=new ArrayList<BancoBean>();
+		 List<BancoForm> lstBeans=new ArrayList<BancoForm>();
 		 
 		 for(Banco banco:lstBancos)
-			 lstBeans.add(new BancoBean(banco.getIdBanco(), banco.getNombre(), banco.getLogo()));
+			 lstBeans.add(new BancoForm(banco.getIdBanco(), banco.getNombre(), banco.getLogo()));
 		 
 			 
 		return lstBeans;
@@ -55,7 +55,7 @@ public class BancoServiceImpl implements BancoService {
 
 	@Override
 	@Transactional
-	public BancoBean saveBanco(BancoBean bean, Boolean cambiarFoto) {
+	public BancoForm saveBanco(BancoForm bean, Boolean cambiarFoto) {
 		
 		if (bean.getIdBanco()==null){
 			Banco newBanco=new Banco(null, bean.getNombre(), SiNo.N, parseUploadedFileToArrayByte(bean.getImagen()));

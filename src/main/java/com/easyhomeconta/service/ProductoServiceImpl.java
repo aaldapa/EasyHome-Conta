@@ -11,7 +11,7 @@ import javax.inject.Named;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import com.easyhomeconta.beans.ProductoBean;
+import com.easyhomeconta.beans.ProductoForm;
 import com.easyhomeconta.dao.BancoDao;
 import com.easyhomeconta.dao.ProductoDao;
 import com.easyhomeconta.dao.TipoProductoDao;
@@ -44,9 +44,9 @@ public class ProductoServiceImpl implements ProductoService {
 	
 	
 	@Override
-	public List<ProductoBean> getProductosForUser(Integer idUser) {
+	public List<ProductoForm> getProductosForUser(Integer idUser) {
 		List<Producto> lstProductos=productoDao.findProductosForUser(idUser);
-		List<ProductoBean> lstBeans=new ArrayList<ProductoBean>();
+		List<ProductoForm> lstBeans=new ArrayList<ProductoForm>();
 		for (Producto producto:lstProductos)
 			lstBeans.add(parseEntityToBean(producto, idUser));
 		return lstBeans;
@@ -85,7 +85,7 @@ public class ProductoServiceImpl implements ProductoService {
 	
 	@Override
 	@Transactional
-	public ProductoBean saveProducto(ProductoBean bean, Integer idUser) {
+	public ProductoForm saveProducto(ProductoForm bean, Integer idUser) {
 		Producto producto=new Producto();
 		List <User> lstUsuariosProducto=new ArrayList<User>();
 		Banco banco=bancoDao.findById(bean.getIdBanco());
@@ -204,9 +204,9 @@ public class ProductoServiceImpl implements ProductoService {
 	 * * @param idUser logado
 	 * @return
 	 */
-	private ProductoBean parseEntityToBean(Producto producto, Integer IdUser){
+	private ProductoForm parseEntityToBean(Producto producto, Integer IdUser){
 				
-		ProductoBean bean=new ProductoBean();
+		ProductoForm bean=new ProductoForm();
 		bean.setIdProducto(producto.getIdProducto());
 		bean.setIdBanco(producto.getBanco().getIdBanco());
 		bean.setNombreBanco(producto.getBanco().getNombre());

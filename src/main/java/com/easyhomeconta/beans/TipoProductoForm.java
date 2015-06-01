@@ -10,18 +10,18 @@ import java.io.Serializable;
  *
  */
 @SuppressWarnings("serial")
-public class TipoProductoBean implements Serializable {
+public class TipoProductoForm implements Serializable {
 
 	private Integer idTipoProducto;
 	private String nombre;
 	private Boolean operable;
 	private String notas;
 	
-	public TipoProductoBean() {
+	public TipoProductoForm() {
 		super();
 	}
 
-	public TipoProductoBean(Integer idProducto, String nombre, String notas, Boolean operable) {
+	public TipoProductoForm(Integer idProducto, String nombre, String notas, Boolean operable) {
 		super();
 		this.idTipoProducto = idProducto;
 		this.nombre = nombre;

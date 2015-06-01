@@ -8,16 +8,20 @@ import java.io.InputStream;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 import org.primefaces.model.DefaultStreamedContent;
+
+import com.easyhomeconta.utils.NumeroUtil;
 
 /**
  * @author Alberto
  *
  */
-@SuppressWarnings("serial")
-public class ProductoBean implements Serializable {
+public class ProductoForm implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
 	private Integer idProducto;
 	private Integer idTipoProducto;
 	private String nombreTProducto;
@@ -36,6 +40,12 @@ public class ProductoBean implements Serializable {
 	private Date fechaVencimiento;
 	private String[] idsPermisos;
 	private Boolean owner;
+
+	//Campos exclusivos para ser utilizados en la renderizacion de listados de posicion global
+	private Date fechaUltOperacion;
+	private BigDecimal balance;
+	private List<OperacionForm> lstOperacionesForm;
+	private Boolean activo;
 	
 	public String[] getIdsPermisos() {
 		return idsPermisos;
@@ -45,9 +55,7 @@ public class ProductoBean implements Serializable {
 		this.idsPermisos = idsPermisos;
 	}
 
-	
-		
-	public ProductoBean() {
+	public ProductoForm() {
 		super();
 	}
 
@@ -197,6 +205,48 @@ public class ProductoBean implements Serializable {
 
 	public void setOwner(Boolean owner) {
 		this.owner = owner;
+	}
+
+	public Date getFechaUltOperacion() {
+		return fechaUltOperacion;
+	}
+
+	public void setFechaUltOperacion(Date fechaUltOperacion) {
+		this.fechaUltOperacion = fechaUltOperacion;
+	}
+
+	public BigDecimal getBalance() {
+		return balance;
+	}
+
+	public void setBalance(BigDecimal balance) {
+		this.balance = balance;
+	}
+	
+	public String getBalanceStr(){
+		return NumeroUtil.formatearACastellano(this.getBalance());
+	}
+
+	public List<OperacionForm> getLstOperacionesForm() {
+		return lstOperacionesForm;
+	}
+
+	public void setLstOperacionesForm(List<OperacionForm> lstOperacionesForm) {
+		this.lstOperacionesForm = lstOperacionesForm;
+	}
+
+	/**
+	 * @return the activo
+	 */
+	public Boolean getActivo() {
+		return activo;
+	}
+
+	/**
+	 * @param activo the activo to set
+	 */
+	public void setActivo(Boolean activo) {
+		this.activo = activo;
 	}
 	
 }

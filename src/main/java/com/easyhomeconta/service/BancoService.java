@@ -7,7 +7,7 @@ import java.util.List;
 
 import javax.faces.model.SelectItem;
 
-import com.easyhomeconta.beans.BancoBean;
+import com.easyhomeconta.beans.BancoForm;
 import com.easyhomeconta.model.Banco;
 
 /**
@@ -34,7 +34,7 @@ public interface BancoService {
 	 * Devuelve una lista de bancos activos (baja N) volcada a un bean para renderizarle 
 	 * @return
 	 */
-	public List<BancoBean> getLstBancosActivos();
+	public List<BancoForm> getLstBancosActivos();
 	
 	/**
 	 * Modifica o crea un nuevo banco en base de datos para el usuario logado en funcion de si
@@ -43,7 +43,7 @@ public interface BancoService {
 	 * @param cambiarFoto.Flag que indica si se ha pulsado el cambio de foto en la vista.
 	 * @return
 	 */
-	public BancoBean saveBanco(BancoBean banco,Boolean cambiarFoto);
+	public BancoForm saveBanco(BancoForm banco,Boolean cambiarFoto);
 	
 	
 	/**

@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.faces.model.SelectItem;
 
-import com.easyhomeconta.beans.TipoProductoBean;
+import com.easyhomeconta.beans.TipoProductoForm;
 
 /**
  * 
@@ -18,7 +18,7 @@ public interface TipoProductoService {
 	 * @param idUser
 	 * @return
 	 */
-	public List<TipoProductoBean> getLstTipoProductosActivos();
+	public List<TipoProductoForm> getLstTipoProductosActivos();
 
 	
 	/**
@@ -33,7 +33,7 @@ public interface TipoProductoService {
 	 * @param tipoProducto
 	 * @return
 	 */
-	public TipoProductoBean saveTipoProducto(TipoProductoBean bean);
+	public TipoProductoForm saveTipoProducto(TipoProductoForm bean);
 	
 	/**
 	 * Baja logica del tipo de producto al que pertenezca el id pasado como parametro

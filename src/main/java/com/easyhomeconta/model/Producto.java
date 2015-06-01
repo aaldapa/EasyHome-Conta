@@ -25,6 +25,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import com.easyhomeconta.utils.Enumeraciones.SiNo;
 
 /**
@@ -92,7 +95,8 @@ public class Producto implements Serializable{
 	@ManyToMany(cascade=CascadeType.ALL ,mappedBy="lstProductos")
 	private List<User> lstUsuarios;
 
-	@OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, mappedBy = "producto")
+	@OneToMany( cascade = CascadeType.ALL, mappedBy = "producto")
+	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<Operacion> lstOperaciones;
 	
 	public Producto() {

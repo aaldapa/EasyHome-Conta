@@ -15,7 +15,7 @@ import javax.inject.Named;
 import org.apache.log4j.Logger;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import com.easyhomeconta.beans.ProductoBean;
+import com.easyhomeconta.beans.ProductoForm;
 import com.easyhomeconta.model.User;
 import com.easyhomeconta.service.BancoService;
 import com.easyhomeconta.service.ProductoService;
@@ -54,10 +54,10 @@ public class ProductoController extends BasicManageBean {
 	//Inicializo la clase con la fecha actual para compara en la tabla los productos que tienen fecha de vencimiento inferior para marcarlos en otro color
 	private Date currentDate=new Date();
 	
-	private List<ProductoBean> lstItems=new ArrayList<ProductoBean>();
+	private List<ProductoForm> lstItems=new ArrayList<ProductoForm>();
 	
-	private ProductoBean selectedItem;
-	private ProductoBean producto;
+	private ProductoForm selectedItem;
+	private ProductoForm producto;
 	private Boolean selectedRow;
 	
 	
@@ -83,7 +83,7 @@ public class ProductoController extends BasicManageBean {
 		lstBancos=bancoService.getLstBancosActivosForCombo();
 		lstTProductos=tProductoService.getLstTipoProductosActivosForCombo();
 		familiares=userService.getFamiliaresForCombo(getUserLogado().getIdUser());
-		setProducto(new ProductoBean());
+		setProducto(new ProductoForm());
 		//Marco el producto como propietario del usuario logado
 		producto.setOwner(true);
 		return "productoForm";
@@ -161,27 +161,27 @@ public class ProductoController extends BasicManageBean {
     }
 
 	
-	public List<ProductoBean> getLstItems() {
+	public List<ProductoForm> getLstItems() {
 		return lstItems;
 	}
 
-	public void setLstItems(List<ProductoBean> lstProductos) {
+	public void setLstItems(List<ProductoForm> lstProductos) {
 		this.lstItems = lstProductos;
 	}
 
-	public ProductoBean getSelectedItem() {
+	public ProductoForm getSelectedItem() {
 		return selectedItem;
 	}
 
-	public void setSelectedItem(ProductoBean selectedItem) {
+	public void setSelectedItem(ProductoForm selectedItem) {
 		this.selectedItem = selectedItem;
 	}
 
-	public ProductoBean getProducto() {
+	public ProductoForm getProducto() {
 		return producto;
 	}
 
-	public void setProducto(ProductoBean producto) {
+	public void setProducto(ProductoForm producto) {
 		this.producto = producto;
 	}
 

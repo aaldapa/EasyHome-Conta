@@ -18,7 +18,7 @@ import org.apache.log4j.Logger;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
-import com.easyhomeconta.beans.BancoBean;
+import com.easyhomeconta.beans.BancoForm;
 import com.easyhomeconta.service.BancoService;
 
 /**
@@ -35,10 +35,10 @@ public class BancoController extends BasicManageBean {
 	@Inject
 	BancoService bancoService;
 	
-	private List<BancoBean> lstItems=new ArrayList<BancoBean>();
+	private List<BancoForm> lstItems=new ArrayList<BancoForm>();
 	
-	private BancoBean selectedItem;
-	private BancoBean banco;
+	private BancoForm selectedItem;
+	private BancoForm banco;
 	private Boolean selectedRow;
 	private Boolean cambiarFoto;	
 	
@@ -58,7 +58,7 @@ public class BancoController extends BasicManageBean {
 	 */
 	public String doNewForm(){
 		setCambiarFoto(false);
-		setBanco(new BancoBean());
+		setBanco(new BancoForm());
 		return "bancoForm";
 	}
 	
@@ -154,27 +154,27 @@ public class BancoController extends BasicManageBean {
 	
     
     
-	public List<BancoBean> getLstItems() {
+	public List<BancoForm> getLstItems() {
 		return lstItems;
 	}
 
-	public void setLstItems(List<BancoBean> lstItems) {
+	public void setLstItems(List<BancoForm> lstItems) {
 		this.lstItems = lstItems;
 	}
 
-	public BancoBean getSelectedItem() {
+	public BancoForm getSelectedItem() {
 		return selectedItem;
 	}
 
-	public void setSelectedItem(BancoBean selectedItem) {
+	public void setSelectedItem(BancoForm selectedItem) {
 		this.selectedItem = selectedItem;
 	}
 
-	public BancoBean getBanco() {
+	public BancoForm getBanco() {
 		return banco;
 	}
 
-	public void setBanco(BancoBean banco) {
+	public void setBanco(BancoForm banco) {
 		this.banco = banco;
 	}
 
@@ -198,7 +198,7 @@ public class BancoController extends BasicManageBean {
 	public List<String> getImages() {
 		List<String> l = new ArrayList<String>();
 				
-		for (BancoBean b : bancoService.getLstBancosActivos())
+		for (BancoForm b : bancoService.getLstBancosActivos())
 			l.add(b.getIdBanco().toString());
 		return l;
 	}

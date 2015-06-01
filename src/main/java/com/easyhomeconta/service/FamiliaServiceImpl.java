@@ -13,7 +13,7 @@ import javax.inject.Named;
 import org.apache.log4j.Logger;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.easyhomeconta.beans.FamiliaBean;
+import com.easyhomeconta.beans.FamiliaForm;
 import com.easyhomeconta.dao.FamiliaDao;
 import com.easyhomeconta.model.Familia;
 
@@ -48,10 +48,10 @@ public class FamiliaServiceImpl implements FamiliaService {
 	}
 
 	@Override
-	public List<FamiliaBean> getLstFamiliasAllBean() {
+	public List<FamiliaForm> getLstFamiliasAllBean() {
 		 
 		List<Familia> lstFamilias=familiaDao.findAll();
-		List<FamiliaBean> lstFamiliasBean=new ArrayList<FamiliaBean>();
+		List<FamiliaForm> lstFamiliasBean=new ArrayList<FamiliaForm>();
 		
 		//Cargo la lista con las familias parseadas a beans
 		for (Familia fam:lstFamilias)
@@ -60,14 +60,14 @@ public class FamiliaServiceImpl implements FamiliaService {
 		return lstFamiliasBean;
 	}
 	
-	private FamiliaBean familiaParseFamiliaBean(Familia familia){
-		FamiliaBean familiaBean=new FamiliaBean(familia.getIdFamilia(), familia.getNombre());
+	private FamiliaForm familiaParseFamiliaBean(Familia familia){
+		FamiliaForm familiaBean=new FamiliaForm(familia.getIdFamilia(), familia.getNombre());
 		return familiaBean;
 	}
 
 	@Override
 	@Transactional
-	public FamiliaBean saveFamilia(FamiliaBean bean) {
+	public FamiliaForm saveFamilia(FamiliaForm bean) {
 		Familia familia=new Familia();
 		
 		//Si el id esta cargado realizamos una modificacion

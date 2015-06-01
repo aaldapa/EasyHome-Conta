@@ -54,8 +54,8 @@
 		                <i class="fa flaticon-savings"></i><i class="fa fa-angle-left pull-right"></i><span>Mis productos</span>
 		                
 		              </a>
-		              <ul class="treeview-menu">
-		                <li class="active"><a href="../layout/top-nav.html"><i class="fa fa-circle-o"></i> Cuentas</a></li>
+		              <ul class="treeview-menu" style="#{ubicacionActiva=='cuenta' || 'deposito' || 'otro' ? 'display:block': ''}">
+		                <li class="#{ubicacionActiva=='cuenta' ? 'active': ''}"><h:commandLink action="#{cuentaBean.doListItems}"><i class="fa fa-circle-o"></i> <h:outputText value="#{msg['leftmenu.cuenta']}"/></h:commandLink></li>
 		                <li><a href="#"><i class="fa fa-circle-o"></i> Depositos</a></li>
 		                <li><a href="#"><i class="fa fa-circle-o"></i> Otros</a></li>
 		              </ul>

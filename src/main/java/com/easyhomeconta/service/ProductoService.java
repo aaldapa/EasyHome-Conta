@@ -5,7 +5,7 @@ package com.easyhomeconta.service;
 
 import java.util.List;
 
-import com.easyhomeconta.beans.ProductoBean;
+import com.easyhomeconta.beans.ProductoForm;
 
 /**
  * @author Alberto
@@ -19,7 +19,7 @@ public interface ProductoService {
 	 * @param idUser
 	 * @return
 	 */
-	public List<ProductoBean> getProductosForUser(Integer idUser);
+	public List<ProductoForm> getProductosForUser(Integer idUser);
 	
 	/**
 	 * Modifica o crea un nuevo producto en base de datos para el usuario logado en funcion de si
@@ -28,7 +28,7 @@ public interface ProductoService {
 	 * @param idUser
 	 * @return
 	 */
-	public ProductoBean saveProducto(ProductoBean bean, Integer idUser);
+	public ProductoForm saveProducto(ProductoForm bean, Integer idUser);
 	
 	/**
 	 * Da de baja el producto al que pertenezca el id pasado como parametro

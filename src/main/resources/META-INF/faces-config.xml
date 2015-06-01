@@ -61,6 +61,7 @@
 	<!-- Entradas de Menus --> 
 	<navigation-rule>
 		<from-view-id>*</from-view-id>
+		<!-- Menu administrador --> 
 		<navigation-case>
 			<from-outcome>rolList</from-outcome>
 			<to-view-id>/pages/rol/rol-list.xhtml</to-view-id>
@@ -86,6 +87,7 @@
 			<to-view-id>/pages/tipoproducto/tipo-producto-list.xhtml</to-view-id>
 			<redirect/>
 		</navigation-case>
+		<!-- Menu configuracion -->
 		<navigation-case>
 			<from-outcome>categoriaList</from-outcome>
 			<to-view-id>/pages/categoria/categoria-list.xhtml</to-view-id>
@@ -94,6 +96,12 @@
 		<navigation-case>
 			<from-outcome>productoList</from-outcome>
 			<to-view-id>/pages/producto/producto-list.xhtml</to-view-id>
+			<redirect/>
+		</navigation-case>
+		<!-- Menu principal-->
+		<navigation-case>
+			<from-outcome>cuentaList</from-outcome>
+			<to-view-id>/pages/cuenta/cuenta-list.xhtml</to-view-id>
 			<redirect/>
 		</navigation-case>
 	</navigation-rule>

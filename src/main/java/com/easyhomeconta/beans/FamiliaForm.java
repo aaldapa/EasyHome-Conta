@@ -9,18 +9,18 @@ import java.io.Serializable;
  * @author Alberto
  *
  */
-public class FamiliaBean implements Serializable {
+public class FamiliaForm implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
 	private Integer idFamilia;
 	private String nombre;
 	
-	public FamiliaBean() {
+	public FamiliaForm() {
 		super();
 	}
 	
-	public FamiliaBean(Integer idFamilia, String nombre) {
+	public FamiliaForm(Integer idFamilia, String nombre) {
 		super();
 		this.idFamilia = idFamilia;
 		this.nombre = nombre;

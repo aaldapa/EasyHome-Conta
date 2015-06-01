@@ -14,7 +14,7 @@ import javax.inject.Named;
 import org.apache.log4j.Logger;
 import org.springframework.dao.DataIntegrityViolationException;
 
-import com.easyhomeconta.beans.FamiliaBean;
+import com.easyhomeconta.beans.FamiliaForm;
 import com.easyhomeconta.service.FamiliaService;
 
 /**
@@ -28,17 +28,17 @@ public class FamiliaController extends BasicManageBean implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private final Logger log = Logger.getLogger(FamiliaController.class);
 	
-	private List<FamiliaBean> lstFamilias;
+	private List<FamiliaForm> lstFamilias;
 	
 	//FamiliaBean seleccionado
-	private FamiliaBean selectedfamilia;
+	private FamiliaForm selectedfamilia;
 	//Flag que se utiliza para renderizar siempre que exista una fila seleccionada
 	private Boolean selectedRow;
 	
 	//Titulo que se muestra en el formulario pop-up
 	private String tituloForm;
 	//Objeto con el contenido de la familia que se modifica o se crea
-	private FamiliaBean familia;
+	private FamiliaForm familia;
 	
 	@Inject
 	FamiliaService familiaService;
@@ -60,7 +60,7 @@ public class FamiliaController extends BasicManageBean implements Serializable{
 	public void doNewForm(AjaxBehaviorEvent event) {
     	log.info("Click en nuevo");
     	tituloForm=getStringFromBundle("familias.form.title.nuevo");
-    	familia=new FamiliaBean();
+    	familia=new FamiliaForm();
     } 
 	
 	/**
@@ -130,21 +130,21 @@ public class FamiliaController extends BasicManageBean implements Serializable{
     	setSelectedRow(false);
     } 
 	
-	public List<FamiliaBean> getLstFamilias() {
+	public List<FamiliaForm> getLstFamilias() {
 		return lstFamilias;
 	}
 
-	public void setLstFamilias(List<FamiliaBean> lstFamilias) {
+	public void setLstFamilias(List<FamiliaForm> lstFamilias) {
 		this.lstFamilias = lstFamilias;
 	}
 
 
-	public FamiliaBean getSelectedfamilia() {
+	public FamiliaForm getSelectedfamilia() {
 		return selectedfamilia;
 	}
 
 
-	public void setSelectedfamilia(FamiliaBean selectedfamilia) {
+	public void setSelectedfamilia(FamiliaForm selectedfamilia) {
 		this.selectedfamilia = selectedfamilia;
 	}
 
@@ -158,11 +158,11 @@ public class FamiliaController extends BasicManageBean implements Serializable{
 		this.selectedRow = selectedRow;
 	}
 
-	public FamiliaBean getFamilia() {
+	public FamiliaForm getFamilia() {
 		return familia;
 	}
 
-	public void setFamilia(FamiliaBean familia) {
+	public void setFamilia(FamiliaForm familia) {
 		this.familia = familia;
 	}
 

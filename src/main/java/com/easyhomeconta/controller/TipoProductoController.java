@@ -12,7 +12,7 @@ import javax.inject.Named;
 
 import org.apache.log4j.Logger;
 
-import com.easyhomeconta.beans.TipoProductoBean;
+import com.easyhomeconta.beans.TipoProductoForm;
 import com.easyhomeconta.service.TipoProductoService;
 
 /**
@@ -29,10 +29,10 @@ public class TipoProductoController extends BasicManageBean{
 	@Inject
 	private TipoProductoService tipoProductoService;
 	
-	private List<TipoProductoBean> lstTipoProductos=new ArrayList<TipoProductoBean>();
+	private List<TipoProductoForm> lstTipoProductos=new ArrayList<TipoProductoForm>();
 	
-	private TipoProductoBean selectedItem;
-	private TipoProductoBean tipoProducto;
+	private TipoProductoForm selectedItem;
+	private TipoProductoForm tipoProducto;
 	private Boolean selectedRow;
 	
 	/**
@@ -59,7 +59,7 @@ public class TipoProductoController extends BasicManageBean{
 	 * @return
 	 */
 	public String doNewForm(){
-		setTipoProducto(new TipoProductoBean());
+		setTipoProducto(new TipoProductoForm());
 		return "tipoProductoForm";
 	}
 		
@@ -99,7 +99,11 @@ public class TipoProductoController extends BasicManageBean{
      */
     public void onRowSelect(AjaxBehaviorEvent event) {  
     	log.info("Seleccion de fila");
-    	selectedRow=true;
+    	//Los items 1 y 2 estan reservados para las cuentas corrientes y los depositos y no pueden ser modificados ni eliminados
+    	if (selectedItem.getIdTipoProducto()>2)
+    		selectedRow=true;
+    	else
+    		selectedRow=false;
     }  
 
     /**
@@ -114,27 +118,27 @@ public class TipoProductoController extends BasicManageBean{
     	selectedRow=false;
     }
 
-	public List<TipoProductoBean> getLstTipoProductos() {
+	public List<TipoProductoForm> getLstTipoProductos() {
 		return lstTipoProductos;
 	}
 
-	public void setLstTipoProductos(List<TipoProductoBean> lstTipoProductos) {
+	public void setLstTipoProductos(List<TipoProductoForm> lstTipoProductos) {
 		this.lstTipoProductos = lstTipoProductos;
 	}
 
-	public TipoProductoBean getSelectedItem() {
+	public TipoProductoForm getSelectedItem() {
 		return selectedItem;
 	}
 
-	public void setSelectedItem(TipoProductoBean selectedItem) {
+	public void setSelectedItem(TipoProductoForm selectedItem) {
 		this.selectedItem = selectedItem;
 	}
 
-	public TipoProductoBean getTipoProducto() {
+	public TipoProductoForm getTipoProducto() {
 		return tipoProducto;
 	}
 
-	public void setTipoProducto(TipoProductoBean tipoProducto) {
+	public void setTipoProducto(TipoProductoForm tipoProducto) {
 		this.tipoProducto = tipoProducto;
 	}
 

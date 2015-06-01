@@ -12,7 +12,7 @@ import javax.inject.Named;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import com.easyhomeconta.beans.TipoProductoBean;
+import com.easyhomeconta.beans.TipoProductoForm;
 import com.easyhomeconta.dao.TipoProductoDao;
 import com.easyhomeconta.model.TipoProducto;
 import com.easyhomeconta.utils.Enumeraciones.SiNo;
@@ -28,13 +28,13 @@ public class TipoProductoServiceImpl implements TipoProductoService {
 	private TipoProductoDao tipoProductoDao;
 	
 	@Override
-	public List<TipoProductoBean> getLstTipoProductosActivos() {
+	public List<TipoProductoForm> getLstTipoProductosActivos() {
 		List<TipoProducto> lstTipoProductos=tipoProductoDao.findTiposProductoActivo();
 		
-		List<TipoProductoBean> lstBeans=new ArrayList<TipoProductoBean>();
+		List<TipoProductoForm> lstBeans=new ArrayList<TipoProductoForm>();
 		
 		for (TipoProducto tipoProducto:lstTipoProductos){
-			TipoProductoBean bean=parseEntityToBean(tipoProducto);
+			TipoProductoForm bean=parseEntityToBean(tipoProducto);
 			lstBeans.add(bean);
 		}
 		
@@ -53,7 +53,7 @@ public class TipoProductoServiceImpl implements TipoProductoService {
 	
 	@Override
 	@Transactional
-	public TipoProductoBean saveTipoProducto(TipoProductoBean bean) {
+	public TipoProductoForm saveTipoProducto(TipoProductoForm bean) {
 		
 		TipoProducto tipoProducto=parseBeanToEntity(bean);
 		
@@ -82,8 +82,8 @@ public class TipoProductoServiceImpl implements TipoProductoService {
 	 * @param tipoProducto
 	 * @return
 	 */
-	private TipoProductoBean parseEntityToBean(TipoProducto tipoProducto){
-		TipoProductoBean bean=new TipoProductoBean();
+	private TipoProductoForm parseEntityToBean(TipoProducto tipoProducto){
+		TipoProductoForm bean=new TipoProductoForm();
 		bean.setIdTipoProducto(tipoProducto.getIdTipoProducto());
 		bean.setNombre(tipoProducto.getNombre());
 		bean.setNotas(tipoProducto.getNotas());
@@ -98,7 +98,7 @@ public class TipoProductoServiceImpl implements TipoProductoService {
 	 * @param bean
 	 * @return
 	 */
-	private TipoProducto parseBeanToEntity(TipoProductoBean bean){
+	private TipoProducto parseBeanToEntity(TipoProductoForm bean){
 		TipoProducto tipoProducto=new TipoProducto();
 		tipoProducto.setIdTipoProducto(bean.getIdTipoProducto());
 		tipoProducto.setNombre(bean.getNombre());

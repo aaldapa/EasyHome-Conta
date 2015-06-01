@@ -6,15 +6,19 @@ package com.easyhomeconta.beans;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.List;
 
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.UploadedFile;
+
+import com.easyhomeconta.utils.NumeroUtil;
 
 /**
  * @author Alberto
  *
  */
-public class BancoBean implements Serializable {
+public class BancoForm implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -23,14 +27,18 @@ public class BancoBean implements Serializable {
 	private byte []logoBanco;
 	private UploadedFile imagen;
 	
+	//Campos exclusivos para ser utilizados en la renderizacion de listados de posicion global
+	private BigDecimal balance;
+	private List<ProductoForm> lstProductosForm;
+	
 	@SuppressWarnings("unused")
 	private DefaultStreamedContent photoDSContent; 
 	
-	public BancoBean() {
+	public BancoForm() {
 		super();
 	}
 	
-	public BancoBean(Integer idBanco, String nombre, byte[] logoBanco) {
+	public BancoForm(Integer idBanco, String nombre, byte[] logoBanco) {
 		super();
 		this.idBanco = idBanco;
 		this.nombre = nombre;
@@ -89,6 +97,26 @@ public class BancoBean implements Serializable {
 
 	public void setImagen(UploadedFile imagen) {
 		this.imagen = imagen;
+	}
+
+	public BigDecimal getBalance() {
+		return balance;
+	}
+	
+	public String getBalanceStr(){
+		return NumeroUtil.formatearACastellano(this.getBalance());
+	}
+
+	public void setBalance(BigDecimal balance) {
+		this.balance = balance;
+	}
+
+	public List<ProductoForm> getLstProductosForm() {
+		return lstProductosForm;
+	}
+
+	public void setLstProductosForm(List<ProductoForm> lstProductosForm) {
+		this.lstProductosForm = lstProductosForm;
 	}
 
 	

@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.faces.model.SelectItem;
 
-import com.easyhomeconta.beans.FamiliaBean;
+import com.easyhomeconta.beans.FamiliaForm;
 import com.easyhomeconta.model.Familia;
 
 /**
@@ -24,7 +24,7 @@ public interface FamiliaService {
 	 * Carga todas las familias en una lista de beans para su representacion
 	 * @return
 	 */
-	public List<FamiliaBean> getLstFamiliasAllBean();
+	public List<FamiliaForm> getLstFamiliasAllBean();
 	
 	/**
 	 * Obtiene una Familia por id
@@ -38,7 +38,7 @@ public interface FamiliaService {
 	 * @param familia
 	 * @return
 	 */
-	public FamiliaBean saveFamilia(FamiliaBean familia);
+	public FamiliaForm saveFamilia(FamiliaForm familia);
 	
 	/**
 	 * Elimina una familia de base de datos
