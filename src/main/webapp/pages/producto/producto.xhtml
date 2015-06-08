@@ -15,10 +15,6 @@
 			<!-- Parametros para el paso de titulos, cabeceras, etc -->
 			<ui:param name="headerTitle1" value="#{msg['productos.listado.titulo']}" />
 			<ui:param name="headerTitle2" value="" />
-			<ui:param name="boxTitle" value="#{msg['producto.form.subtitulo']}" />
-			<ui:param name="boxFooter" value="" />
-			<ui:param name="boxClass" value="box-primary" />
-			<ui:param name="boxTitleClass" value="" />
 			
 			<!-- Para la inclusion de scripts -->
 			<ui:define name="scripts">
@@ -31,7 +27,16 @@
 				
 				<h:form id="id_form" styleClass="form-horizontal"  role="form">	
 					
-					<div class="box-body">
+					<div class="box box-primary">
+					  <div class="box-header with-border">
+					    <h3 class="box-title">#{msg['producto.form.subtitulo']}</h3>
+					    <div class="box-tools pull-right">
+					<!--           Caja o fieldset en la que aparecen los datos. Los botones que aparecen a continuacion son los de minimizar y cerrar la caja. -->
+					          <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Colapsar"><i class="fa fa-minus"></i></button>
+					    </div>
+					  </div>
+					  
+					  <div class="box-body">
 						<p:messages showDetail="true" globalOnly="true" autoUpdate="true" closable="true"/>
 						<div class="row">
 							 <div class="col-md-12">		
@@ -42,10 +47,10 @@
 							        <div class="col-md-3 col-xs-5 form-group-inline">
 							            <h:message for="id_banco" errorClass="has-error control-label" infoClass="has-info control-label" />
 							            <div class="input-group input-append ">
-							            	<h:selectOneListbox id="id_banco" value="#{productoBean.producto.idBanco}" styleClass="form-control" size="1" required="true" requiredMessage="#{msg['error.campo.obligatorio']}">
+							            	<h:selectOneMenu id="id_banco" value="#{productoBean.producto.idBanco}" styleClass="form-control" required="true" requiredMessage="#{msg['error.campo.obligatorio']}">
 							            		<f:selectItem itemValue="" itemLabel="#{msg['combo.selection.option']}" noSelectionOption="true"></f:selectItem>
 							            		<f:selectItems value="#{productoBean.lstBancos}" var="item" itemValue="#{item.value}" itemLabel="#{item.label}" ></f:selectItems>
-							            	</h:selectOneListbox>
+							            	</h:selectOneMenu>
 							            </div>						            
 							        </div>
 								        
@@ -53,10 +58,10 @@
 							        <div class="col-md-3 col-xs-5 form-group-inline">
 							        	<h:message for="id_tipo" errorClass="has-error control-label" infoClass="has-info control-label" />
 							            <div class="input-group input-append">
-							            	<h:selectOneListbox id="id_tipo" value="#{productoBean.producto.idTipoProducto}" styleClass="form-control" size="1" required="true" requiredMessage="#{msg['error.campo.obligatorio']}">
+							            	<h:selectOneMenu id="id_tipo" value="#{productoBean.producto.idTipoProducto}" styleClass="form-control" required="true" requiredMessage="#{msg['error.campo.obligatorio']}">
 							            		<f:selectItem itemValue="" itemLabel="#{msg['combo.selection.option']}" noSelectionOption="true"></f:selectItem>
 							            		<f:selectItems value="#{productoBean.lstTProductos}" var="item" itemValue="#{item.value}" itemLabel="#{item.label}" ></f:selectItems>
-							            	</h:selectOneListbox>
+							            	</h:selectOneMenu>
 							            </div>						            
 							        </div>
 							    </div>
@@ -190,6 +195,9 @@
     					</div>
 		    			
 			        </div><!-- /.box-footer-->
+					  
+					  
+					</div><!-- /.box -->
 		    	</h:form>
 		    	
 		    	<script type="text/javascript">

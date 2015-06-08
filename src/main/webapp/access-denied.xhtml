@@ -14,31 +14,40 @@
   			<!-- Parametros para el paso de titulos, cabeceras, etc -->
 			<ui:param name="headerTitle1" value="" />
 			<ui:param name="headerTitle2" value="" />
-			<ui:param name="boxTitle" value="Página de error 404" />
-			<ui:param name="boxFooter" value="" />
-			<ui:param name="boxFooter" value="" />
-			<ui:param name="boxClass" value="box-warning" />
-			<ui:param name="boxTitleClass" value="text-yellow" />
   			
   			<ui:define name="content">	
-        <!-- Main content -->
-        <div class="content">
-			
-          <div class="error-page">
-            <h2 class="headline text-yellow"> 404</h2>
-            <div class="error-content">
-              <h3><i class="fa fa-warning text-yellow"></i> Oops! Página no encontrada.</h3>
-              <p>
-                No se puede encontrar la página que usted esta buscando. Tal vez usted no tenga permisos para acceder a ella.
-                Sin embargo, puede volver a la 
-                <h:outputLink value="#{request.contextPath}/pages/dashboard.xhtml">
-       				<b>página de inicio.</b>
-      			 </h:outputLink>
-              </p>
-            </div><!-- /.error-content -->
-          </div><!-- /.error-page -->
-      
-        </div><!-- ./wrapper -->
+		       <div class="box box-warning">
+				  <div class="box-header with-border">
+				    <h3 class="box-title text-yellow">Página de error 404</h3>
+				    <div class="box-tools pull-right">
+				<!--           Caja o fieldset en la que aparecen los datos. Los botones que aparecen a continuacion son los de minimizar y cerrar la caja. -->
+				          <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Colapsar"><i class="fa fa-minus"></i></button>
+				    </div>
+				  </div>
+				  
+				   <!-- Main content -->
+	        <div class="content">
+				
+	          <div class="error-page">
+	            <h2 class="headline text-yellow"> 404</h2>
+	            <div class="error-content">
+	              <h3><i class="fa fa-warning text-yellow"></i> Oops! Página no encontrada.</h3>
+	              <p>
+	                No se puede encontrar la página que usted esta buscando. Tal vez usted no tenga permisos para acceder a ella.
+	                Sin embargo, puede volver a la 
+	                <h:outputLink value="#{request.contextPath}/pages/dashboard.xhtml">
+	       				<b>página de inicio.</b>
+	      			 </h:outputLink>
+	              </p>
+	            </div><!-- /.error-content -->
+	          </div><!-- /.error-page -->
+	      
+	        </div><!-- ./wrapper -->
+				  
+				  
+				</div><!-- /.box -->
+	       
+	       
 
 		</ui:define>
     	</ui:composition>

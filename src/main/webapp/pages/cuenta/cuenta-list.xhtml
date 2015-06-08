@@ -16,84 +16,99 @@
 			<!-- Parametros para el paso de titulos, cabeceras, etc -->
 			<ui:param name="headerTitle1" value="#{msg['cuentas.listado.titulo']}" />
 			<ui:param name="headerTitle2" value="" />
-			<ui:param name="boxTitle" value="#{msg['cuentas.listado.subtitulo']}" />
-			<ui:param name="boxFooter" value="" />
-			<ui:param name="boxClass" value="box-primary" />
-			<ui:param name="boxTitleClass" value="" />
-			
+						
 			<!-- Para la inclusion de javascript -->
 			<ui:define name="scripts"></ui:define>
 			
 			<ui:define name="content">
 				
 				<h:form id="id_form" styleClass="form-horizontal"  role="form">	
+					<div class="box box-primary">
+					  	<div class="box-header with-border">
+					    	<h3 class="box-title">#{msg['cuentas.listado.subtitulo']}</h3>
+					    	<div class="box-tools pull-right">
+					<!--           Caja o fieldset en la que aparecen los datos. Los botones que aparecen a continuacion son los de minimizar y cerrar la caja. -->
+					        	<button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Colapsar"><i class="fa fa-minus"></i></button>
+					    	</div>
+					 	</div>
+					  
+						  <div class="box-body">
+							<p:messages showDetail="true" globalOnly="true" autoUpdate="true" closable="true"/>
+							<div class="row">
+								 <div class="col-md-12">
+									
+									<p:dataTable id="id_data_table" var="item" value="#{cuentaBean.lstItems}" style="margin-bottom:20px" tableStyle="font-size: 90%;"
+								   		sortBy="#{item.nombre}"
+								   		reflow="true"
+								   		draggableColumns="true"
+								   		paginator="true" paginatorPosition="both" rows="#{msg['tabla.filas.large']}" rowsPerPageTemplate="#{msg['tabla.filas.large']}"
+								   		paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
+								   		currentPageReportTemplate="#{msg['cuentas.listado.tabla.pie']}"
+								   		emptyMessage="#{msg['tabla.filas.mensaje.no.records']}"
+								   	>
+								   	
+										<f:facet name="header">
+								          <h:outputText value="#{msg['cuentas.listado.tabla.titulo']}"/>
+								        </f:facet>
+								 		   
+								 		<p:columnGroup type="header">
+	    							        <p:row>
+						                		<p:column headerText="#{msg['cuentas.listado.tabla.col.id']}" width="50"/>
+						                		<p:column headerText="#{msg['cuentas.listado.tabla.col.actualizacion']}" width="100"/>
+						                		<p:column headerText="#{msg['cuentas.listado.tabla.col.nombre']}" />
+								                <p:column headerText="#{msg['cuentas.listado.tabla.col.balance']}" width="125"/>
+								                <p:column headerText="#{msg['cuentas.listado.tabla.col.operaciones']}" width="210"/>
+								            </p:row>
+								        </p:columnGroup>
+								        
+							            <p:subTable var="cta" value="#{item.lstProductosForm}" >
+								            <f:facet name="header">
+								                <h:outputText value="#{item.nombre}" />
+								            </f:facet>
+								           <p:column >
+								                <h:outputText class="#{!cta.activo ? 'tachado' : ''}" value="#{cta.idProducto}" />
+								            </p:column>
+								            
+								            <p:column >
+								           		<h:outputText class="#{!cta.activo ? 'tachado' : ''}" value="#{cta.fechaUltOperacion}" >
+								           			<f:convertDateTime pattern="#{msg['patron.fecha.corta']}" timeZone="GMT+2" /> 
+								           		</h:outputText>
+								            </p:column>
+								            
+								            <p:column>
+								                <h:outputText class="#{!cta.activo ? 'tachado' : ''}" value="#{cta.nombre}" />
+								            </p:column>
+								            
+								            <p:column >
+								                <h:outputText value="&nbsp; €" class=" pull-right"/>
+								                <h:outputText class="#{!cta.activo ? 'tachado' : ''} pull-right" value=" #{cta.balanceStr}" />
+								                
+								            </p:column>
+								            
+								            <p:column>
+												
+												<button type="submit" class="btn btn-flat btn-primary btn-xs" title="#{msg['cuentas.listado.tabla.boton.consultar']}" jsf:id="btnConsultar" jsf:action="#{operacionBean.doListItems(cta.idProducto)}" >
+	 											  <span class="glyphicon glyphicon-search" aria-hidden="true"></span> 
+	 											  <h:outputText value=" #{msg['cuentas.listado.tabla.boton.consultar']}"/>
+												</button>
+												<p:row rendered="#{cta.activo}">
+													<button type="submit" title="#{msg['cuentas.listado.tabla.boton.importar']}"  jsf:id="btnImport" jsf:action="#{cuentaBean.doLoadImportForm(cta.idProducto)}" class="btn bg-olive btn-flat btn-xs pull-right">
+		 											  <span class="glyphicon glyphicon-import" aria-hidden="true"></span> 
+		 											  <h:outputText value=" #{msg['cuentas.listado.tabla.boton.importar']}"/>
+													</button>
+												</p:row>
+				            				</p:column>
+								        </p:subTable>
+								 		      
+								   	</p:dataTable>
+								</div>
+							</div><!-- /.row -->
+						</div><!-- /.box-body -->
+					  
+					  
+					</div><!-- /.box -->
 					
-					<div class="box-body">
-						<p:messages showDetail="true" globalOnly="true" autoUpdate="true" closable="true"/>
-						<div class="row">
-							 <div class="col-md-12">
-								
-								<p:dataTable id="id_data_table" var="item" value="#{cuentaBean.lstItems}" style="margin-bottom:20px" tableStyle="font-size: 90%;"
-							   		sortBy="#{item.nombre}"
-							   		reflow="true"
-							   		draggableColumns="true"
-							   		paginator="true" paginatorPosition="bottom" rows="#{msg['tabla.filas.large']}" rowsPerPageTemplate="#{msg['tabla.filas.large']}"
-							   		paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
-							   		currentPageReportTemplate="#{msg['cuentas.listado.tabla.pie']}"
-							   		emptyMessage="#{msg['tabla.filas.mensaje.no.records']}"
-							   	>
-							   	
-									<f:facet name="header">
-							          <h:outputText value="#{msg['cuentas.listado.tabla.titulo']}"/>
-							        </f:facet>
-							 		   
-							 		<p:columnGroup type="header">
-    							        <p:row>
-					                		<p:column headerText="#{msg['cuentas.listado.tabla.col.id']}" width="50"/>
-					                		<p:column headerText="#{msg['cuentas.listado.tabla.col.nombre']}" />
-							                <p:column headerText="#{msg['cuentas.listado.tabla.col.balance']}" width="125"/>
-							                <p:column headerText="#{msg['cuentas.listado.tabla.col.actualizacion']}" width="100"/>							                
-							                <p:column headerText="#{msg['cuentas.listado.tabla.col.operaciones']}" width="200"/>
-							            </p:row>
-							        </p:columnGroup>
-							        
-						            <p:subTable var="cta" value="#{item.lstProductosForm}" >
-							            <f:facet name="header">
-							                <h:outputText value="#{item.nombre}" />
-							            </f:facet>
-							           <p:column >
-							                <h:outputText class="#{cta.activo ? 'tachado' : ''}" value="#{cta.idProducto}" />
-							            </p:column>
-							            
-							            <p:column>
-							                <h:outputText class="#{cta.activo ? 'tachado' : ''}" value="#{cta.nombre}" />
-							            </p:column>
-							            <p:column >
-							                <h:outputText value="&nbsp; €" class=" pull-right"/>
-							                <h:outputText class="#{cta.activo ? 'tachado' : ''} pull-right" value=" #{cta.balanceStr}" />
-							                
-							            </p:column>
-							            <p:column >
-							           		<h:outputText class="#{cta.activo ? 'tachado' : ''}" value="#{cta.fechaUltOperacion}" />
-							            </p:column>
-							            <p:column>
-											<button type="button" class="btn btn-flat btn-primary btn-xs" title="#{msg['cuentas.listado.tabla.boton.consultar']}">
- 											  <span class="glyphicon glyphicon-search" aria-hidden="true"></span> 
- 											  <h:outputText value="#{msg['cuentas.listado.tabla.boton.consultar']}"> </h:outputText>
-											</button>
-											<button type="submit" title="#{msg['cuentas.listado.tabla.boton.importar']}"  jsf:id="testbtn" jsf:action="#{cuentaBean.doLoadForm(cta.idProducto)}" class="btn bg-olive btn-flat btn-xs pull-right">
- 											  <span class="glyphicon glyphicon-import" aria-hidden="true"></span> 
- 											  <h:outputText value="#{msg['cuentas.listado.tabla.boton.importar']}"> </h:outputText>
-											</button>
-											
-			            				</p:column>
-							        </p:subTable>
-							 		      
-							   	</p:dataTable>
-							</div>
-						</div><!-- /.row -->
-					</div><!-- /.box-body -->
-			        
+								        
 		    	</h:form>
 		    			    	
 			</ui:define>

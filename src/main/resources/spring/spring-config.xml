@@ -65,5 +65,17 @@
 <!--         <jdbc:script location="${jdbc.initLocation}"/> -->
 <!--     </jdbc:initialize-database> -->
 
+	<!-- Por defecto, Spring no permite las anotaciones @PostConstructor and @PreDestroy. Esta injeccion se realiza para activarlas -->
+	<bean class="org.springframework.context.annotation.CommonAnnotationBeanPostProcessor" />
 
+	<!-- Spring no tiene el tipo de scope view pero se puede configurar un scope personalizado extendiendo la clase Scope y registrando el bean en el spring-config -->
+	<bean class="org.springframework.beans.factory.config.CustomScopeConfigurer">
+        <property name="scopes">
+            <map>
+                <entry key="view">
+                    <bean class="com.easyhomeconta.scope.ViewScope"/>
+                </entry>
+            </map>
+        </property>
+    </bean>
 </beans>

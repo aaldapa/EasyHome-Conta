@@ -22,8 +22,9 @@ public interface BancoDao extends GenericDao<Banco> {
 	/**
 	 * Dado un id de usuario y un tipo de producto, devuelve la lista de bancos que poseen tipos de producto a los que el 
 	 * usuario puede acceder (con sus respectivos productos).
+	 * Tipo 1 Cuentas, Tipo 2 Depositos, Tipo 3 (Ni cuentas ni depositos)
 	 * @param idUser
-	 * @param idTProducto
+	 * @param idTProducto. 1 Cuentas, 2 Depositos, 3 Todos menos cuentas y depositos y null todos.
 	 * @return
 	 */
 	public List<Banco> findAllCompleteByTipoForUser(Integer idUser,	Integer idTProducto);

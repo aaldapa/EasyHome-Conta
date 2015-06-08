@@ -1,169 +1,141 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0">
-  <!-- Nombre de projecto que aparece en el panel administrativo de Tomcat. -->
-  <display-name>EasyHome-Conta</display-name>
-  
-  <!-- Spring -->  
-  <context-param>
-  	<description>Ubicacion de los archivos de configuracion de Spring</description>
-    <param-name>contextConfigLocation</param-name>
-<!--     <param-value>classpath:spring/spring-config.xml classpath:spring/spring-security-config.xml</param-value> -->
-    <param-value>classpath:spring/spring-*config.xml</param-value>
- 
-  </context-param>
-  
-	<!-- TagLibs de Spring security -->
-  <context-param>
-   	<description>Registro del taglib de spring para poder usar las etiquetas en las paginas</description>
-    <param-name>javax.faces.FACELETS_LIBRARIES</param-name>
-    <param-value>/WEB-INF/spring-security.taglib.xml</param-value>
-  </context-param>
-  
-  <!-- Estado del proyecto	-->
-  <context-param>
-    <description>
+<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+ <!-- Nombre de projecto que aparece en el panel administrativo de Tomcat. -->
+ <display-name>EasyHome-Conta</display-name>
+ <!-- Spring -->
+ <context-param>
+  <description>Ubicacion de los archivos de configuracion de Spring</description>
+  <param-name>contextConfigLocation</param-name>
+  <!--     <param-value>classpath:spring/spring-config.xml classpath:spring/spring-security-config.xml</param-value> -->
+  <param-value>classpath:spring/spring-*config.xml</param-value>
+ </context-param>
+ <!-- TagLibs de Spring security -->
+ <context-param>
+  <description>Registro del taglib de spring para poder usar las etiquetas en las paginas</description>
+  <param-name>javax.faces.FACELETS_LIBRARIES</param-name>
+  <param-value>/WEB-INF/spring-security.taglib.xml</param-value>
+ </context-param>
+ <!-- Configuracion para que no renderice los comentarios en las facelets -->
+ <context-param>
+  <description>Do not render comments in facelets (xhtml) pages. Default is false.</description>
+  <param-name>javax.faces.FACELETS_SKIP_COMMENTS</param-name>
+  <param-value>true</param-value>
+ </context-param>
+ <!-- Configuracion para que se envien null en vez de strings vacios en las peticiones -->
+ <context-param>
+  <param-name>javax.faces.INTERPRET_EMPTY_STRING_SUBMITTED_VALUES_AS_NULL</param-name>
+  <param-value>true</param-value>
+ </context-param>
+ <!-- Estado del proyecto	-->
+ <context-param>
+  <description>
             Determinamos el estado de nuestro projecto (Application.getProjectStage()), de esta forma los errores son mostrados de forma
 	      	mas detallada. Allowed values: Production, Development, UnitTest, SystemTest, Extension. Default value is Production.
         </description>
-    <param-name>javax.faces.PROJECT_STAGE</param-name>
-    <param-value>Development</param-value>
-  </context-param>
-  
-  <!-- Logger -->
-  <context-param>
-    <param-name>log4jConfigLocation</param-name>
-    <param-value>classpath:/log4j.properties</param-value>
-  </context-param>
-  
-  <!-- Configuracion para que no renderice los comentarios en las facelets -->
-  <context-param>
-    <description>Do not render comments in facelets (xhtml) pages. Default is false.</description>
-    <param-name>javax.faces.FACELETS_SKIP_COMMENTS</param-name>
-    <param-value>true</param-value>
-  </context-param>
-  
-  <!-- Configuracion para que se envien null en vez de strings vacios en las peticiones -->
-  <context-param>
-    <param-name>javax.faces.INTERPRET_EMPTY_STRING_SUBMITTED_VALUES_AS_NULL</param-name>
-    <param-value>true</param-value>
-  </context-param>
-  
-  <!-- Añadir este argumento en el servidor Tomcat para que los envios de numeros enteros nulos no viaje con ceros 
+  <param-name>javax.faces.PROJECT_STAGE</param-name>
+  <param-value>Development</param-value>
+ </context-param>
+ <context-param>
+  <param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+  <param-value>client</param-value>
+ </context-param>
+ <!-- Logger -->
+ <context-param>
+  <param-name>log4jConfigLocation</param-name>
+  <param-value>classpath:/log4j.properties</param-value>
+ </context-param>
+ <!-- Añadir este argumento en el servidor Tomcat para que los envios de numeros enteros nulos no viaje con ceros 
   -Dorg.apache.el.parser.COERCE_TO_ZERO=false 
-  -->
   
-  <!-- Theme para primefaces -->
-  <context-param>  
-    <param-name>primefaces.THEME</param-name>  
-    <param-value>aristo</param-value>  
-  </context-param>  
-  
-  <!-- Spring listener que inicializa el framework -->
-  <listener>
-  	<listener-class>
-		org.springframework.web.context.ContextLoaderListener
-	</listener-class>
-  </listener>
-  
-  <listener>
-    <listener-class>
-		org.springframework.web.context.request.RequestContextListener
-	</listener-class>
-  </listener>
-  
-  <!-- En este listener guardo la en base de datos la desconexion por timeout -->
-  <listener>
-	<listener-class>
-    	com.easyhomeconta.session.MySessionListener
-    </listener-class>
-  </listener>
-  
-  <!-- Por defecto 30 minutos --> 
-  <session-config> 
-  	<session-timeout>10</session-timeout> 
-  </session-config>
-  
-  <context-param>
-    <param-name>javax.faces.STATE_SAVING_METHOD</param-name>
-    <param-value>client</param-value>
-  </context-param>
-  
-  <!-- Spring Security -->
-   <filter>
-    <filter-name>springSecurityFilterChain</filter-name>
-    <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
-  </filter>
-  <filter-mapping>
-    <filter-name>springSecurityFilterChain</filter-name>
-    <url-pattern>/*</url-pattern>
-  </filter-mapping> 
-  
-  <!-- Welcome page -->  
-  <welcome-file-list>
-    <welcome-file>index.xhtml</welcome-file>
-  </welcome-file-list>
-  
-  <!-- ERRORES -->
-  <!-- Errores de session expirada-->
-  <error-page>
-    <exception-type>javax.faces.application.ViewExpiredException</exception-type>
-    <location>/session-expired.xhtml</location>
-  </error-page>
-  
-  <!-- Los metodos con anotaciones de seguridad en java, cuando no se cumple la restriccion dan un error de acceso de negado.
-  Mediante este control, cuando se provoque un error de este tipo mostrare la pagina de acceso denegado -->
-  <error-page>
-    <exception-type>org.springframework.security.access.AccessDeniedException</exception-type>
-    <location>/access-denied.xhtml</location>
-  </error-page>
-  
-  <!-- Errores generales -->
-  <error-page>
-    <error-code>500</error-code>
-    <location>/error-500.xhtml</location>
-  </error-page>
-  
-  <!-- JSF mapping.  Este Faces Servlet es el que recibe todas las peticiones. -->
-  <servlet>
-    <servlet-name>Faces Servlet</servlet-name>
-    <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
-    <load-on-startup>1</load-on-startup>
-  </servlet>
-  
-  <!-- que son mapeadas a una URL, por defecto "/faces/". 
+ Theme para primefaces -->
+ <context-param>
+  <param-name>primefaces.THEME</param-name>
+  <param-value>aristo</param-value>
+ </context-param>
+ <!-- Spring Security -->
+ <filter>
+  <filter-name>springSecurityFilterChain</filter-name>
+  <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+ </filter>
+ <filter-mapping>
+  <filter-name>springSecurityFilterChain</filter-name>
+  <url-pattern>/*</url-pattern>
+ </filter-mapping>
+ <!-- Spring listener que inicializa el framework -->
+ <listener>
+  <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+ </listener>
+ <listener>
+  <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+ </listener>
+ <!-- En este listener guardo la en base de datos la desconexion por timeout -->
+ <listener>
+  <listener-class>com.easyhomeconta.session.MySessionListener</listener-class>
+ </listener>
+ <!-- JSF mapping.  Este Faces Servlet es el que recibe todas las peticiones. -->
+ <servlet>
+  <servlet-name>Faces Servlet</servlet-name>
+  <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+  <load-on-startup>1</load-on-startup>
+ </servlet>
+ <!-- que son mapeadas a una URL, por defecto "/faces/". 
      Con *.xhtml executaremos todas las páginas con extensión "xhtml"
 	 sin necesidad de colocar /faces/, básicamente padronizamos nuestra URL.
 	 Si utilizamos /faces/* el usuário puede digitar www.site.com/index.xhtml y podrá
 	 ver todo nuestro código, para evitar esto, lo solucionamos también con *.xhtml
 	 y de este modo serán procesadas todas las páginas xhtml. -->
-  <servlet-mapping>
-    <servlet-name>Faces Servlet</servlet-name>
-    <url-pattern>*.xhtml</url-pattern>
-  </servlet-mapping>
- 
-  
-<!--   <mime-mapping> -->
-<!--     <extension>eot</extension> -->
-<!--     <mime-type>application/vnd.ms-fontobject</mime-type> -->
-<!--   </mime-mapping> -->
-<!--   <mime-mapping> -->
-<!--     <extension>otf</extension> -->
-<!--     <mime-type>font/opentype</mime-type> -->
-<!--   </mime-mapping> -->
-<!--   <mime-mapping> -->
-<!--     <extension>ttf</extension> -->
-<!--     <mime-type>application/x-font-ttf</mime-type> -->
-<!--   </mime-mapping> -->
-<!--   <mime-mapping> -->
-<!--     <extension>woff</extension> -->
-<!--     <mime-type>application/x-font-woff</mime-type> -->
-<!--   </mime-mapping> -->
-<!--   <mime-mapping> -->
-<!--     <extension>svg</extension> -->
-<!--     <mime-type>image/svg+xml</mime-type> -->
-<!--   </mime-mapping> -->
-<!--   <mime-mapping> -->
-<!--     <extension>ico</extension> -->
-<!--     <mime-type>image/x-icon</mime-type> -->
-<!--   </mime-mapping> -->
+ <servlet-mapping>
+  <servlet-name>Faces Servlet</servlet-name>
+  <url-pattern>*.xhtml</url-pattern>
+ </servlet-mapping>
+ <!-- Por defecto 30 minutos -->
+ <session-config>
+  <session-timeout>30</session-timeout>
+ </session-config>
+ <!-- Welcome page -->
+ <welcome-file-list>
+  <welcome-file>index.xhtml</welcome-file>
+ </welcome-file-list>
+ <!-- ERRORES 
+ Errores de session expirada-->
+ <error-page>
+  <exception-type>javax.faces.application.ViewExpiredException</exception-type>
+  <location>/session-expired.xhtml</location>
+ </error-page>
+ <!-- Los metodos con anotaciones de seguridad en java, cuando no se cumple la restriccion dan un error de acceso de negado.
+  Mediante este control, cuando se provoque un error de este tipo mostrare la pagina de acceso denegado -->
+ <error-page>
+  <exception-type>org.springframework.security.access.AccessDeniedException</exception-type>
+  <location>/access-denied.xhtml</location>
+ </error-page>
+ <!-- Errores generales -->
+ <error-page>
+  <error-code>500</error-code>
+  <location>/error-500.xhtml</location>
+ </error-page>
+ <!--   <mime-mapping> 
+     <extension>eot</extension> 
+     <mime-type>application/vnd.ms-fontobject</mime-type> 
+   </mime-mapping> 
+   <mime-mapping> 
+     <extension>otf</extension> 
+     <mime-type>font/opentype</mime-type> 
+   </mime-mapping> 
+   <mime-mapping> 
+     <extension>ttf</extension> 
+     <mime-type>application/x-font-ttf</mime-type> 
+   </mime-mapping> 
+   <mime-mapping> 
+     <extension>woff</extension> 
+     <mime-type>application/x-font-woff</mime-type> 
+   </mime-mapping> 
+   <mime-mapping> 
+     <extension>svg</extension> 
+     <mime-type>image/svg+xml</mime-type> 
+   </mime-mapping> 
+   <mime-mapping> 
+     <extension>ico</extension> 
+     <mime-type>image/x-icon</mime-type> 
+   </mime-mapping> -->
 </web-app>

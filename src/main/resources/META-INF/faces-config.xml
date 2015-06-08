@@ -104,6 +104,22 @@
 			<to-view-id>/pages/cuenta/cuenta-list.xhtml</to-view-id>
 			<redirect/>
 		</navigation-case>
+		<navigation-case>
+			<from-outcome>depositoList</from-outcome>
+			<to-view-id>/pages/deposito/deposito-list.xhtml</to-view-id>
+			<redirect/>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>operacionList</from-outcome>
+			<to-view-id>/pages/operacion/operacion-list.xhtml</to-view-id>
+			<redirect/>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>operacionImportForm</from-outcome>
+			<to-view-id>/pages/operacion/import.xhtml</to-view-id>
+			<redirect/>
+		</navigation-case>
+		
 	</navigation-rule>
 	
 	<!-- Categorias -->
@@ -128,6 +144,7 @@
 	
 	<!-- Roles No tiene navegacion-->
 	<!-- Familias No tiene navegacion-->
+	
 	<!-- Users -->
 	<navigation-rule>
 		<from-view-id>/pages/user/user-list.xhtml</from-view-id>
@@ -157,5 +174,24 @@
 			<redirect/>
 		</navigation-case>
 	</navigation-rule>
+	
+<!-- 	Cuentas -->
+<!-- 	<navigation-rule> -->
+<!-- 		<from-view-id>/pages/cuenta/cuenta-list.xhtml</from-view-id> -->
+<!-- 		<navigation-case> -->
+<!-- 			<from-outcome>operacionList</from-outcome> -->
+<!-- 			<to-view-id>/pages/operacion/operacion-list.xhtml</to-view-id> -->
+<!-- 			<redirect/> -->
+<!-- 		</navigation-case> -->
+<!-- 		<navigation-case> -->
+<!-- 			<from-outcome>operacionImportForm</from-outcome> -->
+<!-- 			<to-view-id>/pages/operacion/import.xhtml</to-view-id> -->
+					
+<!-- 		</navigation-case> -->
+<!-- 	</navigation-rule> -->
+	
+	
+	<!-- Operaciones -->
+	
 	
 </faces-config>

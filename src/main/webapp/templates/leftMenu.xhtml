@@ -8,7 +8,8 @@
  
 	<ui:composition>
 		
-		<ui:param name="ubicacionActiva" value="#{menuBean.ubicacionActiva}" />
+		<ui:param name="ubicacion" value="#{menuBean.ubicacionActiva}" />
+	
 		
 		<h:form >
 		    <!-- Left side column. contains the sidebar -->
@@ -41,23 +42,35 @@
 		          <ul class="sidebar-menu">
 		            <li class="header"><h:outputLabel value="#{msg['leftmenu.menu.title']}"/> </li>
 		            
-<!-- 		            <ui:param name="estado" value="#{ubicacionActiva=='familia' ? 'active': ''}" /> -->
-		            
-		            <li class="#{ubicacionActiva=='dashboard' ? 'active': ''}">
+					<!-- Posicion global -->
+		            <li class="#{ubicacion=='dashboard' ? 'active': ''}">
 		              	<h:outputLink value="#{request.contextPath}/pages/dashboard.xhtml" styleClass="logo">
        						<i class="fa fa-dashboard"></i><span><h:outputText value="#{msg['leftmenu.dashboard']}"/></span>
        	  			  	</h:outputLink>		              
 		            </li>
 		        
-		         	<li class="treeview #{ubicacionActiva=='familia' ? 'active': ''}">
+		        	<!-- Mis productos -->
+		         	<li class="treeview #{ubicacion=='cuenta' || ubicacion=='deposito' || ubicacion=='otro' ? 'active': ''}">
 		              <a href="#">
-		                <i class="fa flaticon-savings"></i><i class="fa fa-angle-left pull-right"></i><span>Mis productos</span>
-		                
+		                <i class="fa flaticon-savings"></i><i class="fa fa-angle-left pull-right"></i>
+		                <span><h:outputText value="#{msg['leftmenu.mis.productos']}"/></span>
 		              </a>
-		              <ul class="treeview-menu" style="#{ubicacionActiva=='cuenta' || 'deposito' || 'otro' ? 'display:block': ''}">
-		                <li class="#{ubicacionActiva=='cuenta' ? 'active': ''}"><h:commandLink action="#{cuentaBean.doListItems}"><i class="fa fa-circle-o"></i> <h:outputText value="#{msg['leftmenu.cuenta']}"/></h:commandLink></li>
-		                <li><a href="#"><i class="fa fa-circle-o"></i> Depositos</a></li>
-		                <li><a href="#"><i class="fa fa-circle-o"></i> Otros</a></li>
+		              <ul class="treeview-menu" style="#{ubicacion=='cuenta' || ubicacion=='deposito' || 'otro' ? 'display:block': ''}">
+		                <li class="#{ubicacion=='cuenta' ? 'active': ''}"><h:commandLink action="#{cuentaBean.doListItems}"><i class="fa fa-circle-o text-blue"></i> <h:outputText value="#{msg['leftmenu.cuentas']}"/></h:commandLink></li>
+		                 <li class="#{ubicacion=='deposito' ? 'active': ''}"><h:commandLink action="#{depositoBean.doListItems}"><i class="fa fa-circle-o text-green"></i> <h:outputText value="#{msg['leftmenu.depositos']}"/></h:commandLink></li>
+		                <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <h:outputText value="#{msg['leftmenu.otros']}"/></a></li>
+		              </ul>
+		            </li>
+		            
+		            <!-- Operaciones -->
+		         	<li class="treeview #{ubicacion=='operacion' || ubicacion=='import' ? 'active': ''}">
+		              <a href="#">
+		                <i class="fa flaticon-savings"></i><i class="fa fa-angle-left pull-right"></i>
+		                <span><h:outputText value="#{msg['leftmenu.operaciones']}"/></span>
+		              </a>
+		              <ul class="treeview-menu" style="#{ubicacion=='operacion' || ubicacion=='import'  ? 'display:block': ''}">
+		                <li class="#{ubicacion=='operacion' ? 'active': ''}"><h:commandLink action="#{operacionBean.doListItems}"><i class="fa fa-circle-o text-blue"></i> <h:outputText value="#{msg['leftmenu.consultar']}"/></h:commandLink></li>
+		                 <li class="#{ubicacion=='import' ? 'active': ''}"><h:commandLink action="#{operacionBean.doLoadImportForm}"><i class="fa fa-circle-o text-green"></i> <h:outputText value="#{msg['leftmenu.importar']}"/></h:commandLink></li>
 		              </ul>
 		            </li>
 		            

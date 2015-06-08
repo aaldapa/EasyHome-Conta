@@ -6,23 +6,23 @@ package com.easyhomeconta.controller;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.faces.bean.ViewScoped;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.apache.log4j.Logger;
+import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataIntegrityViolationException;
 
-import com.easyhomeconta.beans.FamiliaForm;
+import com.easyhomeconta.forms.FamiliaForm;
 import com.easyhomeconta.service.FamiliaService;
 
 /**
  * @author Alberto
  *
  */
+@Scope("session")
 @Named(value="familiaBean")
-@ViewScoped
 public class FamiliaController extends BasicManageBean implements Serializable{
 
 	private static final long serialVersionUID = 1L;

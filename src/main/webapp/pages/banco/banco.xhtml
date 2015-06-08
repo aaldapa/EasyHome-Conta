@@ -27,7 +27,17 @@
 				
 				<h:form id="form" styleClass="form-horizontal"  role="form" enctype="multipart/form-data">	
 					<h:inputHidden value="#{bancoBean.banco.idBanco}"/>
-					<div class="box-body">
+					
+					<div class="box box-primary">
+					  <div class="box-header with-border">
+					    <h3 class="box-title">#{msg['banco.form.subtitulo']}</h3>
+					    <div class="box-tools pull-right">
+					<!--           Caja o fieldset en la que aparecen los datos. Los botones que aparecen a continuacion son los de minimizar y cerrar la caja. -->
+					          <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Colapsar"><i class="fa fa-minus"></i></button>
+					    </div>
+					  </div>
+					  
+					  <div class="box-body">
 						<p:messages showDetail="true" globalOnly="true" autoUpdate="true" closable="true"/>
 						<div class="row alineacion-vertical">
 							
@@ -86,8 +96,49 @@
 						          </div>
 						    </div>
 						    
-						    
 						</div><!-- /.row -->
+						<div class="row">
+						
+							<div class="col-md-12">
+						    	<p:separator />
+						    	<!-- Text inputs nombre-->
+					          	<div class="form-group">
+					             	
+						            <h:outputLabel styleClass="col-md-2 control-label" for="id_fila" value="#{msg['banco.form.fila.inicio']}"/>
+						            <div class="col-md-1">
+						            	<h:message for="id_fila" errorClass="has-error control-label" infoClass="has-info control-label"/>
+						              <h:inputText id="id_fila" pt:placeholder="Nº" class="form-control" label="#{msg['banco.form.fila.label']}" value="#{bancoBean.banco.filaInicio}" >
+						              	<f:convertNumber maxFractionDigits="0"/>
+						              </h:inputText>
+						            </div>
+									
+						            <h:outputLabel styleClass="col-md-2 control-label" for="id_c_fecha" value="#{msg['banco.form.columna.fecha']}"/>
+						            <div class="col-md-1">
+						            	<h:message for="id_c_fecha" errorClass="has-error control-label" infoClass="has-info control-label"/>
+						             	<h:inputText id="id_c_fecha" pt:placeholder="Nº" class="form-control" label="#{msg['banco.form.columna.label']}" value="#{bancoBean.banco.columnaFecha}" >
+						             		<f:convertNumber maxFractionDigits="0" />
+						             	</h:inputText>
+						            </div>
+						            
+						            <h:outputLabel styleClass="col-md-2 control-label" for="id_c_concepto" value="#{msg['banco.form.columna.concepto']}"/>
+						            <div class="col-md-1">
+						            	<h:message for="id_c_concepto" errorClass="has-error control-label" infoClass="has-info control-label"/>
+						              	<h:inputText id="id_c_concepto" pt:placeholder="Nº" class="form-control" label="#{msg['banco.form.columna.label']}" value="#{bancoBean.banco.columnaConcepto}" >
+						              		<f:convertNumber maxFractionDigits="0"/>
+						              	</h:inputText>
+						            </div>
+						            
+						            <h:outputLabel styleClass="col-md-2 control-label" for="id_c_importe" value="#{msg['banco.form.columna.importe']}"/>
+						            <div class="col-md-1">
+						              <h:message for="id_c_importe" errorClass="has-error control-label" infoClass="has-info control-label"/>
+						              <h:inputText id="id_c_importe" pt:placeholder="Nº" class="form-control" label="#{msg['banco.form.columna.label']}" value="#{bancoBean.banco.columnaImporte}" >
+						              	<f:convertNumber maxFractionDigits="0"/>
+						              </h:inputText>
+						            </div>
+						        </div>
+						 	</div>
+						</div>
+						    
 					</div><!-- /.box-body -->
 					
 					<!-- Para la botonera -->
@@ -99,6 +150,10 @@
     					</div>
 		    			
 			        </div><!-- /.box-footer-->
+					</div><!-- /.box -->
+					
+					
+					
 		    	</h:form>
 		    	
 		    	<script type="text/javascript">

@@ -17,19 +17,19 @@ import com.easyhomeconta.forms.BancoForm;
 import com.easyhomeconta.model.User;
 import com.easyhomeconta.service.ProductoService;
 import com.easyhomeconta.service.UserService;
-import com.sun.faces.context.flash.ELFlash;
 
 /**
  * @author Alberto
  *
  */
 @Scope("view")
-@Named(value="cuentaBean")
-public class CuentaController extends BasicManageBean {
+@Named(value="depositoBean")
+public class DepositoController extends BasicManageBean {
 
 	private static final long serialVersionUID = 1L;
 	
-	private final Logger log = Logger.getLogger(CuentaController.class);
+	@SuppressWarnings("unused")
+	private final Logger log = Logger.getLogger(DepositoController.class);
 	
 	@Inject
 	ProductoService productoService;
@@ -37,17 +37,15 @@ public class CuentaController extends BasicManageBean {
 	@Inject
 	UserService userService;
 	
-	private List<BancoForm> lstItems;
-	
+	private List<BancoForm> lstItems;	
 	private User userLogado;
-
-
+	
 	/**
-	 * Cuando desde la vista se instancia al controller, el primer metodo que se ejecuta es el init, desde el que cargo la lista de productos
+	 * Metodo que se ejecuta cada vez que se instancia
 	 */
 	@PostConstruct
 	public void init(){
-		lstItems=productoService.findAllByTypeForUser(getUserLogado().getIdUser(), new Integer (1));
+		lstItems=productoService.findAllByTypeForUser(getUserLogado().getIdUser(), new Integer(2));
 	}
 	
 	/**
@@ -56,16 +54,19 @@ public class CuentaController extends BasicManageBean {
 	 * @return
 	 */
 	public String doListItems(){
-		return "cuentaList";
+		return "depositoList";
 	}
 	
-	public String doLoadImportForm(Integer idProducto){		
-		log.info(idProducto);
-		ELFlash.getFlash().put("idProducto", idProducto);
-		
-		return "operacionImportForm";
+	/**
+	 * Se encarga de dar de baja el item y cargar de nuevo la pagina con la lista de items
+	 * @param idProducto
+	 * @return
+	 */
+	public String doCancelDeposito(Integer idProducto){
+		productoService.deleteProducto(idProducto);
+		lstItems=productoService.findAllByTypeForUser(getUserLogado().getIdUser(), new Integer(2));
+		return "depositoList";
 	}
-	
 	
 	/**
 	 * Cargo al usuario logado existente en el Contexto de spring security para obtener su id y referencias
@@ -89,5 +90,5 @@ public class CuentaController extends BasicManageBean {
 	public void setLstItems(List<BancoForm> lstItems) {
 		this.lstItems = lstItems;
 	}
-
+	
 }

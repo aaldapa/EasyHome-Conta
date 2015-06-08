@@ -11,6 +11,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.apache.log4j.Logger;
+import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.easyhomeconta.model.Categoria;
@@ -21,6 +22,7 @@ import com.easyhomeconta.service.CategoriaService;
  * @author Alberto
  *
  */
+@Scope("session")
 @Named(value="categoriaBean")
 public class CategoriaController extends BasicManageBean {
 

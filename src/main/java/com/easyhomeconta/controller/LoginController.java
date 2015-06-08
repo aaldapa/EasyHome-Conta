@@ -6,12 +6,12 @@ package com.easyhomeconta.controller;
 import java.io.IOException;
 import java.io.Serializable;
 
-import javax.faces.bean.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.ServletException;
 
 import org.apache.log4j.Logger;
+import org.springframework.context.annotation.Scope;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -29,8 +29,8 @@ import com.easyhomeconta.utils.Enumeraciones.LogonType;
  * @author Alberto
  *
  */
+@Scope("session")
 @Named(value="loginBean")
-@SessionScoped
 public class LoginController extends BasicManageBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;

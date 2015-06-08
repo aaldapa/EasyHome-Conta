@@ -15,10 +15,6 @@
 			<!-- Parametros para el paso de titulos, cabeceras, etc -->
 			<ui:param name="headerTitle1" value="#{msg['tipoproductos.listado.titulo']}" />
 			<ui:param name="headerTitle2" value="" />
-			<ui:param name="boxTitle" value="#{msg['tipoproducto.form.subtitulo']}" />
-			<ui:param name="boxFooter" value="" />
-			<ui:param name="boxClass" value="box-primary" />
-			<ui:param name="boxTitleClass" value="" />
 			
 			<!-- Para la inclusion de javascript -->
 			<ui:define name="scripts"></ui:define>
@@ -27,58 +23,70 @@
 				
 				<h:form id="id_form" styleClass="form-horizontal"  role="form">	
 					
-					<div class="box-body">
-						<p:messages showDetail="true" globalOnly="true" autoUpdate="true" closable="true"/>
-						<div class="row">
-							 <h:inputHidden value="#{tProductoBean.tipoProducto.idTipoProducto}" />
-							 <div class="col-md-12">		
-							 	<!-- Text inputs-->
-					          	<div class="form-group">
-					            
-						            <h:outputLabel styleClass="col-md-2 control-label" for="id_nombre" value="#{msg['tipoproducto.form.nombre']}"/>
+					<div class="box box-primary">
+					  <div class="box-header with-border">
+					    <h3 class="box-title">#{msg['tipoproducto.form.subtitulo']}</h3>
+					    <div class="box-tools pull-right">
+					<!--           Caja o fieldset en la que aparecen los datos. Los botones que aparecen a continuacion son los de minimizar y cerrar la caja. -->
+					          <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Colapsar"><i class="fa fa-minus"></i></button>
+					    </div>
+					  </div>
+					  
+						<div class="box-body">
+							<p:messages showDetail="true" globalOnly="true" autoUpdate="true" closable="true"/>
+							<div class="row">
+								 <h:inputHidden value="#{tProductoBean.tipoProducto.idTipoProducto}" />
+								 <div class="col-md-12">		
+								 	<!-- Text inputs-->
+						          	<div class="form-group">
 						            
-						            <div class="col-md-3 form-group-inline">
-						              <h:message for="id_nombre" errorClass="has-error control-label" infoClass="has-info control-label" />
-						              <h:inputText id="id_nombre" pt:placeholder="#{msg['tipoproducto.form.nombre']}" class="form-control" label="#{msg['tipoproducto.form.nombre']}" value="#{tProductoBean.tipoProducto.nombre}" required="true" requiredMessage="#{msg['error.campo.obligatorio']}"/>
-						            </div>
-									
-						            <h:outputLabel styleClass="col-md-2 control-label" for="id_operable" value="#{msg['tipoproducto.form.operable']}"/>
-						            
-						            <div class="col-md-3 ">
-						               <div class="input-group input-append">
-						               		<h:selectOneListbox value="#{tProductoBean.tipoProducto.operable}" styleClass="form-control" size="1">
-					            				<f:selectItem itemValue="true" itemLabel="#{msg['tipoproducto.form.operable.si']}" noSelectionOption="true"></f:selectItem>
-					            				<f:selectItem itemValue="false" itemLabel="#{msg['tipoproducto.form.operable.no']}" noSelectionOption="true"></f:selectItem>
-							            	</h:selectOneListbox>
+							            <h:outputLabel styleClass="col-md-2 control-label" for="id_nombre" value="#{msg['tipoproducto.form.nombre']}"/>
+							            
+							            <div class="col-md-3 form-group-inline">
+							              <h:message for="id_nombre" errorClass="has-error control-label" infoClass="has-info control-label" />
+							              <h:inputText id="id_nombre" pt:placeholder="#{msg['tipoproducto.form.nombre']}" class="form-control" label="#{msg['tipoproducto.form.nombre']}" value="#{tProductoBean.tipoProducto.nombre}" required="true" requiredMessage="#{msg['error.campo.obligatorio']}"/>
 							            </div>
-						            </div>
-						        
+										
+							            <h:outputLabel styleClass="col-md-2 control-label" for="id_operable" value="#{msg['tipoproducto.form.operable']}"/>
+							            
+							            <div class="col-md-3 ">
+							               <div class="input-group input-append">
+							               		<h:selectOneMenu value="#{tProductoBean.tipoProducto.operable}" styleClass="form-control">
+						            				<f:selectItem itemValue="true" itemLabel="#{msg['tipoproducto.form.operable.si']}" noSelectionOption="true"></f:selectItem>
+						            				<f:selectItem itemValue="false" itemLabel="#{msg['tipoproducto.form.operable.no']}" noSelectionOption="true"></f:selectItem>
+								            	</h:selectOneMenu>
+								            </div>
+							            </div>
+							        
+							            
+							        </div>
+								
+									<div class="form-group">
 						            
-						        </div>
-							
-								<div class="form-group">
-					            
-						            <h:outputLabel styleClass="col-md-2 control-label" for="id_descripcion" value="#{msg['tipoproducto.form.notas']}"/>
-						            
-						            <div class="col-md-8">
-						               <h:inputTextarea id="id_descripcion" pt:placeholder="#{msg['tipoproducto.form.notas']}" class="form-control" label="#{msg['tipoproducto.form.notas']}" value="#{tProductoBean.tipoProducto.notas}"/>
-						            </div>
-						            
-						        </div>
-							
-							</div> <!-- col-md-12 -->
-						</div><!-- /.row -->
-					</div><!-- /.box-body -->
+							            <h:outputLabel styleClass="col-md-2 control-label" for="id_descripcion" value="#{msg['tipoproducto.form.notas']}"/>
+							            
+							            <div class="col-md-8">
+							               <h:inputTextarea id="id_descripcion" pt:placeholder="#{msg['tipoproducto.form.notas']}" class="form-control" label="#{msg['tipoproducto.form.notas']}" value="#{tProductoBean.tipoProducto.notas}"/>
+							            </div>
+							            
+							        </div>
+								
+								</div> <!-- col-md-12 -->
+							</div><!-- /.row -->
+						</div><!-- /.box-body -->
+						
+						<!-- Para la botonera -->
+				        <div class="box-footer">
+	 						
+	    					<div class="btn-toolbar">
+	    						<h:commandLink action="#{tProductoBean.doListItems}" styleClass="btn btn-default pull-right" value="#{msg['boton.volver']}" immediate="true" title="#{msg['boton.volver']}"/>
+	   					 		<h:commandButton styleClass="btn btn-primary pull-right" value="#{msg['boton.guardar']}" action="#{tProductoBean.doSaveItem}" title="#{msg['boton.guardar']}"/>
+	    					</div>
+			    			
+				        </div><!-- /.box-footer-->
+						
+					</div><!-- /.box -->
 					
-					<!-- Para la botonera -->
-			        <div class="box-footer">
- 						
-    					<div class="btn-toolbar">
-    						<h:commandLink action="#{tProductoBean.doListItems}" styleClass="btn btn-default pull-right" value="#{msg['boton.volver']}" immediate="true" title="#{msg['boton.volver']}"/>
-   					 		<h:commandButton styleClass="btn btn-primary pull-right" value="#{msg['boton.guardar']}" action="#{tProductoBean.doSaveItem}" title="#{msg['boton.guardar']}"/>
-    					</div>
-		    			
-			        </div><!-- /.box-footer-->
 		    	</h:form>
 		    	
 			</ui:define>

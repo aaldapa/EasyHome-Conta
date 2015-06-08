@@ -41,8 +41,7 @@ public class Categoria implements Serializable {
 	
 	private String descripcion;
 	
-	//Mapeo para NaN con Roles (Usamos EAGER para que los roles se carguen por defecto al hacer la query de usuarios y no tengamos que hacer una join en la select)
-	@ManyToMany(fetch=FetchType.EAGER)
+	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable(name="CATEGORIA_OPERACIONES",
 			joinColumns={@JoinColumn(name="id_categoria")},
 			inverseJoinColumns={@JoinColumn(name="id_operacion")})

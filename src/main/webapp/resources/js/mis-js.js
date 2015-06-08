@@ -46,4 +46,3 @@ function mostrarModal(){
 function ocultarModal(){
 	$('.modal').hide();
 }
-

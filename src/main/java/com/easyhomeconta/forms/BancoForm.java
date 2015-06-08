@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.easyhomeconta.beans;
+package com.easyhomeconta.forms;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -27,6 +27,11 @@ public class BancoForm implements Serializable {
 	private byte []logoBanco;
 	private UploadedFile imagen;
 	
+	private Integer filaInicio;
+	private Integer columnaFecha;
+	private Integer columnaImporte;
+	private Integer columnaConcepto; 
+	
 	//Campos exclusivos para ser utilizados en la renderizacion de listados de posicion global
 	private BigDecimal balance;
 	private List<ProductoForm> lstProductosForm;
@@ -38,7 +43,8 @@ public class BancoForm implements Serializable {
 		super();
 	}
 	
-	public BancoForm(Integer idBanco, String nombre, byte[] logoBanco) {
+	public BancoForm(Integer idBanco, String nombre, Integer filaInicio, Integer columnaFecha,
+			Integer columnaImporte, Integer columnaConcepto, byte[] logoBanco) {
 		super();
 		this.idBanco = idBanco;
 		this.nombre = nombre;
@@ -46,7 +52,26 @@ public class BancoForm implements Serializable {
 		if (this.getLogoBanco()!=null){
 			InputStream is = new ByteArrayInputStream(this.getLogoBanco());
 			this.photoDSContent=new DefaultStreamedContent(is);
-		} 
+		}
+	}
+	
+	public BancoForm(Integer idBanco, String nombre, byte[] logoBanco,
+			UploadedFile imagen, Integer filaInicio, Integer columnaFecha,
+			Integer columnaImporte, Integer columnaConcepto,
+			BigDecimal balance, List<ProductoForm> lstProductosForm,
+			DefaultStreamedContent photoDSContent) {
+		super();
+		this.idBanco = idBanco;
+		this.nombre = nombre;
+		this.logoBanco = logoBanco;
+		this.imagen = imagen;
+		this.filaInicio = filaInicio;
+		this.columnaFecha = columnaFecha;
+		this.columnaImporte = columnaImporte;
+		this.columnaConcepto = columnaConcepto;
+		this.balance = balance;
+		this.lstProductosForm = lstProductosForm;
+		this.photoDSContent = photoDSContent;
 	}
 
 	/**
@@ -117,6 +142,38 @@ public class BancoForm implements Serializable {
 
 	public void setLstProductosForm(List<ProductoForm> lstProductosForm) {
 		this.lstProductosForm = lstProductosForm;
+	}
+
+	public Integer getFilaInicio() {
+		return filaInicio;
+	}
+
+	public void setFilaInicio(Integer filaInicio) {
+		this.filaInicio = filaInicio;
+	}
+
+	public Integer getColumnaFecha() {
+		return columnaFecha;
+	}
+
+	public void setColumnaFecha(Integer columnaFecha) {
+		this.columnaFecha = columnaFecha;
+	}
+
+	public Integer getColumnaImporte() {
+		return columnaImporte;
+	}
+
+	public void setColumnaImporte(Integer columnaImporte) {
+		this.columnaImporte = columnaImporte;
+	}
+
+	public Integer getColumnaConcepto() {
+		return columnaConcepto;
+	}
+
+	public void setColumnaConcepto(Integer columnaConcepto) {
+		this.columnaConcepto = columnaConcepto;
 	}
 
 	

@@ -15,10 +15,7 @@
 			<!-- Parametros para el paso de titulos, cabeceras, etc -->
 			<ui:param name="headerTitle1" value="#{msg['categorias.listado.titulo']}" />
 			<ui:param name="headerTitle2" value="" />
-			<ui:param name="boxTitle" value="#{msg['categoria.form.subtitulo']}" />
-			<ui:param name="boxFooter" value="" />
-			<ui:param name="boxClass" value="box-primary" />
-			<ui:param name="boxTitleClass" value="" />
+
 			
 			<!-- Para la inclusion de javascript -->
 			<ui:define name="scripts"></ui:define>
@@ -26,8 +23,15 @@
 			<ui:define name="content">
 				
 				<h:form id="id_form" styleClass="form-horizontal"  role="form">	
-					
-					<div class="box-body">
+				<div class="box box-primary">
+  					<div class="box-header with-border">
+				    	<h3 class="box-title ">#{msg['categoria.form.subtitulo']}</h3>
+				    	<div class="box-tools pull-right">
+				<!--           Caja o fieldset en la que aparecen los datos. Los botones que aparecen a continuacion son los de minimizar y cerrar la caja. -->
+							<button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Colapsar"><i class="fa fa-minus"></i></button>
+				    	</div>
+				  	</div>
+				  	<div class="box-body">
 						<p:messages showDetail="true" globalOnly="true" autoUpdate="true" closable="true"/>
 						<div class="row">
 							<h:inputHidden value="#{categoriaBean.categoria.idCategoria}" />
@@ -53,17 +57,18 @@
 						
 						</div><!-- /.row -->
 					</div><!-- /.box-body -->
-					
+				
 					<!-- Para la botonera -->
-			        <div class="box-footer">
- 						
-    					<div class="btn-toolbar">
-    						<h:commandLink action="#{categoriaBean.doListItems}" styleClass="btn btn-default pull-right" value="#{msg['boton.volver']}" immediate="true" title="#{msg['boton.volver']}"/>
-   					 		<h:commandButton styleClass="btn btn-primary pull-right" value="#{msg['boton.guardar']}" action="#{categoriaBean.doSaveItem}" title="#{msg['boton.guardar']}"/>
-    					</div>
-		    			
+				    <div class="box-footer">
+	 						
+	  					<div class="btn-toolbar">
+	  						<h:commandLink action="#{categoriaBean.doListItems}" styleClass="btn btn-default pull-right" value="#{msg['boton.volver']}" immediate="true" title="#{msg['boton.volver']}"/>
+	 					 		<h:commandButton styleClass="btn btn-primary pull-right" value="#{msg['boton.guardar']}" action="#{categoriaBean.doSaveItem}" title="#{msg['boton.guardar']}"/>
+	  					</div>
 			        </div><!-- /.box-footer-->
-		    	</h:form>		    	
+	    		</div><!-- /.box -->
+				</h:form>
+						    	
 			</ui:define>
     	</ui:composition>
     	

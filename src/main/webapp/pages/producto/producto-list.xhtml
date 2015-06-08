@@ -28,108 +28,119 @@
 				
 				<h:form id="id_form" styleClass="form-horizontal"  role="form">	
 					
-					<div class="box-body">
-						<p:messages showDetail="true" globalOnly="true" autoUpdate="true" closable="true"/>
-						<div class="row">
-							 <div class="col-md-12">
-								
-								<p:dataTable id="id_data_table" var="item" value="#{productoBean.lstItems}" style="margin-bottom:20px" tableStyle="font-size: 90%;" 
-							   		rowStyleClass="#{item.fechaVencimiento le productoBean.currentDate ? 'text-danger' : null}"
-							   		sortBy="#{item.idProducto}"
-							   		reflow="true"
-							   		draggableColumns="true" 
-							   		selectionMode="single" selection="#{productoBean.selectedItem}" rowKey="#{item.idProducto}" 
-							   		paginator="true" paginatorPosition="bottom" rows="#{msg['tabla.filas.medium']}" rowsPerPageTemplate="#{msg['tabla.filas.small']},#{msg['tabla.filas.medium']},#{msg['tabla.filas.large']}"
-							   		paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
-							   		currentPageReportTemplate="#{msg['tabla.pie']}"
-							   		emptyMessage="#{msg['tabla.filas.mensaje.no.records']}"
-							   	>
-									<!-- Al seleccionar una fila de la tabla realizar llama via ajax al metodo del listener	-->   	
-									<f:ajax event="rowSelect" listener="#{productoBean.onRowSelect}" render=":id_form"/>
-									<!-- Al deseleccionar una fila de la tabla realizar llama via ajax al metodo del listener	-->
-									<f:ajax event="rowUnselect" listener="#{productoBean.onRowUnselect}" render=":id_form"/>
-			
-									<f:facet name="header">
-							          <h:outputText value="#{msg['productos.listado.tabla.titulo']}"/>
-							        </f:facet>
-							 		
-							 		<p:column headerText="#{msg['productos.listado.tabla.col.id']}"  width="50" priority="6">
-							           <h:outputText value="#{item.idProducto}"/>
-							       	</p:column>
-							       								       	
-							       	<p:column headerText="#{msg['productos.listado.tabla.col.banco']}" sortBy="#{item.nombreBanco}" width="15%" priority="4">
-							           <h:outputText value="#{item.nombreBanco}"/>
-							       	</p:column>
-							       	
-							       	<p:column headerText="#{msg['productos.listado.tabla.col.tipo']}" sortBy="#{item.nombreTProducto}" width="20%" priority="2">
-							           <h:outputText value="#{item.nombreTProducto}"/>
-							       	</p:column>
-							 
-							       <p:column headerText="#{msg['productos.listado.tabla.col.nombre']}" sortBy="#{item.nombre}" priority="1">
-							           	<h:outputText value="#{item.nombre}"/>
-							       </p:column>
-							       
-							       <p:column headerText="#{msg['productos.listado.tabla.col.apertura']}" sortBy="#{item.fechaApertura}" width="15%" priority="5">
-							           	<h:outputText value="#{item.fechaApertura}">
-							           		<f:convertDateTime pattern="#{msg['patron.fecha.corta']}" timeZone="GMT+2" /> 
-							           	</h:outputText>
-							       </p:column>
-							       
-							       <p:column headerText="#{msg['productos.listado.tabla.col.vencimiento']}" sortBy="#{item.fechaVencimiento}" width="15%" priority="3">
-							           	<h:outputText value="#{item.fechaVencimiento}">
-							           		<f:convertDateTime pattern="#{msg['patron.fecha.corta']}" timeZone="GMT+2" /> 
-							           	</h:outputText>
-							       </p:column>
-							       
-							   	</p:dataTable>
-							</div>
-						</div><!-- /.row -->
-					</div><!-- /.box-body -->
-					
-					<!-- Para la botonera -->
-			        <div class="box-footer">
- 						
-    					<div class="btn-toolbar">
-    						<!-- Gracias al atributo rendered los botones de editar y eliminar se muestran siempre que el atributo selectedRow es true. 
-    						El valor del atributo es modificado cada vez que se selecciona o deselecciona una fila de la tabla, por medio de una llamada ajax -->
-    						<c:set var="isRowSelected" value="#{productoBean.selectedRow}"/>
-    					
-    						<h:commandButton type="button" id="id_boton_eliminar" styleClass="btn btn-default pull-right" title="#{msg['boton.eliminar']}" value="#{msg['boton.eliminar']}" onclick="mostrarModal();"
-    							rendered="#{isRowSelected}"/>
-    						
-    						<h:commandLink id="id_boton_editar" styleClass="btn btn-default pull-right"	action="#{productoBean.doLoadForm}" title="#{msg['boton.editar']}" value="#{msg['boton.editar']}" 
-    							rendered="#{isRowSelected}"/>
-    						
-    						 <h:commandButton action="#{productoBean.doNewForm}" styleClass="btn btn-primary pull-right" title="#{msg['boton.nuevo']}" value="#{msg['boton.nuevo']}"/>
-    					</div>
-			        </div><!-- /.box-footer-->
-			        
-			          <!-- Ventana modal de confirmacion para eliminar un registro -->
-           
-		            <div class="modal" >
-		              <div class="modal-dialog">
-		                <div class="modal-content">
-		                  <div class="modal-header">
-		                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="ocultarModal();"><span aria-hidden="true">×</span></button>
-		                    <h4 class="modal-title"><h:outputLabel value="#{msg['modal.titulo']}"/></h4>
-		                  </div>
-		                  <div class="modal-body">
-		                    <p><h:outputText value="#{msg['productos.listado.botones.confirmacion']}"/></p>
-		                    <p><h:outputText value="#{msg['modal.confirmacion']}"/></p>
-		                  </div>
-		                  <div class="modal-footer">
-			                   <button type="button" class="btn btn-default pull-left" data-dismiss="modal" onclick="ocultarModal();">
-			                    	<h:outputText value="#{msg['boton.cancelar']}"></h:outputText>
-								</button>
-								
-			                    <h:commandLink id="id_boton_eliminar2" styleClass="btn btn-primary"	action="#{productoBean.doDeleteItem}"	onclick="ocultarModal();"
-			    						title="#{msg['boton.eliminar']}" value="#{msg['boton.aceptar']}" rendered="#{isRowSelected}">
-	    							<f:ajax execute="id_form" render="@form" />
-								</h:commandLink>
-		                  </div>
-		                </div><!-- /.modal-content -->
-		              </div><!-- /.modal-dialog -->
-		            </div><!-- /.modal -->        
+					<div class="box box-primary">
+					  <div class="box-header with-border">
+					    <h3 class="box-title">#{msg['productos.listado.subtitulo']}</h3>
+					    <div class="box-tools pull-right">
+					<!--           Caja o fieldset en la que aparecen los datos. Los botones que aparecen a continuacion son los de minimizar y cerrar la caja. -->
+					          <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Colapsar"><i class="fa fa-minus"></i></button>
+					    </div>
+					  </div>
+					  
+	  					<div class="box-body">
+							<p:messages showDetail="true" globalOnly="true" autoUpdate="true" closable="true"/>
+							<div class="row">
+								 <div class="col-md-12">
+									
+									<p:dataTable id="id_data_table" var="item" value="#{productoBean.lstItems}" style="margin-bottom:20px" tableStyle="font-size: 90%;" 
+								   		rowStyleClass="#{item.fechaVencimiento le productoBean.currentDate ? 'text-danger' : null}"
+								   		sortBy="#{item.idProducto}"
+								   		reflow="true"
+								   		draggableColumns="true" 
+								   		selectionMode="single" selection="#{productoBean.selectedItem}" rowKey="#{item.idProducto}" 
+								   		paginator="true" paginatorPosition="bottom" rows="#{msg['tabla.filas.medium']}" rowsPerPageTemplate="#{msg['tabla.filas.small']},#{msg['tabla.filas.medium']},#{msg['tabla.filas.large']}"
+								   		paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
+								   		currentPageReportTemplate="#{msg['tabla.pie']}"
+								   		emptyMessage="#{msg['tabla.filas.mensaje.no.records']}"
+								   	>
+										<!-- Al seleccionar una fila de la tabla realizar llama via ajax al metodo del listener	-->   	
+										<f:ajax event="rowSelect" listener="#{productoBean.onRowSelect}" render=":id_form"/>
+										<!-- Al deseleccionar una fila de la tabla realizar llama via ajax al metodo del listener	-->
+										<f:ajax event="rowUnselect" listener="#{productoBean.onRowUnselect}" render=":id_form"/>
+				
+										<f:facet name="header">
+								          <h:outputText value="#{msg['productos.listado.tabla.titulo']}"/>
+								        </f:facet>
+								 		
+								 		<p:column headerText="#{msg['productos.listado.tabla.col.id']}"  width="50" priority="6">
+								           <h:outputText value="#{item.idProducto}"/>
+								       	</p:column>
+								       								       	
+								       	<p:column headerText="#{msg['productos.listado.tabla.col.banco']}" sortBy="#{item.nombreBanco}" width="15%" priority="4">
+								           <h:outputText value="#{item.nombreBanco}"/>
+								       	</p:column>
+								       	
+								       	<p:column headerText="#{msg['productos.listado.tabla.col.tipo']}" sortBy="#{item.nombreTProducto}" width="20%" priority="2">
+								           <h:outputText value="#{item.nombreTProducto}"/>
+								       	</p:column>
+								 
+								       <p:column headerText="#{msg['productos.listado.tabla.col.nombre']}" sortBy="#{item.nombre}" priority="1">
+								           	<h:outputText value="#{item.nombre}"/>
+								       </p:column>
+								       
+								       <p:column headerText="#{msg['productos.listado.tabla.col.apertura']}" sortBy="#{item.fechaApertura}" width="15%" priority="5">
+								           	<h:outputText value="#{item.fechaApertura}">
+								           		<f:convertDateTime pattern="#{msg['patron.fecha.corta']}" timeZone="GMT+2" /> 
+								           	</h:outputText>
+								       </p:column>
+								       
+								       <p:column headerText="#{msg['productos.listado.tabla.col.vencimiento']}" sortBy="#{item.fechaVencimiento}" width="15%" priority="3">
+								           	<h:outputText value="#{item.fechaVencimiento}">
+								           		<f:convertDateTime pattern="#{msg['patron.fecha.corta']}" timeZone="GMT+2" /> 
+								           	</h:outputText>
+								       </p:column>
+								       
+								   	</p:dataTable>
+								</div>
+							</div><!-- /.row -->
+						</div><!-- /.box-body -->
+						
+						<!-- Para la botonera -->
+				        <div class="box-footer">
+	 						
+	    					<div class="btn-toolbar">
+	    						<!-- Gracias al atributo rendered los botones de editar y eliminar se muestran siempre que el atributo selectedRow es true. 
+	    						El valor del atributo es modificado cada vez que se selecciona o deselecciona una fila de la tabla, por medio de una llamada ajax -->
+	    						<c:set var="isRowSelected" value="#{productoBean.selectedRow}"/>
+	    					
+	    						<h:commandButton type="button" id="id_boton_eliminar" styleClass="btn btn-default pull-right" title="#{msg['boton.eliminar']}" value="#{msg['boton.eliminar']}" onclick="mostrarModal();"
+	    							rendered="#{isRowSelected}"/>
+	    						
+	    						<h:commandLink id="id_boton_editar" styleClass="btn btn-default pull-right"	action="#{productoBean.doLoadForm}" title="#{msg['boton.editar']}" value="#{msg['boton.editar']}" 
+	    							rendered="#{isRowSelected}"/>
+	    						
+	    						 <h:commandButton action="#{productoBean.doNewForm}" styleClass="btn btn-primary pull-right" title="#{msg['boton.nuevo']}" value="#{msg['boton.nuevo']}"/>
+	    					</div>
+				        </div><!-- /.box-footer-->
+				        
+				          <!-- Ventana modal de confirmacion para eliminar un registro -->
+	           
+			            <div class="modal" >
+			              <div class="modal-dialog">
+			                <div class="modal-content">
+			                  <div class="modal-header">
+			                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="ocultarModal();"><span aria-hidden="true">×</span></button>
+			                    <h4 class="modal-title"><h:outputLabel value="#{msg['modal.titulo']}"/></h4>
+			                  </div>
+			                  <div class="modal-body">
+			                    <p><h:outputText value="#{msg['productos.listado.botones.confirmacion']}"/></p>
+			                    <p><h:outputText value="#{msg['modal.confirmacion']}"/></p>
+			                  </div>
+			                  <div class="modal-footer">
+				                   <button type="button" class="btn btn-default pull-left" data-dismiss="modal" onclick="ocultarModal();">
+				                    	<h:outputText value="#{msg['boton.cancelar']}"></h:outputText>
+									</button>
+									
+				                    <h:commandLink id="id_boton_eliminar2" styleClass="btn btn-primary"	action="#{productoBean.doDeleteItem}"	onclick="ocultarModal();"
+				    						title="#{msg['boton.eliminar']}" value="#{msg['boton.aceptar']}" rendered="#{isRowSelected}">
+		    							<f:ajax execute="id_form" render="@form" />
+									</h:commandLink>
+			                  </div>
+			                </div><!-- /.modal-content -->
+			              </div><!-- /.modal-dialog -->
+			            </div><!-- /.modal -->
+					  
+					</div><!-- /.box -->        
 			        
 		    	</h:form>
 		    			    	

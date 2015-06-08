@@ -15,7 +15,7 @@
 			<!-- Parametros para el paso de titulos, cabeceras, etc -->
 			<ui:param name="headerTitle1" value="#{msg['roles.listado.titulo']}" />
 			<ui:param name="headerTitle2" value="" />
-			<ui:param name="boxTitle" value="#{msg['roles.listado.subtitulo']}" />
+			<ui:param name="boxTitle" value="" />
 			<ui:param name="boxFooter" value="" />
 			<ui:param name="boxClass" value="box-primary" />
 			<ui:param name="boxTitleClass" value="" />
@@ -27,47 +27,50 @@
 				
 				<h:form id="id_form" styleClass="form-horizontal"  role="form">	
 					
-					<div class="box-body">
-						<p:messages showDetail="true" globalOnly="true" autoUpdate="true" closable="true"/>
-						<div class="row">
-							 <div class="col-md-12">		
-							 	<p:dataTable id="id_data_table" var="item" value="#{rolBean.lstRoles}" style="margin-bottom:20px" tableStyle="font-size: 90%;" 
-							   		reflow="true"
-							   		draggableColumns="true" 
-							   		paginator="true" paginatorPosition="bottom" rows="#{msg['tabla.filas.medium']}" rowsPerPageTemplate="#{msg['tabla.filas.small']},#{msg['tabla.filas.medium']},#{msg['tabla.filas.large']}"
-							   		paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
-							   		currentPageReportTemplate="#{msg['tabla.pie']}"
-							   		emptyMessage="#{msg['tabla.filas.mensaje.no.records']}"
-							   	>
-								   <f:facet name="header">
-							          <h:outputText value="#{msg['roles.listado.tabla.titulo']}"/>
-							       </f:facet>
-							 		
-							 		<p:column headerText="#{msg['roles.listado.tabla.col.id']}"  width="50" priority="3">
-							           <h:outputText value="#{item.idRol}"/>
-							       	</p:column>
-							 
-							       <p:column headerText="#{msg['roles.listado.tabla.col.nombre']}" priority="1">
-							           <h:outputText value="#{item.role}"/>
-							       </p:column>
-							 
-							        <p:column headerText="#{msg['roles.listado.tabla.col.descripcion']}" priority="2">
-							           <h:outputText value="#{item.descripcion}"/>
-							       </p:column>
-							 
-							   	</p:dataTable>
-							</div> <!-- /. col-md-12  -->
-						</div><!-- /.row -->
-					</div><!-- /.box-body -->
-					
-<!-- 					Para la botonera -->
-<!-- 			        <div class="box-footer"> -->
- 						
-<!--     					<div class="btn-toolbar"> -->
-<!--     						BOTONES -->
-<!--     					</div> -->
-		    			
-<!-- 			        </div>/.box-footer -->
+					<div class="box box-primary">
+					  <div class="box-header with-border">
+					    <h3 class="box-title ">#{msg['roles.listado.subtitulo']}</h3>
+					    <div class="box-tools pull-right">
+					<!--           Caja o fieldset en la que aparecen los datos. Los botones que aparecen a continuacion son los de minimizar y cerrar la caja. -->
+					          <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Colapsar"><i class="fa fa-minus"></i></button>
+					    </div>
+					  </div>
+					 
+					 	<div class="box-body">
+							<p:messages showDetail="true" globalOnly="true" autoUpdate="true" closable="true"/>
+							<div class="row">
+								 <div class="col-md-12">		
+								 	<p:dataTable id="id_data_table" var="item" value="#{rolBean.lstRoles}" style="margin-bottom:20px" tableStyle="font-size: 90%;" 
+								   		reflow="true"
+								   		draggableColumns="true" 
+								   		paginator="true" paginatorPosition="bottom" rows="#{msg['tabla.filas.medium']}" rowsPerPageTemplate="#{msg['tabla.filas.small']},#{msg['tabla.filas.medium']},#{msg['tabla.filas.large']}"
+								   		paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
+								   		currentPageReportTemplate="#{msg['tabla.pie']}"
+								   		emptyMessage="#{msg['tabla.filas.mensaje.no.records']}"
+								   	>
+									   <f:facet name="header">
+								          <h:outputText value="#{msg['roles.listado.tabla.titulo']}"/>
+								       </f:facet>
+								 		
+								 		<p:column headerText="#{msg['roles.listado.tabla.col.id']}"  width="50" priority="3">
+								           <h:outputText value="#{item.idRol}"/>
+								       	</p:column>
+								 
+								       <p:column headerText="#{msg['roles.listado.tabla.col.nombre']}" priority="1">
+								           <h:outputText value="#{item.role}"/>
+								       </p:column>
+								 
+								        <p:column headerText="#{msg['roles.listado.tabla.col.descripcion']}" priority="2">
+								           <h:outputText value="#{item.descripcion}"/>
+								       </p:column>
+								 
+								   	</p:dataTable>
+								</div> <!-- /. col-md-12  -->
+							</div><!-- /.row -->
+						</div><!-- /.box-body -->
+					 	
+					</div><!-- /.box -->
+								
 		    	</h:form>
 		    	
 			</ui:define>

@@ -3,6 +3,7 @@
  */
 package com.easyhomeconta.service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,11 +12,12 @@ import javax.inject.Named;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import com.easyhomeconta.beans.ProductoForm;
 import com.easyhomeconta.dao.BancoDao;
 import com.easyhomeconta.dao.ProductoDao;
 import com.easyhomeconta.dao.TipoProductoDao;
 import com.easyhomeconta.dao.UserDao;
+import com.easyhomeconta.forms.BancoForm;
+import com.easyhomeconta.forms.ProductoForm;
 import com.easyhomeconta.model.Banco;
 import com.easyhomeconta.model.Producto;
 import com.easyhomeconta.model.TipoProducto;
@@ -51,37 +53,6 @@ public class ProductoServiceImpl implements ProductoService {
 			lstBeans.add(parseEntityToBean(producto, idUser));
 		return lstBeans;
 	}
-
-//	@Override
-//	@Transactional
-//	public ProductoBean saveProducto(ProductoBean bean, Integer idUser) {
-//		Producto producto=parseBeanToEntity(bean);
-//		//Usuario logado
-//		User userLogado=userDao.findById(idUser);
-//		//Si el usuario no tiene productos aun inicializamos el array de productos
-//		if (userLogado.getLstProductos()==null){
-//			userLogado.setLstProductos(new ArrayList<Producto>());
-//			//Añadimos el producto
-//			userLogado.getLstProductos().add(producto);
-//		}
-//		//Añado al usuario logado al grupo de usuarios al que le pertenece el producto
-//		//producto.getLstUsuarios().add(userDao.findById(idUser));
-//		
-//		
-//		producto.setBaja(SiNo.N);
-//		//Si es un producto nuevo
-//		if (bean.getIdProducto()==null){
-//			producto=productoDao.create(producto);
-//			bean.setIdProducto(producto.getIdProducto());
-//		}
-//		else
-//			producto=productoDao.update(producto);
-//		
-//		
-//		return bean;
-//	}
-
-	
 	
 	@Override
 	@Transactional
@@ -196,6 +167,48 @@ public class ProductoServiceImpl implements ProductoService {
 		//Baja logica para no eliminar el producto de forma permanente
 		producto.setBaja(SiNo.S);
 		productoDao.update(producto);
+	}
+	
+	@Override
+	public List<BancoForm> findAllByTypeForUser(Integer idUser, Integer idTProducto) {
+		
+		List<Banco> lstBancos=bancoDao.findAllCompleteByTipoForUser(idUser, idTProducto);
+		List<BancoForm> lstBancosForm=new ArrayList<BancoForm>();
+		
+		for(Banco b:lstBancos){
+			List<ProductoForm> lstProductosForm=new ArrayList<ProductoForm>();
+			BancoForm bForm=new BancoForm();
+			bForm.setIdBanco(b.getIdBanco());
+			bForm.setNombre(b.getNombre());
+			BigDecimal balanceTotal=new BigDecimal(0);
+			
+			for (Producto p:b.getLstProductos()){
+				ProductoForm newProducto=new ProductoForm();
+				newProducto.setIdProducto(p.getIdProducto());
+				
+				newProducto.setNombre(p.getNombre());
+				newProducto.setNombreBanco(p.getBanco().getNombre());
+				newProducto.setRentabilidad(p.getRentabilidad());
+				newProducto.setFechaVencimiento(p.getFechaVencimiento());
+				
+				//Si el tipo de producto es operable obtenemos la fecha del ultimo movimiento y el balance
+				if (p.getTipoProducto().getOperable().compareTo(SiNo.S)==0){
+					newProducto.setBalance(productoDao.getBalance(p.getIdProducto()));
+					newProducto.setFechaUltOperacion(productoDao.getFechaUltimaOperacion(p.getIdProducto()));
+				}
+				else
+					newProducto.setBalance(p.getImporte());
+								
+				newProducto.setActivo(p.getBaja().equals(SiNo.N)?true:false);
+				//Sumo el balance de la cuenta al del banco para obtener el total de las cuentas
+				balanceTotal=balanceTotal.add(newProducto.getBalance());
+				lstProductosForm.add(newProducto);	
+			}
+			bForm.setBalance(balanceTotal);
+			bForm.setLstProductosForm(lstProductosForm);
+			lstBancosForm.add(bForm);
+		}
+		return lstBancosForm;
 	}
 	
 	/**

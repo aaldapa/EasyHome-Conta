@@ -7,7 +7,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.faces.bean.RequestScoped;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.model.SelectItem;
 import javax.inject.Inject;
@@ -15,6 +14,7 @@ import javax.inject.Named;
 
 import org.apache.log4j.Logger;
 import org.primefaces.model.UploadedFile;
+import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.easyhomeconta.model.Rol;
@@ -26,8 +26,8 @@ import com.easyhomeconta.service.UserService;
  * @author Alberto
  *
  */
+@Scope("session")
 @Named(value="userBean")
-@RequestScoped
 public class UserController extends BasicManageBean implements Serializable{
 
 	private static final long serialVersionUID = 1L;

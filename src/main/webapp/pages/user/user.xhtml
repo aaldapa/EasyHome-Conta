@@ -30,177 +30,191 @@
 			<ui:define name="content">
 				
 				<h:form id="form" styleClass="form-horizontal"  role="form" enctype="multipart/form-data">	
-					<div class="box-body">
-						<p:messages showDetail="true" globalOnly="true" autoUpdate="true" closable="true"/>
-						<div class="row">
-						    <!-- Foto y carga de foto -->
-							<div class="col-md-4">
-						    	<h:inputHidden value="#{userBean.user.idUser}"></h:inputHidden>
-						      	<h:inputHidden value="#{userBean.cambiarFoto}" id="id_campo_cambiar_foto"/>
-						
-								<div class="col-md-offset-2 col-md-9">
-									<div class="col-md-offset-1  col-md-10">			
-										<div class="form-group">
-											<c:choose>
-							                	<c:when test="#{not empty userBean.user.photoDSContent}">
-							                		<p:graphicImage id="image" value="#{userBean.user.photoDSContent}" styleClass="img-rounded img-responsive center-block" cache="false"></p:graphicImage>	
-							                	</c:when>
-							                	<c:otherwise>
-							                		<h:graphicImage  library="img" name="photo.png" alt="" styleClass="img-rounded img-responsive center-block" />
-							                	</c:otherwise>
-							                </c:choose>
-										</div>
+					
+					<div class="box box-primary">
+					  <div class="box-header with-border">
+					    <h3 class="box-title ">#{msg['usuarios.form.subtitulo']}</h3>
+					    <div class="box-tools pull-right">
+					<!--           Caja o fieldset en la que aparecen los datos. Los botones que aparecen a continuacion son los de minimizar y cerrar la caja. -->
+					          <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Colapsar"><i class="fa fa-minus"></i></button>
+					    </div>
+					  </div>
+					  
+	  					<div class="box-body">
+							<p:messages showDetail="true" globalOnly="true" autoUpdate="true" closable="true"/>
+							<div class="row">
+							    <!-- Foto y carga de foto -->
+								<div class="col-md-4">
+							    	<h:inputHidden value="#{userBean.user.idUser}"></h:inputHidden>
+							      	<h:inputHidden value="#{userBean.cambiarFoto}" id="id_campo_cambiar_foto"/>
+							
+									<div class="col-md-offset-2 col-md-9">
+										<div class="col-md-offset-1  col-md-10">			
+											<div class="form-group">
+												<c:choose>
+								                	<c:when test="#{not empty userBean.user.photoDSContent}">
+								                		<p:graphicImage id="image" value="#{userBean.user.photoDSContent}" styleClass="img-rounded img-responsive center-block" cache="false"></p:graphicImage>	
+								                	</c:when>
+								                	<c:otherwise>
+								                		<h:graphicImage  library="img" name="photo.png" alt="" styleClass="img-rounded img-responsive center-block" />
+								                	</c:otherwise>
+								                </c:choose>
+											</div>
+							            </div>
+							        </div>
+							          
+	
+									<div class="col-md-offset-2 col-md-9 ">
+	
+										<div class="col-md-offset-1 col-md-10 ">
+							            	<div class="form-group">
+								            	<h:commandButton id="id_boton_cambiar_foto" type="button" class="btn btn-default btn-sm center-block" value="#{msg['usuarios.form.photo.cambiar']}" />
+					 					     </div>	
+						            	</div>
 						            </div>
-						        </div>
-						          
-
-								<div class="col-md-offset-2 col-md-9 ">
-
-									<div class="col-md-offset-1 col-md-10 ">
-						            	<div class="form-group">
-							            	<h:commandButton id="id_boton_cambiar_foto" type="button" class="btn btn-default btn-sm center-block" value="#{msg['usuarios.form.photo.cambiar']}" />
+						            
+						            <!-- Campos de texto -->
+						            <div class="col-md-12">
+							            <div class="form-group">
+							            	<p:fileUpload id="id_fileUpload" 
+							            				value="#{userBean.imagen}"
+				 					         			label="#{msg['usuarios.form.photo.cambiar']}" 
+				 					         			mode="simple"
+				 					         			skinSimple="false"
+				 					         			styleClass="btn btn-primary hide center-block"
+					         				/>
 				 					     </div>	
-					            	</div>
-					            </div>
-					            
-					            <!-- Campos de texto -->
-					            <div class="col-md-12">
-						            <div class="form-group">
-						            	<p:fileUpload id="id_fileUpload" 
-						            				value="#{userBean.imagen}"
-			 					         			label="#{msg['usuarios.form.photo.cambiar']}" 
-			 					         			mode="simple"
-			 					         			skinSimple="false"
-			 					         			styleClass="btn btn-primary hide center-block"
-				         				/>
-			 					     </div>	
-				            	</div><!-- /.col-md-12-->
-						    </div><!-- /.col-md-4-->
-						    						    
-						    <div class="col-sm-8 col-xs-12">
-								
-								<!-- Text inputs-->
-								<div class="form-group">
-							        <!-- Si se trata hemos entrado al formulario mediante edicion mostramos estos campos -->
-									<c:if test="#{not empty userBean.user.idUser}">
+					            	</div><!-- /.col-md-12-->
+							    </div><!-- /.col-md-4-->
+							    						    
+							    <div class="col-sm-8 col-xs-12">
+									
+									<!-- Text inputs-->
+									<div class="form-group">
+								        <!-- Si se trata hemos entrado al formulario mediante edicion mostramos estos campos -->
+										<c:if test="#{not empty userBean.user.idUser}">
+									        <label class="col-md-2 control-label">
+									        	<h:outputLabel value="#{msg['usuarios.form.fecha.alta']}"/>
+									       	</label>
+									        <div class="col-md-4">
+									            <div class="input-group input-append">
+									            	<h:inputText class="form-control" value="#{userBean.user.fechaCreacion}" readonly="true">
+		       	             							<f:convertDateTime pattern="#{msg['patron.fecha.corta']}" />
+			 					          			</h:inputText>
+									                <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+		
+									            </div>
+									        </div>
+									  	</c:if>
+									        
 								        <label class="col-md-2 control-label">
-								        	<h:outputLabel value="#{msg['usuarios.form.fecha.alta']}"/>
+								        	<h:outputLabel value="#{msg['usuarios.form.familia']}"/>
 								       	</label>
 								        <div class="col-md-4">
 								            <div class="input-group input-append">
-								            	<h:inputText class="form-control" value="#{userBean.user.fechaCreacion}" readonly="true">
-	       	             							<f:convertDateTime pattern="#{msg['patron.fecha.corta']}" />
-		 					          			</h:inputText>
-								                <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+								            	<h:selectOneMenu value="#{userBean.selectedFamilia}" styleClass="form-control">
+								            		<f:selectItem itemValue="0" itemLabel="#{msg['usuarios.form.familia.option']}" noSelectionOption="true"></f:selectItem>
+								            		<f:selectItems value="#{userBean.lstFamilias}" var="item" itemValue="#{item.value}" itemLabel="#{item.label}" ></f:selectItems>
+								            	</h:selectOneMenu>
 	
-								            </div>
+								            </div>						            
 								        </div>
-								  	</c:if>
-								        
-							        <label class="col-md-2 control-label">
-							        	<h:outputLabel value="#{msg['usuarios.form.familia']}"/>
-							       	</label>
-							        <div class="col-md-4">
-							            <div class="input-group input-append">
-							            	<h:selectOneListbox value="#{userBean.selectedFamilia}" styleClass="form-control" size="1">
-							            		<f:selectItem itemValue="0" itemLabel="#{msg['usuarios.form.familia.option']}" noSelectionOption="true"></f:selectItem>
-							            		<f:selectItems value="#{userBean.lstFamilias}" var="item" itemValue="#{item.value}" itemLabel="#{item.label}" ></f:selectItems>
-							            	</h:selectOneListbox>
-
-							            </div>						            
-							        </div>
-							    </div>
-								
-								<!-- Text input-->
-						          <div class="form-group">
-						            <h:message for="id_nombre" errorClass="has-error control-label" infoClass="has-info control-label"/>
-						            <label class="col-md-2 control-label" for="textinput">
-						            	<h:outputLabel value="#{msg['usuarios.form.nombre']}"/>
-						            </label>
-						            <div class="col-md-6">
-						              <h:inputText id="id_nombre" pt:placeholder="#{msg['usuarios.form.nombre']}" class="form-control" label="#{msg['usuarios.form.nombre']}" value="#{userBean.user.nombre}" required="true" requiredMessage="#{msg['error.campo.obligatorio']}"/>
-						            </div>
-						          </div>
-						
-						          <!-- Text input-->
-						          <div class="form-group">
-						            <h:message for="id_apel1" errorClass="has-error control-label" infoClass="has-info control-label"/>
-						            <label class="col-md-2 control-label" for="textinput">
-						            	<h:outputLabel value="#{msg['usuarios.form.apel1']}"/>
-						            </label>
-						            <div class="col-md-6">
-						             <h:inputText id="id_apel1" pt:placeholder="#{msg['usuarios.form.apel1']}" class="form-control" label="#{msg['usuarios.form.apel1']}" value="#{userBean.user.apellido1}" required="true" requiredMessage="#{msg['error.campo.obligatorio']}"/>
-						            </div>
-						          </div>
-						          
-						          <!-- Text input-->
-						          <div class="form-group">
-						            <label class="col-md-2 control-label" for="textinput">
-						            	<h:outputLabel value="#{msg['usuarios.form.apel2']}"/>
-						            </label>
-						            <div class="col-md-6">
-						              <h:inputText pt:placeholder="#{msg['usuarios.form.apel2']}" class="form-control" label="#{msg['usuarios.form.apel2']}" value="#{userBean.user.apellido2}"/>
-						            </div>
-						          </div>
-						
-								<!-- Listado de roles -->      
-								<div class="form-group">
-									<label class="col-md-2 control-label" for="textinput">
-										<h:outputLabel value="#{msg['usuarios.form.roles']}"/>
-									</label>
-	                      			<!-- Parece ser que el bucle c:forEach de jsf no envia bien los valores del #{rol.selected} asi que usamos el ui:repeat-->
-	                      			<ui:repeat var="rol" value="#{userBean.lstRoles}" varStatus="y" >
-										
-										<!-- la etiqueta c:set para varibles no funciona dentro de la etiqueta ui:repeat
-										Para utilizar valores dinamicos de variables usamos ui:param y para evaluar la condicion
-										lo hacemos dentro de la propia etiqueta -->
-										<ui:param name="separacion" value="#{y.index eq 2 ? 'col-md-offset-2' : ''}"  />
-										
-										<div class="col-md-4 checkbox #{separacion}">	
-	                        				<label>
-	                        					<h:selectBooleanCheckbox value="#{rol.selected}" />
-	                          						<h:outputText value="#{rol.role}"/> 
-	                        				</label>
-	                        			</div>
-	                        		</ui:repeat>								
-	                      		</div>
-						        
-						          <!-- Text inputs-->
-						          <div class="form-group">
-						            
-						            <label class="col-md-2 control-label" for="textinput">
-						            	<h:outputLabel value="#{msg['usuarios.form.username']}"/>
-						            </label>
-						            
-						            <div class="col-md-4 form-group-inline">
-						              <h:message for="id_username" errorClass="has-error control-label" infoClass="has-info control-label"/>
-						              <h:inputText id="id_username" pt:placeholder="#{msg['usuarios.form.username']}" class="form-control" label="#{msg['usuarios.form.username']}" value="#{userBean.user.username}" required="true" requiredMessage="#{msg['error.campo.obligatorio']}"/>
-						            </div>
+								    </div>
 									
-									
-						            <label class="col-md-2 control-label" for="textinput">
-						            	<h:outputLabel value="#{msg['usuarios.form.password']}"/>
-						            </label>
-						            <div class="col-md-4 form-group-inline">
-						               <h:message for="id_password" errorClass="has-error control-label" infoClass="has-info control-label"/>
-						               <h:inputSecret id="id_password" pt:placeholder="#{msg['usuarios.form.password']}" class="form-control" label="#{msg['usuarios.form.password']}" value="#{userBean.user.password}" redisplay="true" required="true" requiredMessage="#{msg['error.campo.obligatorio']}"/>
-						            </div>
-						          </div>
-						          
-						          
-						    </div><!-- /.col-lg-12 -->
-						</div><!-- /.row -->
-					</div><!-- /.box-body -->
+									<!-- Text input-->
+							          <div class="form-group">
+							            <h:message for="id_nombre" errorClass="has-error control-label" infoClass="has-info control-label"/>
+							            <label class="col-md-2 control-label" for="textinput">
+							            	<h:outputLabel value="#{msg['usuarios.form.nombre']}"/>
+							            </label>
+							            <div class="col-md-6">
+							              <h:inputText id="id_nombre" pt:placeholder="#{msg['usuarios.form.nombre']}" class="form-control" label="#{msg['usuarios.form.nombre']}" value="#{userBean.user.nombre}" required="true" requiredMessage="#{msg['error.campo.obligatorio']}"/>
+							            </div>
+							          </div>
+							
+							          <!-- Text input-->
+							          <div class="form-group">
+							            <h:message for="id_apel1" errorClass="has-error control-label" infoClass="has-info control-label"/>
+							            <label class="col-md-2 control-label" for="textinput">
+							            	<h:outputLabel value="#{msg['usuarios.form.apel1']}"/>
+							            </label>
+							            <div class="col-md-6">
+							             <h:inputText id="id_apel1" pt:placeholder="#{msg['usuarios.form.apel1']}" class="form-control" label="#{msg['usuarios.form.apel1']}" value="#{userBean.user.apellido1}" required="true" requiredMessage="#{msg['error.campo.obligatorio']}"/>
+							            </div>
+							          </div>
+							          
+							          <!-- Text input-->
+							          <div class="form-group">
+							            <label class="col-md-2 control-label" for="textinput">
+							            	<h:outputLabel value="#{msg['usuarios.form.apel2']}"/>
+							            </label>
+							            <div class="col-md-6">
+							              <h:inputText pt:placeholder="#{msg['usuarios.form.apel2']}" class="form-control" label="#{msg['usuarios.form.apel2']}" value="#{userBean.user.apellido2}"/>
+							            </div>
+							          </div>
+							
+									<!-- Listado de roles -->      
+									<div class="form-group">
+										<label class="col-md-2 control-label" for="textinput">
+											<h:outputLabel value="#{msg['usuarios.form.roles']}"/>
+										</label>
+		                      			<!-- Parece ser que el bucle c:forEach de jsf no envia bien los valores del #{rol.selected} asi que usamos el ui:repeat-->
+		                      			<ui:repeat var="rol" value="#{userBean.lstRoles}" varStatus="y" >
+											
+											<!-- la etiqueta c:set para varibles no funciona dentro de la etiqueta ui:repeat
+											Para utilizar valores dinamicos de variables usamos ui:param y para evaluar la condicion
+											lo hacemos dentro de la propia etiqueta -->
+											<ui:param name="separacion" value="#{y.index eq 2 ? 'col-md-offset-2' : ''}"  />
+											
+											<div class="col-md-4 checkbox #{separacion}">	
+		                        				<label>
+		                        					<h:selectBooleanCheckbox value="#{rol.selected}" />
+		                          						<h:outputText value="#{rol.role}"/> 
+		                        				</label>
+		                        			</div>
+		                        		</ui:repeat>								
+		                      		</div>
+							        
+							          <!-- Text inputs-->
+							          <div class="form-group">
+							            
+							            <label class="col-md-2 control-label" for="textinput">
+							            	<h:outputLabel value="#{msg['usuarios.form.username']}"/>
+							            </label>
+							            
+							            <div class="col-md-4 form-group-inline">
+							              <h:message for="id_username" errorClass="has-error control-label" infoClass="has-info control-label"/>
+							              <h:inputText id="id_username" pt:placeholder="#{msg['usuarios.form.username']}" class="form-control" label="#{msg['usuarios.form.username']}" value="#{userBean.user.username}" required="true" requiredMessage="#{msg['error.campo.obligatorio']}"/>
+							            </div>
+										
+										
+							            <label class="col-md-2 control-label" for="textinput">
+							            	<h:outputLabel value="#{msg['usuarios.form.password']}"/>
+							            </label>
+							            <div class="col-md-4 form-group-inline">
+							               <h:message for="id_password" errorClass="has-error control-label" infoClass="has-info control-label"/>
+							               <h:inputSecret id="id_password" pt:placeholder="#{msg['usuarios.form.password']}" class="form-control" label="#{msg['usuarios.form.password']}" value="#{userBean.user.password}" redisplay="true" required="true" requiredMessage="#{msg['error.campo.obligatorio']}"/>
+							            </div>
+							          </div>
+							          
+							          
+							    </div><!-- /.col-lg-12 -->
+							</div><!-- /.row -->
+						</div><!-- /.box-body -->
+						
+						<!-- Para la botonera -->
+				        <div class="box-footer">
+	 						
+	    					<div class="btn-toolbar">
+	    						<h:commandLink action="#{userBean.doListUsers}" styleClass="btn btn-default pull-right" value="#{msg['boton.volver']}" immediate="true" title="#{msg['boton.volver']}"/>
+	   					 		<h:commandButton styleClass="btn btn-primary pull-right" value="#{msg['boton.guardar']}" action="#{userBean.doSaveUser}" update="id_data_table" title="#{msg['boton.guardar']}"/>
+	   					 	</div>
+			    			
+				        </div><!-- /.box-footer-->
+						  
+					  
+					</div><!-- /.box -->
 					
-					<!-- Para la botonera -->
-			        <div class="box-footer">
- 						
-    					<div class="btn-toolbar">
-    						<h:commandLink action="#{userBean.doListUsers}" styleClass="btn btn-default pull-right" value="#{msg['boton.volver']}" immediate="true" title="#{msg['boton.volver']}"/>
-   					 		<h:commandButton styleClass="btn btn-primary pull-right" value="#{msg['boton.guardar']}" action="#{userBean.doSaveUser}" update="id_data_table" title="#{msg['boton.guardar']}"/>
-   					 	</div>
-		    			
-			        </div><!-- /.box-footer-->
 		    	</h:form>
 		    	
 		    	

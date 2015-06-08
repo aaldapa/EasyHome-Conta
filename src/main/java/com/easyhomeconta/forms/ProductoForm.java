@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.easyhomeconta.beans;
+package com.easyhomeconta.forms;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -119,6 +119,10 @@ public class ProductoForm implements Serializable {
 		return rentabilidad;
 	}
 
+	public String getRentabilidadStr(){
+		return NumeroUtil.formatearACastellano(new BigDecimal(getRentabilidad()));	
+	}
+	
 	public void setRentabilidad(Float rentabilidad) {
 		this.rentabilidad = rentabilidad;
 	}

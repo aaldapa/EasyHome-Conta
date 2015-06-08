@@ -7,7 +7,6 @@ import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.inject.Inject;
@@ -17,15 +16,16 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
+import org.springframework.context.annotation.Scope;
 
-import com.easyhomeconta.beans.BancoForm;
+import com.easyhomeconta.forms.BancoForm;
 import com.easyhomeconta.service.BancoService;
 
 /**
  * @author Alberto
  *
  */
-@RequestScoped
+@Scope("session")
 @Named(value="bancoBean")
 public class BancoController extends BasicManageBean {
 
@@ -207,7 +207,7 @@ public class BancoController extends BasicManageBean {
 		FacesContext context = FacesContext.getCurrentInstance();
 		HttpServletRequest myRequest = (HttpServletRequest) context.getExternalContext().getRequest();
 		String imageID = myRequest.getParameter("imageID");
-		log.info((String) myRequest.getParameter("imageID"));
+//		log.info((String) myRequest.getParameter("imageID"));
 		if (imageID!=null)
 			return new DefaultStreamedContent(new ByteArrayInputStream(bancoService.getBancoById(Integer.parseInt(imageID)).getLogo()));
 		else

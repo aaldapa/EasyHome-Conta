@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:jsf="http://xmlns.jcp.org/jsf">  
+      
+    <h:body>	
+    	
+    	<ui:composition template="../../templates/main.xhtml">
+			<!-- Parametros para el paso de titulos, cabeceras, etc -->
+			<ui:param name="headerTitle1" value="#{msg['depositos.listado.titulo']}" />
+			<ui:param name="headerTitle2" value="" />
+			
+			<!-- Para la inclusion de javascript -->
+			<ui:define name="scripts"></ui:define>
+			
+			<ui:define name="content">
+				
+				<h:form id="id_form" styleClass="form-horizontal"  role="form">	
+					
+					<div class="box box-primary">
+					  <div class="box-header with-border">
+					    <h3 class="box-title ">#{msg['depositos.listado.subtitulo']}</h3>
+					    <div class="box-tools pull-right">
+					<!--           Caja o fieldset en la que aparecen los datos. Los botones que aparecen a continuacion son los de minimizar y cerrar la caja. -->
+					          <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Colapsar"><i class="fa fa-minus"></i></button>
+					    </div>
+					  </div>
+					  <div class="box-body">
+						<p:messages showDetail="true" globalOnly="true" autoUpdate="true" closable="true"/>
+						<div class="row">
+							 <div class="col-md-12">		
+								 <p:dataTable id="id_data_table" var="item" value="#{depositoBean.lstItems}" style="margin-bottom:20px" tableStyle="font-size: 90%;"
+								   		sortBy="#{item.nombre}"
+								   		reflow="true"
+								   		draggableColumns="true"
+								   		paginator="true" paginatorPosition="bottom" rows="#{msg['tabla.filas.large']}" rowsPerPageTemplate="#{msg['tabla.filas.large']}"
+								   		paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
+								   		currentPageReportTemplate="#{msg['cuentas.listado.tabla.pie']}"
+								   		emptyMessage="#{msg['tabla.filas.mensaje.no.records']}"
+								   	>
+								   	
+										<f:facet name="header">
+								          <h:outputText value="#{msg['depositos.listado.tabla.titulo']}"/>
+								        </f:facet>
+								 		   
+								 		<p:columnGroup type="header">
+	    							        <p:row>
+						                		<p:column headerText="#{msg['depositos.listado.tabla.col.id']}" width="50"/>
+						                		<p:column headerText="#{msg['depositos.listado.tabla.col.vencimiento']}" width="100"/>
+						                		<p:column headerText="#{msg['depositos.listado.tabla.col.nombre']}" />
+								                <p:column headerText="#{msg['depositos.listado.tabla.col.rentabilidad']}" width="80"/>	
+								                <p:column headerText="#{msg['depositos.listado.tabla.col.balance']}" width="125"/>
+								                <p:column headerText="#{msg['depositos.listado.tabla.col.operaciones']}" width="100"/>
+								            </p:row>
+								        </p:columnGroup>
+								        
+							            <p:subTable var="dto" value="#{item.lstProductosForm}" >
+								            <f:facet name="header">
+								                <h:outputText value="#{item.nombre}" />
+								            </f:facet>
+								           <p:column >
+								                <h:outputText class="#{!dto.activo ? 'tachado' : ''}" value="#{dto.idProducto}" />
+								            </p:column>
+								            <p:column >
+									            <h:outputText class="#{!dto.activo ? 'tachado' : ''}" value="#{dto.fechaVencimiento}" >
+								           			<f:convertDateTime pattern="#{msg['patron.fecha.corta']}" timeZone="GMT+2" /> 
+									           	</h:outputText>
+								            </p:column>
+								            <p:column>
+								                <h:outputText class="#{!dto.activo ? 'tachado' : ''}" value="#{dto.nombre}" />
+								            </p:column>
+								          	<p:column>
+								          		<h:outputText class="pull-right" value="&nbsp; %" />
+								          		<h:outputText class="#{!dto.activo ? 'tachado' : ''} pull-right" value=" #{dto.rentabilidadStr}" />
+								          	</p:column>
+								            <p:column >
+								                <h:outputText value="&nbsp; €" class=" pull-right"/>
+								                <h:outputText class="#{!dto.activo ? 'tachado' : ''} pull-right" value=" #{dto.balanceStr}" />
+								                
+								            </p:column>
+								            <p:column >
+												<p:row rendered="#{dto.activo}">
+													<button type="submit" title="#{msg['depositos.listado.tabla.col.cancelar']}"  jsf:id="btnCancel" jsf:action="#{depositoBean.doCancelDeposito(dto.idProducto)}" class="btn btn-primary btn-flat btn-xs pull-right">
+		 											  <span class="ion-android-hand" aria-hidden="true"></span> 
+		 											  <h:outputText value=" #{msg['depositos.listado.tabla.col.cancelar']}"/>
+													</button>
+												</p:row>
+												<p:row rendered="#{!dto.activo}">
+													
+												</p:row>
+												
+				            				</p:column>
+				            				
+								            
+								        </p:subTable>
+								 		      
+								   	</p:dataTable>
+								</div>
+							</div><!-- /.row -->
+						</div><!-- /.box-body -->
+					</div><!-- /.box -->
+					</h:form>
+		    	
+			</ui:define>
+    	</ui:composition>
+    	
+    </h:body>
+
+</html>

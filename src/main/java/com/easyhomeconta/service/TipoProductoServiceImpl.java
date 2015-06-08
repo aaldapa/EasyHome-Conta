@@ -12,8 +12,8 @@ import javax.inject.Named;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import com.easyhomeconta.beans.TipoProductoForm;
 import com.easyhomeconta.dao.TipoProductoDao;
+import com.easyhomeconta.forms.TipoProductoForm;
 import com.easyhomeconta.model.TipoProducto;
 import com.easyhomeconta.utils.Enumeraciones.SiNo;
 

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.easyhomeconta.beans;
+package com.easyhomeconta.forms;
 
 import java.io.Serializable;
 import java.math.BigDecimal;

@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.faces.model.SelectItem;
 
-import com.easyhomeconta.beans.TipoProductoForm;
+import com.easyhomeconta.forms.TipoProductoForm;
 
 /**
  * 

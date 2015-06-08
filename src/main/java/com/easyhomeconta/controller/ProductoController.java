@@ -13,9 +13,10 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.apache.log4j.Logger;
+import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import com.easyhomeconta.beans.ProductoForm;
+import com.easyhomeconta.forms.ProductoForm;
 import com.easyhomeconta.model.User;
 import com.easyhomeconta.service.BancoService;
 import com.easyhomeconta.service.ProductoService;
@@ -26,6 +27,7 @@ import com.easyhomeconta.service.UserService;
  * @author Alberto
  *
  */
+@Scope("session")
 @Named(value="productoBean")
 public class ProductoController extends BasicManageBean {
 

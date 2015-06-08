@@ -7,7 +7,7 @@ import java.util.List;
 
 import javax.faces.model.SelectItem;
 
-import com.easyhomeconta.beans.BancoForm;
+import com.easyhomeconta.forms.BancoForm;
 import com.easyhomeconta.model.Banco;
 
 /**
@@ -51,4 +51,14 @@ public interface BancoService {
 	 * @param idBanco
 	 */
 	public void deleteBanco(Integer idBanco);
+	
+	/**
+	 * Devuelve una lista de bancos form con cargado con el tipo de productos pasado como parametro
+	 * En el caso de que idProducto sea null se cargara con todos los productos del banco.
+	 * Tambien se cargan aquellos productos que esten dados de baja logica.
+	 * @param idUser
+	 * @param idTroducto
+	 * @return
+	 */
+	public List<BancoForm> findAllForUser(Integer idUser, Integer idTroducto);
 }

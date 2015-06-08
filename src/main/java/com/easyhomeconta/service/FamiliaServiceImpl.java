@@ -13,8 +13,8 @@ import javax.inject.Named;
 import org.apache.log4j.Logger;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.easyhomeconta.beans.FamiliaForm;
 import com.easyhomeconta.dao.FamiliaDao;
+import com.easyhomeconta.forms.FamiliaForm;
 import com.easyhomeconta.model.Familia;
 
 /**

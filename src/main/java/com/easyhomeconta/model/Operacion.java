@@ -10,8 +10,6 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -42,10 +40,6 @@ public class Operacion implements Serializable {
 	@JoinColumn(name = "id_producto", nullable = true)
 	private Producto producto;
 	
-	@Enumerated(EnumType.STRING)
-	@Column(columnDefinition = "ENUM('INGRESO','GASTO') default 'GASTO'", nullable=false) 
-	private TipoOperacion tipoOperacion;
-	
 	@Temporal(TemporalType.DATE)
 	@Column(nullable=false)
 	private Date fecha;
@@ -71,7 +65,6 @@ public class Operacion implements Serializable {
 		super();
 		this.idOperacion = idOperacion;
 		this.producto = producto;
-		this.tipoOperacion = tipoOperacion;
 		this.fecha = fecha;
 		this.concepto = concepto;
 		this.notas = notas;
@@ -93,14 +86,6 @@ public class Operacion implements Serializable {
 
 	public void setProducto(Producto producto) {
 		this.producto = producto;
-	}
-
-	public TipoOperacion getTipoOperacion() {
-		return tipoOperacion;
-	}
-
-	public void setTipoOperacion(TipoOperacion tipoOperacion) {
-		this.tipoOperacion = tipoOperacion;
 	}
 
 	public Date getFecha() {
@@ -158,8 +143,6 @@ public class Operacion implements Serializable {
 		result = prime * result + ((notas == null) ? 0 : notas.hashCode());
 		result = prime * result
 				+ ((producto == null) ? 0 : producto.hashCode());
-		result = prime * result
-				+ ((tipoOperacion == null) ? 0 : tipoOperacion.hashCode());
 		return result;
 	}
 
@@ -207,15 +190,13 @@ public class Operacion implements Serializable {
 				return false;
 		} else if (!producto.equals(other.producto))
 			return false;
-		if (tipoOperacion != other.tipoOperacion)
-			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
 		return "Operacion [idOperacion=" + idOperacion + ", producto="
-				+ producto + ", tipoOperacion=" + tipoOperacion + ", fecha="
+				+ producto + ", fecha="
 				+ fecha + ", concepto=" + concepto + ", notas=" + notas
 				+ ", importe=" + importe + ", lstCategorias=" + lstCategorias
 				+ "]";

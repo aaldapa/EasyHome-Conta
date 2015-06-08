@@ -15,10 +15,7 @@
 			<!-- Parametros para el paso de titulos, cabeceras, etc -->
 			<ui:param name="headerTitle1" value="#{msg['usuarios.form.expediente.titulo']}" />
 			<ui:param name="headerTitle2" value="" />
-			<ui:param name="boxTitle" value="#{userBean.user.userNameForSession}" />
-			<ui:param name="boxFooter" value="" />
-			<ui:param name="boxClass" value="box-primary" />
-			<ui:param name="boxTitleClass" value="" />
+
 			
 			<!-- Para la inclusion de javascript -->
 			<ui:define name="scripts"></ui:define>
@@ -26,6 +23,15 @@
 			<ui:define name="content">
 				
 				<h:form id="form" styleClass="form-horizontal"  role="form" enctype="multipart/form-data">	
+					<div class="box box-primary">
+					  <div class="box-header with-border">
+					    <h3 class="box-title">#{userBean.user.userNameForSession}</h3>
+					    <div class="box-tools pull-right">
+					<!--           Caja o fieldset en la que aparecen los datos. Los botones que aparecen a continuacion son los de minimizar y cerrar la caja. -->
+					          <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Colapsar"><i class="fa fa-minus"></i></button>
+					    </div>
+					  </div>
+
 					<div class="box-body">
 						<p:messages showDetail="true" globalOnly="true" autoUpdate="true" closable="true"/>
 						<div class="row">
@@ -99,10 +105,10 @@
 							       	</label>
 							        <div class="col-md-4">
 							            <div class="input-group input-append">
-							            	<h:selectOneListbox id="id_combo_familia" value="#{userBean.selectedFamilia}" styleClass="form-control" size="1" disabled="true">
+							            	<h:selectOneMenu id="id_combo_familia" value="#{userBean.selectedFamilia}" styleClass="form-control" disabled="true">
 							            		<f:selectItem itemValue="0" itemLabel="#{msg['usuarios.form.familia.option']}" noSelectionOption="true"></f:selectItem>
 							            		<f:selectItems value="#{userBean.lstFamilias}" var="item" itemValue="#{item.value}" itemLabel="#{item.label}" ></f:selectItems>
-							            	</h:selectOneListbox>
+							            	</h:selectOneMenu>
 							            </div>
 							        </div>
 							    </div>
@@ -200,6 +206,10 @@
    					 	</div>
 		    			
 			        </div><!-- /.box-footer-->
+				  
+					  
+					</div><!-- /.box -->
+					
 		    	</h:form>
 		    	
 		    	

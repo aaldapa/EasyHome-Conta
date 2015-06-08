@@ -23,14 +23,6 @@ public interface ProductoDao extends GenericDao<Producto> {
 	public List<Producto> findProductosForUser (Integer idUser);
 	
 	/**
-	 * Busca las cuentas corrientes para el usuario con el id pasado como parametro
-	 * @param idUser
-	 * @param idTProducto
-	 * @return
-	 */
-	public List<Producto> findAllByTipoForUser (Integer idUser, Integer idTProducto);
-	
-	/**
 	 * Obtiene el balance total de un producto, es decir, la suma de todos los movimiento u operaciones mas el importe de del producto (importe de apertura) 
 	 * @param idProducto
 	 * @return
@@ -43,6 +35,14 @@ public interface ProductoDao extends GenericDao<Producto> {
 	 * @return
 	 */
 	public Date getFechaUltimaOperacion(Integer idProducto);
+	
+	
+	/**
+	 * Obtiene todos los productos operables para el id de usuario dado
+	 * @param idUser
+	 * @return
+	 */
+	public List<Producto> findProductosOperablesForUser (Integer idUser);
 	
 	
 }

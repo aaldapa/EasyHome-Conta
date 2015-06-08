@@ -15,10 +15,6 @@
 			<!-- Parametros para el paso de titulos, cabeceras, etc -->
 			<ui:param name="headerTitle1" value="#{msg['bancos.listado.titulo']}" />
 			<ui:param name="headerTitle2" value="" />
-			<ui:param name="boxTitle" value="#{msg['bancos.listado.subtitulo']}" />
-			<ui:param name="boxFooter" value="" />
-			<ui:param name="boxClass" value="box-primary" />
-			<ui:param name="boxTitleClass" value="" />
 			
 			<!-- Para la inclusion de javascript -->
 			<ui:define name="scripts"></ui:define>
@@ -27,7 +23,16 @@
 				
 				<h:form id="id_form" styleClass="form-horizontal"  role="form">	
 					
-					<div class="box-body">
+				<div class="box box-primary">
+  					<div class="box-header with-border">
+    					<h3 class="box-title">#{msg['bancos.listado.subtitulo']}</h3>
+    					<div class="box-tools pull-right">
+						<!--           Caja o fieldset en la que aparecen los datos. Los botones que aparecen a continuacion son los de minimizar y cerrar la caja. -->
+          					<button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Colapsar"><i class="fa fa-minus"></i></button>
+    					</div>
+  					</div>
+  
+  					<div class="box-body">
 						<p:messages showDetail="true" globalOnly="true" autoUpdate="true" closable="true"/>
 						<div class="row">
 							 <div class="col-md-12">		
@@ -93,34 +98,37 @@
 <!-- 								<f:param name="imageID" value="#{imageID}" id_="image_id"/> -->
 <!-- 							</p:graphicImage> -->
 <!-- 						</ui:repeat> -->
-					</div>
+						</div>
 			        </div><!-- /.box-footer-->
 			        
-			        <!-- Ventana modal de confirmacion para eliminar un registro -->
-		            <div class="modal" >
-		              <div class="modal-dialog">
-		                <div class="modal-content">
-		                  <div class="modal-header">
-		                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="ocultarModal();"><span aria-hidden="true">×</span></button>
-		                    <h4 class="modal-title"><h:outputLabel value="#{msg['modal.titulo']}"/></h4>
-		                  </div>
-		                  <div class="modal-body">
-		                    <p><h:outputText value="#{msg['bancos.listado.botones.confirmacion']}"/></p>
-		                    <p><h:outputText value="#{msg['modal.confirmacion']}"/></p>
-		                  </div>
-		                  <div class="modal-footer">
-			                   <button type="button" class="btn btn-default pull-left" data-dismiss="modal" onclick="ocultarModal();">
-			                    	<h:outputText value="#{msg['boton.cancelar']}"></h:outputText>
-								</button>
-								
-			                    <h:commandLink id="id_boton_eliminar2" styleClass="btn btn-primary"	action="#{bancoBean.doDeleteItem}"	onclick="ocultarModal();"
-			    						title="#{msg['boton.eliminar']}" value="#{msg['boton.aceptar']}" rendered="#{isRowSelected}">
-	    							<f:ajax execute="id_form" render="@form" />
-								</h:commandLink>
-		                  </div>
-		                </div><!-- /.modal-content -->
-		              </div><!-- /.modal-dialog -->
-		            </div><!-- /.modal -->        
+				        <!-- Ventana modal de confirmacion para eliminar un registro -->
+			            <div class="modal" >
+			              <div class="modal-dialog">
+			                <div class="modal-content">
+			                  <div class="modal-header">
+			                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="ocultarModal();"><span aria-hidden="true">×</span></button>
+			                    <h4 class="modal-title"><h:outputLabel value="#{msg['modal.titulo']}"/></h4>
+			                  </div>
+			                  <div class="modal-body">
+			                    <p><h:outputText value="#{msg['bancos.listado.botones.confirmacion']}"/></p>
+			                    <p><h:outputText value="#{msg['modal.confirmacion']}"/></p>
+			                  </div>
+			                  <div class="modal-footer">
+				                   <button type="button" class="btn btn-default pull-left" data-dismiss="modal" onclick="ocultarModal();">
+				                    	<h:outputText value="#{msg['boton.cancelar']}"></h:outputText>
+									</button>
+									
+				                    <h:commandLink id="id_boton_eliminar2" styleClass="btn btn-primary"	action="#{bancoBean.doDeleteItem}"	onclick="ocultarModal();"
+				    						title="#{msg['boton.eliminar']}" value="#{msg['boton.aceptar']}" rendered="#{isRowSelected}">
+		    							<f:ajax execute="id_form" render="@form" />
+									</h:commandLink>
+			                  </div>
+			                </div><!-- /.modal-content -->
+			              </div><!-- /.modal-dialog -->
+			            </div><!-- /.modal -->
+					</div><!-- /.box -->
+					
+					        
 			        
 		    	</h:form>
 		    	

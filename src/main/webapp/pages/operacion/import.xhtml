@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">  
+      
+    <h:body>	
+		
+    	<ui:composition template="../../templates/main.xhtml">
+			<!-- Parametros para el paso de titulos, cabeceras, etc -->
+			<ui:param name="headerTitle1" value="#{msg['operaciones.listado.titulo']}" />
+			<ui:param name="headerTitle2" value="" />
+			
+			<!-- Para la inclusion de javascript -->
+			<ui:define name="scripts"></ui:define>
+			
+			<ui:define name="content">
+
+				<h:form id="id_form" styleClass="form-horizontal"  role="form" enctype="multipart/form-data">	
+					
+					<div class="box box-primary">
+	  					<div class="box-header with-border">
+						    <h3 class="col-md-3 box-title #{boxTitleClass}">#{msg['operacion.form.importar.subtitulo']}</h3>
+						    
+						    <div class="pull-right">
+						<!--           Caja o fieldset en la que aparecen los datos. Los botones que aparecen a continuacion son los de minimizar y cerrar la caja. -->
+						          <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Colapsar"><i class="fa fa-minus"></i></button>
+						    </div>
+
+						  </div>
+						  <div class="box-body">
+							<p:messages showDetail="true" globalOnly="true" autoUpdate="true" closable="true" />
+							<div class="row">
+								<div class="col-md-12">
+									 <!-- Text inputs combos-->
+									<div class="form-group">
+										<h:outputLabel class="col-md-2 control-label" value="#{msg['operacion.fom.importar.combo']}"/>
+								        <div class="col-md-3 form-group-inline">
+								            
+								            <div class="input-group input-append ">
+								            	<h:selectOneMenu id="id_producto" value="#{operacionBean.idProducto}" styleClass="form-control">
+					            					<f:selectItem itemValue="" itemLabel="#{msg['combo.selection.option']}" noSelectionOption="true"></f:selectItem>
+					            					<f:selectItems value="#{operacionBean.lstProductos}" var="item" itemValue="#{item.value}" itemLabel="#{item.label}" ></f:selectItems>
+					            				</h:selectOneMenu>
+								            </div>						            
+								        </div>
+									        
+								       <div class="col-md-7">
+								        	<p:fileUpload id="id_fileUpload" style="margin-bottom:20px"
+			 					         			label="#{msg['operacion.form.importar.choose']}" 
+			 					         			uploadLabel="#{msg['operacion.form.importar.upload']}"
+			 					         			cancelLabel="#{msg['operacion.form.importar.cancel']}"
+			 					         			mode="advanced"
+			 					         			fileUploadListener="#{operacionBean.handleFileUpload}"
+			 					         			allowTypes="/(\.|\/)(xls)$/"
+			 					         			invalidFileMessage="#{msg['operacion.form.importar.type.error']}"
+			 					         			dragDropSupport="true"
+			 					    				update="@form"
+			 					    				process="@form"
+					         				>
+					         					
+					         				</p:fileUpload>
+					         										            
+								      </div>
+								    </div>
+								 </div>
+								 
+							</div><!-- /.row -->
+								
+							<div class="row">
+								 <div class="col-md-12">		
+								<!-- Campos de texto -->
+						           <p:dataTable id="id_data_table" value="#{operacionBean.lstOperacionesForm}" var="item" style="margin-bottom:20px" tableStyle="font-size: 80%;"
+						           reflow="true"
+						           editable="true" editMode="cell" widgetVar="cellCars"
+						           selection="#{operacionBean.selectedOperacionesForm}" rowKey="#{item.id}"
+						           scrollable="true" scrollHeight="375" 
+						           emptyMessage="#{msg['tabla.filas.mensaje.no.records']}">
+						           		
+						           		<p:column selectionMode="multiple" style="width:40px;text-align:center"/>
+						           		
+						           		<p:column headerText="#{msg['operaciones.listado.tabla.col.fecha']}" width="85">
+						           			<p:cellEditor>
+							           			<f:facet name="output">
+							           				<h:outputText value="#{item.fecha}">
+							           					<f:convertDateTime pattern="#{msg['patron.fecha.corta']}" timeZone="GMT+2" />
+							           				</h:outputText> 
+							           			 </f:facet>
+		           			                	<f:facet name="input">
+		           			                		<p:inputText id="id_fecha" value="#{item.fecha}" required="true" >
+		           			                			<f:convertDateTime pattern="#{msg['patron.fecha.corta']}" timeZone="GMT+2" />
+		           			                		</p:inputText>
+		           			                		
+		           			                	</f:facet>
+	           			                	</p:cellEditor>
+						           		</p:column>
+						           		
+						           		<p:column headerText="#{msg['operaciones.listado.tabla.col.categoria']}" width="175">
+						           			<p:cellEditor>
+							           			<f:facet name="output">
+													<!-- Como para que se vea la seleccion tengo que presentar el dato en funcion del id,
+													 recorro la lista de  categorias en busca del id seleccionado, si lo encuentro muestro el texto-->
+							           				<ui:repeat value="#{operacionBean.lstCategorias}" var="categoria" >
+							           					<h:outputText value="#{categoria.label}" rendered="#{item.idCategoria==categoria.value}"/>
+							           				</ui:repeat>
+							           			 </f:facet>
+		           			                	<f:facet name="input">
+		           			         					<h:selectOneMenu value="#{item.idCategoria}" styleClass="form-control" >
+							            					<f:selectItem itemValue="" itemLabel="#{msg['combo.selection.option']}" noSelectionOption="true"></f:selectItem>
+							            					<f:selectItems value="#{operacionBean.lstCategorias}" var="cat" itemLabel="#{cat.nombre}" itemValue="#{cat.idCategoria}" />
+							            				</h:selectOneMenu>
+		           			                	</f:facet>
+	           			                	</p:cellEditor>
+						           		</p:column>
+						           		
+						           		<p:column headerText="#{msg['operaciones.listado.tabla.col.concepto']}" >
+						           			<p:cellEditor>
+							           			<f:facet name="output"><h:outputText value="#{item.concepto}" /> </f:facet>
+		           			                	<f:facet name="input"><p:inputText id="id_concepto" value="#{item.concepto}" style="width:100%"/></f:facet>
+	           			                	</p:cellEditor>
+						           		</p:column>
+						           		
+						           		<p:column headerText="#{msg['operaciones.listado.tabla.col.importe']}" width="100">
+						           			<p:cellEditor>
+							           			<f:facet name="output"><h:outputText value="#{item.importeStr} €" class="pull-right"/> </f:facet>
+		           			                	<f:facet name="input">
+		           			                		<p:inputText id="id_importe" value="#{item.importe}" style="width:100%"  required="true" >
+		           			                			<f:convertNumber  maxFractionDigits="2"  for="id_importe"/>
+		           			                		</p:inputText>
+		           			                	</f:facet>
+	           			                	</p:cellEditor>
+						           		</p:column>
+<!-- 						           		<f:facet name="footer"> -->
+<!--             								Total registros: {totalRecords} -->
+<!--         								</f:facet> -->
+						           </p:dataTable>	
+				         							 					    	
+				            	</div><!-- /.col-md-12-->
+							</div><!-- /.row -->
+						</div><!-- /.box-body -->
+						
+						<!-- Para la botonera -->
+				        <div class="box-footer">
+	 						<div class="btn-toolbar">
+    							<h:commandLink action="#{operacionBean.doListItems}" immediate="true" styleClass="btn btn-default pull-right" value="#{msg['boton.volver']}" title="#{msg['boton.volver']}"/>
+   					 			
+   					 			<h:commandButton action="#{operacionBean.doDeleteSelection}" styleClass="btn btn-default pull-right" value="#{msg['boton.eliminar']}" title="#{msg['boton.eliminar']}" >
+   					 				<f:ajax execute="id_form" render="@form"/>
+   					 			</h:commandButton>
+   					 			<h:commandButton action="#{operacionBean.doSaveItems}" styleClass="btn btn-primary pull-right" value="#{msg['boton.guardar']}" title="#{msg['boton.guardar']}" >
+   					 				<f:ajax execute="id_form" render="@form" />
+   					 			</h:commandButton>
+    						</div>
+				        </div><!-- /.box-footer-->
+					  
+					</div><!-- /.box -->
+					
+		    	</h:form>
+		    	
+		    	<script type="text/javascript">
+				   $(document).ready(function(){
+					   
+					   
+				   });
+				 </script>
+				
+		    	
+			</ui:define>
+    	</ui:composition>
+    	
+    </h:body>
+
+</html>

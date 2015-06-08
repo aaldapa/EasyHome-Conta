@@ -16,10 +16,6 @@
 			<!-- Parametros para el paso de titulos, cabeceras, etc -->
 			<ui:param name="headerTitle1" value="#{msg['categorias.listado.titulo']}" />
 			<ui:param name="headerTitle2" value="" />
-			<ui:param name="boxTitle" value="#{msg['categorias.listado.subtitulo']}" />
-			<ui:param name="boxFooter" value="" />
-			<ui:param name="boxClass" value="box-primary" />
-			<ui:param name="boxTitleClass" value="" />
 			
 			<!-- Para la inclusion de javascript -->
 			<ui:define name="scripts"></ui:define>
@@ -27,7 +23,15 @@
 			<ui:define name="content">
 				
 				 <h:form id="id_form">
-					<div class="box-body">
+				 <div class="box box-primary">
+  					<div class="box-header with-border">
+    					<h3 class="box-title #{boxTitleClass}">#{msg['categorias.listado.subtitulo']}</h3>
+					    <div class="box-tools pull-right">
+					<!--           Caja o fieldset en la que aparecen los datos. Los botones que aparecen a continuacion son los de minimizar y cerrar la caja. -->
+					          <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Colapsar"><i class="fa fa-minus"></i></button>
+					    </div>
+					</div>
+  					<div class="box-body">
 						
 						<div class="row">
 						  <div class="col-md-12">		
@@ -113,7 +117,11 @@
 		                </div><!-- /.modal-content -->
 		              </div><!-- /.modal-dialog -->
 		            </div><!-- /.modal -->        
-
+  					
+  
+				</div><!-- /.box -->
+				 
+					
 				</h:form>		    	
 			</ui:define>
     	</ui:composition>

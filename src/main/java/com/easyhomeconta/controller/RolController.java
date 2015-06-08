@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.apache.log4j.Logger;
+import org.springframework.context.annotation.Scope;
 
 import com.easyhomeconta.model.Rol;
 import com.easyhomeconta.service.RolService;
@@ -17,6 +18,7 @@ import com.easyhomeconta.service.RolService;
  * @author Alberto
  *
  */
+@Scope("session")
 @Named(value="rolBean")
 public class RolController extends BasicManageBean {
 

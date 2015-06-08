@@ -11,14 +11,16 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.apache.log4j.Logger;
+import org.springframework.context.annotation.Scope;
 
-import com.easyhomeconta.beans.TipoProductoForm;
+import com.easyhomeconta.forms.TipoProductoForm;
 import com.easyhomeconta.service.TipoProductoService;
 
 /**
  * @author Alberto
  *
  */
+@Scope("session")
 @Named(value="tProductoBean")
 public class TipoProductoController extends BasicManageBean{
 

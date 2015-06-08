@@ -76,9 +76,29 @@
     NAME="output5" PATH="/pages/categoria/categoria-list.xhtml"
     TARGET="rules:#pages#categoria#categoria-list.xhtml"
     TITLE="categoriaList" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="productoList::#pages#producto#producto-list.xhtml"
+    NAME="output6" PATH="/pages/producto/producto-list.xhtml"
+    TARGET="rules:#pages#producto#producto-list.xhtml"
+    TITLE="productoList" model-entity="JSFProcessItemOutput"/>
    <PROCESS-ITEM-OUTPUT ID="cuentaList::#pages#cuenta#cuenta-list.xhtml"
-    NAME="output6" PATH="/pages/cuenta/cuenta-list.xhtml"
+    NAME="output7" PATH="/pages/cuenta/cuenta-list.xhtml"
     TARGET="rules:#pages#cuenta#cuenta-list.xhtml" TITLE="cuentaList" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="depositoList::#pages#deposito#deposito-list.xhtml"
+    NAME="output8" PATH="/pages/deposito/deposito-list.xhtml"
+    TARGET="rules:#pages#deposito#deposito-list.xhtml"
+    TITLE="depositoList" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="operacionList::#pages#operacion#operacion-list.xhtml"
+    NAME="output9" PATH="/pages/operacion/operacion-list.xhtml"
+    TARGET="rules:#pages#operacion#operacion-list.xhtml"
+    TITLE="operacionList" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="operacionImportForm::#pages#operacion#import.xhtml"
+    NAME="output10" PATH="/pages/operacion/import.xhtml"
+    TARGET="rules:#pages#operacion#import.xhtml"
+    TITLE="operacionImportForm" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#pages#user#user-profile.xhtml"
@@ -125,4 +145,10 @@
   PATH="/pages/banco/banco.xhtml" SHAPE="512,1041,0,0" model-entity="JSFProcessGroup"/>
  <PROCESS-ITEM NAME="rules:#pages#cuenta#cuenta-list.xhtml"
   PATH="/pages/cuenta/cuenta-list.xhtml" SHAPE="304,897,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#pages#operacion#operacion-list.xhtml"
+  PATH="/pages/operacion/operacion-list.xhtml" SHAPE="448,1329,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#pages#operacion#import.xhtml"
+  PATH="/pages/operacion/import.xhtml" SHAPE="464,1361,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#pages#deposito#deposito-list.xhtml"
+  PATH="/pages/deposito/deposito-list.xhtml" SHAPE="304,961,0,0" model-entity="JSFProcessGroup"/>
 </PROCESS>

@@ -1,12 +1,13 @@
 /**
  * 
  */
-package com.easyhomeconta.beans;
+package com.easyhomeconta.forms;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import com.easyhomeconta.utils.NumeroUtil;
 import com.easyhomeconta.utils.Enumeraciones.TipoOperacion;
 
 /**
@@ -20,6 +21,7 @@ public class OperacionForm implements Serializable {
 	
 	private Long id;
 	private Integer idCategoria;
+	private String nombreCategoria;
 	private Integer idProducto; 
 	private TipoOperacion tipoOperacion;
 	private Date fecha;
@@ -98,6 +100,10 @@ public class OperacionForm implements Serializable {
 	public BigDecimal getImporte() {
 		return importe;
 	}
+	
+	public String getImporteStr(){
+		return NumeroUtil.formatearACastellano(this.getImporte());
+	}
 
 	public void setImporte(BigDecimal importe) {
 		this.importe = importe;
@@ -119,8 +125,18 @@ public class OperacionForm implements Serializable {
 		this.notas = notas;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	/**
+	 * @return the nombreCategoria
+	 */
+	public String getNombreCategoria() {
+		return nombreCategoria;
+	}
+
+	/**
+	 * @param nombreCategoria the nombreCategoria to set
+	 */
+	public void setNombreCategoria(String nombreCategoria) {
+		this.nombreCategoria = nombreCategoria;
 	}
 
 }

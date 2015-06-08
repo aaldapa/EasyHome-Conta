@@ -5,7 +5,8 @@ package com.easyhomeconta.service;
 
 import java.util.List;
 
-import com.easyhomeconta.beans.ProductoForm;
+import com.easyhomeconta.forms.BancoForm;
+import com.easyhomeconta.forms.ProductoForm;
 
 /**
  * @author Alberto
@@ -35,5 +36,13 @@ public interface ProductoService {
 	 * @param idProducto
 	 */
 	public void deleteProducto(Integer idProducto);
+	
+	/**
+	 * Devuelve la lista de bancos con la lista de tipos de productos a los que el usuario tiene acceso lista para ser renderizada
+	 * @param idUser
+	 * @param idTProducto
+	 * @return
+	 */
+	public List<BancoForm> findAllByTypeForUser(Integer idUser, Integer idTProducto);
 	
 }
