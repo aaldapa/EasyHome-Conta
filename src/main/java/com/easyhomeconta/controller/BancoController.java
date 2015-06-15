@@ -4,6 +4,7 @@
 package com.easyhomeconta.controller;
 
 import java.io.ByteArrayInputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +21,7 @@ import org.springframework.context.annotation.Scope;
 
 import com.easyhomeconta.forms.BancoForm;
 import com.easyhomeconta.service.BancoService;
+import com.easyhomeconta.utils.MyUtils;
 
 /**
  * @author Alberto
@@ -27,7 +29,7 @@ import com.easyhomeconta.service.BancoService;
  */
 @Scope("session")
 @Named(value="bancoBean")
-public class BancoController extends BasicManageBean {
+public class BancoController implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private final Logger log = Logger.getLogger(BancoController.class);
@@ -140,11 +142,11 @@ public class BancoController extends BasicManageBean {
 		if (banco.getImagen().getSize()>0){
 		
 			if (banco.getImagen().getSize()>25000){
-				addErrorMessage(getStringFromBundle("banco.form.error.imagen.sumary"), getStringFromBundle("banco.form.error.imagen.size.detail"));
+				MyUtils.addErrorMessage(MyUtils.getStringFromBundle("banco.form.error.imagen.sumary"), MyUtils.getStringFromBundle("banco.form.error.imagen.size.detail"));
 				isValid=false;
 			}
 			if (!banco.getImagen().getContentType().startsWith("image")){
-				addErrorMessage(getStringFromBundle("banco.form.error.imagen.sumary"), getStringFromBundle("banco.form.error.imagen.formato.detail"));
+				MyUtils.addErrorMessage(MyUtils.getStringFromBundle("banco.form.error.imagen.sumary"), MyUtils.getStringFromBundle("banco.form.error.imagen.formato.detail"));
 				isValid=false;
 			}
 		}

@@ -3,6 +3,7 @@
  */
 package com.easyhomeconta.controller;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +25,7 @@ import com.easyhomeconta.service.CategoriaService;
  */
 @Scope("session")
 @Named(value="categoriaBean")
-public class CategoriaController extends BasicManageBean {
+public class CategoriaController implements Serializable {
 
 
 	private static final long serialVersionUID = 1L;

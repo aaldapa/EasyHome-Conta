@@ -5,6 +5,7 @@ package com.easyhomeconta.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -29,7 +30,7 @@ import com.easyhomeconta.utils.Enumeraciones.TipoOperacion;
 @SuppressWarnings("serial")
 @Entity
 @Table(name="OPERACIONES")
-public class Operacion implements Serializable {
+public class Operacion implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy= GenerationType.AUTO) 
@@ -44,7 +45,7 @@ public class Operacion implements Serializable {
 	@Column(nullable=false)
 	private Date fecha;
 	
-	@Column(length=40, nullable=false)
+	@Column(length=50, nullable=false)
 	private String concepto;
 	
 	private String notas;
@@ -202,4 +203,25 @@ public class Operacion implements Serializable {
 				+ "]";
 	}
 	
+	/**
+	 * Metodo para ordernar las operaciones por fecha e idOperacion de forma ascencente
+	 */
+	public static Comparator<Operacion> orderByFechaAndIdAsc = new Comparator<Operacion>(){
+		
+		public int compare (Operacion op1, Operacion op2){
+			int comparacion;
+		    //Ordenar por fecha
+			comparacion = op1.getFecha().compareTo(op2.getFecha());
+			
+		    //Si la fecha a comparar es la misma, se compara por idOperacion
+		    if (comparacion==0)
+		    	comparacion = op1.getIdOperacion().compareTo(op2.getIdOperacion());
+		    
+			return comparacion;
+		}
+	};
 }
+	
+
+
+

@@ -21,6 +21,7 @@ import com.easyhomeconta.model.Rol;
 import com.easyhomeconta.model.User;
 import com.easyhomeconta.service.FamiliaService;
 import com.easyhomeconta.service.UserService;
+import com.easyhomeconta.utils.MyUtils;
 
 /**
  * @author Alberto
@@ -28,7 +29,7 @@ import com.easyhomeconta.service.UserService;
  */
 @Scope("session")
 @Named(value="userBean")
-public class UserController extends BasicManageBean implements Serializable{
+public class UserController implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
@@ -235,7 +236,9 @@ public class UserController extends BasicManageBean implements Serializable{
 		
 		//Validacion de username
 		if (!userService.isUsernameValido(user)){
-			addErrorMessage(getStringFromBundle("usuarios.form.error.usuario.duplicado.sumary"),getStringFromBundle("usuarios.form.error.usuario.duplicado.detail"));
+			MyUtils.addErrorMessage(
+					MyUtils.getStringFromBundle("usuarios.form.error.usuario.duplicado.sumary"),
+					MyUtils.getStringFromBundle("usuarios.form.error.usuario.duplicado.detail"));
 			return null;
 		}
 		
@@ -249,7 +252,9 @@ public class UserController extends BasicManageBean implements Serializable{
 		
 		//Si venimos del expediente al modificar mostramos mensaje de que se ha modificado el expediente con exito porque no se viaja a ninguna pagina
 		if (outcome==null)
-			addInfoMessage(getStringFromBundle("usuarios.form.save.success.sumary"),getStringFromBundle("usuarios.form.save.success.detail"));
+			MyUtils.addInfoMessage(
+					MyUtils.getStringFromBundle("usuarios.form.save.success.sumary"),
+					MyUtils.getStringFromBundle("usuarios.form.save.success.detail"));
 		
 		return outcome;
 		
@@ -266,11 +271,11 @@ public class UserController extends BasicManageBean implements Serializable{
 		if (imagen.getSize()>0){
 		
 			if (imagen.getSize()>55000){
-				addErrorMessage(getStringFromBundle("usuarios.form.error.imagen.sumary"), getStringFromBundle("usuarios.form.error.imagen.size.detail"));
+				MyUtils.addErrorMessage(MyUtils.getStringFromBundle("usuarios.form.error.imagen.sumary"), MyUtils.getStringFromBundle("usuarios.form.error.imagen.size.detail"));
 				isValid=false;
 			}
 			if (!imagen.getContentType().startsWith("image")){
-				addErrorMessage(getStringFromBundle("usuarios.form.error.imagen.sumary"), getStringFromBundle("usuarios.form.error.imagen.formato.detail"));
+				MyUtils.addErrorMessage(MyUtils.getStringFromBundle("usuarios.form.error.imagen.sumary"), MyUtils.getStringFromBundle("usuarios.form.error.imagen.formato.detail"));
 				isValid=false;
 			}
 		}

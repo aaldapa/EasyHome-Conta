@@ -3,6 +3,7 @@
  */
 package com.easyhomeconta.controller;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -24,7 +25,7 @@ import com.easyhomeconta.service.UserService;
  */
 @Scope("view")
 @Named(value="depositoBean")
-public class DepositoController extends BasicManageBean {
+public class DepositoController implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	

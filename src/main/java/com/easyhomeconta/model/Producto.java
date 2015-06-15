@@ -25,9 +25,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
-
 import com.easyhomeconta.utils.Enumeraciones.SiNo;
 
 /**
@@ -45,11 +42,11 @@ public class Producto implements Serializable{
 	@Column(name = "id_producto", unique = true, nullable = false)
 	private Integer idProducto;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_tipo_producto", nullable = false)
 	private TipoProducto tipoProducto;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_banco", nullable = false)
 	private Banco banco;
 	
@@ -96,7 +93,6 @@ public class Producto implements Serializable{
 	private List<User> lstUsuarios;
 
 	@OneToMany( cascade = CascadeType.ALL, mappedBy = "producto")
-	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<Operacion> lstOperaciones;
 	
 	public Producto() {

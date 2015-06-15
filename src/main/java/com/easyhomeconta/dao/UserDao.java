@@ -41,6 +41,18 @@ public interface UserDao extends GenericDao<User> {
       */
      public List<User> findUsersByProducto(Integer idProducto);
      
+     /**
+      * Borra el usuario de la base de datos
+      * @param user
+      */
      public void deleteUser(User user);
+     
+     
+     /**
+      * Obtiene el usuario con los roles cargados
+      * @param idUser
+      * @return
+      */
+     public User findById(Integer idUser);
      
 }

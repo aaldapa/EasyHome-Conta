@@ -37,7 +37,8 @@ public class BancoDaoImpl extends GenericDaoImpl<Banco> implements BancoDao {
 		StringBuffer sql=new StringBuffer();
 		
 		sql.append(" select distinct(b) from Banco b "
-				+ " join fetch b.lstProductos p" 
+				+ " join fetch b.lstProductos p"
+				+ " join p.tipoProducto "
 				+ " join p.lstUsuarios as u" 
 				+ " where u.idUser = :idUser ");
 		

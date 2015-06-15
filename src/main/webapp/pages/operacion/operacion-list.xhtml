@@ -13,32 +13,311 @@
     	
     	<ui:composition template="../../templates/main.xhtml">
 			<!-- Parametros para el paso de titulos, cabeceras, etc -->
-			<ui:param name="headerTitle1" value="#{msg['listado.titulo']}" />
+			<ui:param name="headerTitle1" value="#{msg['operaciones.listado.titulo']}" />
 			<ui:param name="headerTitle2" value="" />
-			<ui:param name="boxTitle" value="#{msg['form.subtitulo']}" />
-			<ui:param name="boxFooter" value="" />
-			<ui:param name="boxClass" value="box-primary" />
-			<ui:param name="boxTitleClass" value="" />
+
 			
 			<!-- Para la inclusion de javascript -->
-			<ui:define name="scripts"></ui:define>
+			<ui:define name="scripts">
+			<!-- Include Required Prerequisites -->
+				
+				<!-- Include Date Range Picker -->
+			 	<h:outputScript name="./plugins/daterangepicker/moment.min.js" />
+			 	<h:outputScript name="./plugins/daterangepicker/daterangepicker.js" />
+			 	<h:outputStylesheet name="./plugins/daterangepicker/daterangepicker-bs3.css" />
+			</ui:define>
 			
 			<ui:define name="content">
 				
 				<h:form id="id_form" styleClass="form-horizontal"  role="form">	
 					
+					<div class="box box-success">
+					  <div class="box-header with-border">
+					    <h3 class="box-title col-md-12">
+					    	<h:outputText class="col-md-4" value="#{msg['operaciones.listado.subtitulo1']}"/>
+					    	<h:outputText class="col-md-offset-2 col-md-2" value="#{msg['operaciones.listado.registros']}"/>
+					    	<h:outputText id="id_nRegistros" class="col-md-1" value="#{operacionBean.resultadoConsulta.nRegistros}"/>
+					    	<h:outputText class="col-md-1" value="#{msg['operaciones.listado.balance']}"/>
+					    	<h:outputText id="id_balance" class="col-md-2" value="#{operacionBean.resultadoConsulta.balanceStr} €"/>
+					    </h3>
+					    <div class="box-tools pull-right">
+					<!--           Caja o fieldset en la que aparecen los datos. Los botones que aparecen a continuacion son los de minimizar y cerrar la caja. -->
+					          <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Colapsar"><i class="fa fa-minus"></i></button>
+					    </div>
+					  </div>
+					  
 					<div class="box-body">
 						<p:messages showDetail="true" globalOnly="true" autoUpdate="true" closable="true"/>
-						<div class="row">
-							 <div class="col-md-12">		
-							 Pagina de operaciones Hello word!!
-							</div>
-						</div><!-- /.row -->
-					</div><!-- /.box-body -->
+							<div class="row">
+							 	<div class="col-md-12">		
+							 
+							 		<div class="form-group">
+								        <h:outputLabel styleClass="col-md-1 control-label" for="reportrange" value="#{msg['operaciones.listado.rango']}"/>
+							        	<div class="col-md-3">
+							        		<div class="input-group input-append">
+							            		<h:inputText id="reportrange" class="form-control "  required="true" requiredMessage="#{msg['error.campo.obligatorio']}"/>
+							                	<span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+							            	</div>
+							        	</div>
+								        
+								        <h:inputHidden id="id_fInicio" class="date" value="#{operacionBean.fechaInicio}">
+								        	<f:convertDateTime pattern="#{msg['patron.fecha.corta']}" />
+								        </h:inputHidden>
+								        <h:inputHidden id="id_fFin" class="date" value="#{operacionBean.fechaFin}">
+								        	<f:convertDateTime pattern="#{msg['patron.fecha.corta']}" />
+								        </h:inputHidden>
+							        
+							        	<h:outputLabel styleClass="col-md-2 control-label" for="id_producto" value="#{msg['operaciones.listado.productos']}"/>
+								        <div class="col-md-3">
+								            <div class="input-group ">
+								            	<h:selectOneMenu id="id_producto" value="#{operacionBean.idProducto}" styleClass="form-control">
+						            				<f:selectItem itemValue="" itemLabel="#{msg['operaciones.listado.combo.todos']}" noSelectionOption="true"></f:selectItem>
+						            				<f:selectItems value="#{operacionBean.lstProductos}" var="item" itemValue="#{item.value}" itemLabel="#{item.label}" ></f:selectItems>
+						            				<f:ajax event="change" execute="@form" render="id_form:id_data_table id_form:id_nRegistros id_form:id_balance" listener="#{operacionBean.doLoadDateTable}"></f:ajax>
+					            				</h:selectOneMenu>
+								            </div>
+								        </div>
+								        
+								        <h:outputLabel styleClass="col-md-1 control-label" for="id_categorias" value="Categorias"/>
+								        <div class="col-md-2">
+								            <div class="input-group ">
+								        		<h:selectOneMenu id="id_categorias" value="#{operacionBean.idCategoria}" styleClass="form-control" >
+			            							<f:selectItem itemValue="" itemLabel="#{msg['operaciones.listado.combo.todas']}" noSelectionOption="true"></f:selectItem>
+			            							<f:selectItem itemValue="0" itemLabel="#{msg['operaciones.listado.combo.ninguna']}" noSelectionOption="true"></f:selectItem>
+			            							<f:selectItems value="#{operacionBean.lstCategorias}" var="cat" itemLabel="#{cat.nombre}" itemValue="#{cat.idCategoria}" />
+			            							<f:ajax event="change" execute="@form" render="id_form:id_data_table id_form:id_nRegistros id_form:id_balance" listener="#{operacionBean.doLoadDateTable}"></f:ajax>
+			            						</h:selectOneMenu>
+			            				 	</div>
+								        </div>
+							        
+							        </div>
+								</div>
+							</div><!-- /.row -->
+						
+						</div><!-- /.box-body -->
+					</div>
 					
 					
+					<!-- LISTADO -->
+					
+					<div class="box box-primary">
+					  <div class="box-header with-border">
+					    <h3 class="box-title col-md-7">
+					    	#{msg['operaciones.listado.subtitulo2']}
+					    </h3>
+					    
+					    <div class="box-tools col-md-5">
+					<!--           Caja o fieldset en la que aparecen los datos. Los botones que aparecen a continuacion son los de minimizar y cerrar la caja. -->
+<!-- 					          <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Colapsar"><i class="fa fa-minus"></i></button> -->
+
+							<div class="input-group pull-right">
+              					<h:inputText class="form-control" value="#{operacionBean.busqueda}" pt:placeholder="#{msg['operaciones.listado.combo.buscar.placeholder']}">
+              						<f:ajax event="keyup" execute="@form" render="id_form:id_data_table" listener="#{operacionBean.doLoadDateTable}"/>
+              					</h:inputText>
+              					<span class="input-group-btn">
+	              					<button class="btn btn-default" type="button" onclick="envioAjax()">
+	              						<span class="glyphicon glyphicon-search"></span>
+	             					</button>
+             					</span>
+             				</div>
+					    </div>
+					  </div>
+					  
+					  <div class="box-body">
+							
+							<div class="row">
+								 <div class="col-md-12">		
+								<!-- Campos de texto -->
+						           <p:dataTable id="id_data_table"  value="#{operacionBean.resultadoConsulta.lstOperacionesForm}" var="item" style="margin-bottom:20px" tableStyle="font-size: 80%;"
+						           	rowStyleClass="#{item.importe>0?'opingreso':'opgasto'}"
+					           		reflow="true"
+					           		editable="true" editMode="cell" widgetVar="dtOperaciones"
+					           		selection="#{operacionBean.selectedOperacionesForm}" rowKey="#{item.id}"
+						        	scrollable="true" scrollHeight="400" 
+					    	 		emptyMessage="#{msg['tabla.filas.mensaje.no.records']}"
+						           >
+						           		
+						           		<p:column selectionMode="multiple" style="width:40px;text-align:center"/>
+						           		
+						           		<p:column headerText="#{msg['operaciones.listado.tabla.col.fecha']}" width="85" sortBy="#{item.fecha}">
+						           			<p:cellEditor>
+							           			<f:facet name="output">
+							           				<h:outputText value="#{item.fecha}">
+							           					<f:convertDateTime pattern="#{msg['patron.fecha.corta']}" timeZone="GMT+2" />
+							           				</h:outputText> 
+							           			 </f:facet>
+		           			                	<f:facet name="input">
+		           			                		<p:inputText id="id_fecha" value="#{item.fecha}" required="true" >
+		           			                			<f:convertDateTime pattern="#{msg['patron.fecha.corta']}" timeZone="GMT+2" />
+		           			                		</p:inputText>
+		           			                		
+		           			                	</f:facet>
+	           			                	</p:cellEditor>
+						           		</p:column>
+						           		
+						           		<p:column headerText="#{msg['operaciones.listado.tabla.col.categoria']}" width="175" sortBy="#{item.nombreCategoria}">
+						           			
+						           			<p:cellEditor>
+							           			<f:facet name="output">
+													<!-- Como para que se vea la seleccion tengo que presentar el dato en funcion del id,
+													 recorro la lista de  categorias en busca del id seleccionado, si lo encuentro muestro el texto-->
+							           				<ui:repeat value="#{operacionBean.lstCategorias}" var="categoria" >
+							           					<h:outputText value="#{categoria.label}" rendered="#{item.idCategoria==categoria.value}"/>
+							           				</ui:repeat>
+													
+							           			 </f:facet>
+		           			                	<f:facet name="input">
+	           			         					<h:selectOneMenu value="#{item.idCategoria}" styleClass="form-control" >
+						            					<f:selectItem itemValue="" itemLabel="#{msg['combo.selection.option']}" noSelectionOption="true"></f:selectItem>
+						            					<f:selectItems value="#{operacionBean.lstCategorias}" var="cat" itemLabel="#{cat.nombre}" itemValue="#{cat.idCategoria}" />
+						            				</h:selectOneMenu>
+		           			                	</f:facet>
+	           			                	</p:cellEditor>
+						           		</p:column>
+						           		
+						           		<p:column headerText="#{msg['operaciones.listado.tabla.col.concepto']}" sortBy="#{item.concepto}">
+						           			<p:cellEditor>
+							           			<f:facet name="output"><h:outputText value="#{item.concepto}" /> </f:facet>
+		           			                	<f:facet name="input"><p:inputText id="id_concepto" value="#{item.concepto}" style="width:100%" maxlength="50"/></f:facet>
+	           			                	</p:cellEditor>
+						           		</p:column>
+						           		
+						           		<p:column headerText="#{msg['operaciones.listado.tabla.col.importe']}" width="100" sortBy="#{item.importe}">
+						           			<p:cellEditor>
+							           			<f:facet name="output"><h:outputText value="#{item.importeStr} €" class="pull-right"/> </f:facet>
+		           			                	<f:facet name="input">
+		           			                		<p:inputText id="id_importe" value="#{item.importe}" style="width:100%"  required="true" >
+		           			                			<f:convertNumber  maxFractionDigits="2"  for="id_importe"/>
+		           			                		</p:inputText>
+		           			                	</f:facet>
+	           			                	</p:cellEditor>
+						           		</p:column>
+						           		
+						           		<!-- Columna expandible -->
+						           		<p:column style="width:35px">
+            								<p:rowToggler />
+        								</p:column>
+        								<!-- Contenido de columna expandible -->
+        								<p:rowExpansion>
+											<div class="form-group">
+												<h:outputText class="col-md-1" value="#{msg['operaciones.listado.tabla.notas']}" />
+												<div class="input-group col-md-10">
+													<h:inputTextarea id="id_notas" class="form-control" pt:placeholder="#{msg['operaciones.listado.tabla.notas.placeholder']}" label="#{msg['operaciones.listado.tabla.notas']}" value="#{item.notas}"/>
+								    			</div>
+								    		</div>
+
+										</p:rowExpansion>
+										
+						           </p:dataTable>	
+				         							 					    	
+				            	</div><!-- /.col-md-12-->
+							</div><!-- /.row -->
+						</div><!-- /.box-body -->
+						
+						<!-- Para la botonera -->
+				        <div class="box-footer">
+	 						<div class="btn-toolbar">
+	    							
+   					 			<h:commandButton type="button" id="id_boton_eliminar" styleClass="btn btn-default pull-right" value="#{msg['boton.eliminar']}" title="#{msg['boton.eliminar']}"  onclick="mostrarModal();">
+   					 				<f:ajax execute="id_form" render="id_form:id_data_table"/>
+   					 			</h:commandButton>
+   					 			
+   					 			<h:commandButton action="#{operacionBean.doSaveItems('UPDATE')}" styleClass="btn btn-default pull-right" value="#{msg['boton.guardar']}" title="#{msg['boton.guardar']}" >
+   					 				<f:ajax execute="id_form" render="id_form:id_data_table" />
+   					 			</h:commandButton>
+   					 			
+   					 			<h:commandButton type="button" class="btn btn-primary  pull-right" onclick="PF('familiaForm').show()" title="#{msg['boton.nuevo']}" value="#{msg['boton.nuevo']}"/>
+	            				
+   					 			
+    						</div>
+				        </div><!-- /.box-footer-->
+			
+					<!-- Ventana modal de confirmacion para eliminar un registro -->
+			            <div class="modal" >
+			              <div class="modal-dialog">
+			                <div class="modal-content">
+			                  <div class="modal-header">
+			                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="ocultarModal();"><span aria-hidden="true">×</span></button>
+			                    <h4 class="modal-title"><h:outputLabel value="#{msg['modal.titulo']}"/></h4>
+			                  </div>
+			                  <div class="modal-body">
+			                    <p><h:outputText value="#{msg['operaciones.listado.botones.confirmacion']}"/></p>
+			                    <p><h:outputText value="#{msg['modal.confirmacion']}"/></p>
+			                  </div>
+			                  <div class="modal-footer">
+			                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal" onclick="ocultarModal();">
+			                    	<h:outputText value="#{msg['boton.cancelar']}"/>
+								</button>
+								
+								<h:commandButton  styleClass="btn btn-primary" value="#{msg['boton.aceptar']}" onclick="ocultarModal();" title="#{msg['boton.aceptar']}">
+		    						<f:ajax listener="#{operacionBean.doDeleteItems}" event="click" render="id_form:id_data_table" execute="id_form"></f:ajax>
+								</h:commandButton>
+			                  </div>
+			                </div><!-- /.modal-content -->
+			              </div><!-- /.modal-dialog -->
+			            </div><!-- /.modal -->        
+			
+					</div>
+					
+					<!-- Peticion ajax invocada desde javascript -->
+					<p:remoteCommand name="envioAjax" actionListener="#{operacionBean.doLoadDateTable}" update="id_form:id_data_table id_form:id_nRegistros id_form:id_balance" ></p:remoteCommand>
 		    	</h:form>
-		    	
+		    	<script type="text/javascript">
+				   $(document).ready(function(){
+
+					   $('#id_form\\:reportrange').val(moment().subtract(#{operacionBean.nRangodias}+1, 'days').format("#{msg['patron.corto']}") + " #{msg['operaciones.listado.al']} " + moment().format("#{msg['patron.corto']}"));
+					   
+					   $('#id_form\\:reportrange').daterangepicker({
+						   format: "#{msg['patron.corto']}",
+					        startDate: moment().subtract(#{operacionBean.nRangodias}, 'days'),
+					        endDate: moment(),
+					        showDropdowns: true,
+					        showWeekNumbers: false,
+					        timePicker: false,
+					        timePickerIncrement: 1,
+					        timePicker12Hour: true,
+					        ranges: {
+// 						       'Today': [moment(), moment()],
+// 					           'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+// 					           'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+					           "#{msg['cal.boton.ult.30']}": [moment().subtract(30, 'days'), moment()],
+					           "#{msg['cal.boton.mes.act']}": [moment().startOf('month'), moment().endOf('month')],
+					           "#{msg['cal.boton.mes.ant']}": [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+					           "#{msg['cal.boton.ano.act']}": [moment().startOf('year'), moment().endOf('year')],
+					           "#{msg['cal.boton.ano.ant']}": [moment().subtract(1, 'year').startOf('year'), moment().subtract(1, 'year').endOf('year')],
+					        },
+					        opens: 'right',
+					        drops: 'down',
+					        buttonClasses: ['btn', 'btn-sm'],
+					        applyClass: 'btn-primary',
+					        cancelClass: 'btn-default pull-right',
+					        separator: " "+ "#{msg['operaciones.listado.al']}"+" ",
+					        locale: {
+					            applyLabel: "#{msg['boton.aceptar']}",
+					            cancelLabel: "#{msg['boton.cancelar']}",
+					            fromLabel: "#{msg['cal.desde']}",
+					            toLabel: "#{msg['cal.hasta']}",
+					            customRangeLabel: "#{msg['cal.boton.custom']}",
+					            daysOfWeek: ["#{msg['dia.7']}", "#{msg['dia.1']}", "#{msg['dia.2']}", "#{msg['dia.3']}", "#{msg['dia.4']}", "#{msg['dia.5']}","#{msg['dia.6']}"],
+					            monthNames: ["#{msg['mes.1']}", "#{msg['mes.2']}", "#{msg['mes.3']}", "#{msg['mes.4']}", "#{msg['mes.5']}", "#{msg['mes.6']}", "#{msg['mes.7']}", "#{msg['mes.8']}", "#{msg['mes.9']}", "#{msg['mes.10']}", "#{msg['mes.11']}", "#{msg['mes.12']}"],
+					            firstDay: 1
+					        }
+					    }, function(start, end, label) {
+					        console.log(start.toISOString(), end.toISOString(), label);
+					        
+					        $('#id_form\\:reportrange').val(start.format("#{msg['patron.corto']}") + " #{msg['operaciones.listado.al']} " + end.format("#{msg['patron.corto']}"));
+
+					        $('#id_form\\:id_fInicio').val(start.format("#{msg['patron.corto']}"));
+					        $('#id_form\\:id_fFin').val(end.format("#{msg['patron.corto']}"));
+
+							//Funcion javascript indicada en la tag p:remoteCommand
+					        envioAjax();
+					        
+					    });
+										
+					});
+
+				</script>
 			</ui:define>
     	</ui:composition>
     	

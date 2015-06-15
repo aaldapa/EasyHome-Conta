@@ -6,6 +6,7 @@ package com.easyhomeconta.dao;
 import java.util.List;
 
 import javax.inject.Named;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 import com.easyhomeconta.model.Categoria;
@@ -28,6 +29,26 @@ public class CategoriaDaoImpl extends GenericDaoImpl<Categoria> implements
 		    
 	    List<Categoria> lstCategorias= (List<Categoria>)query.getResultList();
 	    return lstCategorias;
+	}
+
+	@Override
+	public Categoria findCategorizacionUsuarioByIdOperacion(Long idOperacion, Integer idUsuario) {
+		Query query=entityManager.createQuery(
+				" select cats from Operacion o "
+				+ " left join o.lstCategorias cats"
+				+ " where o.idOperacion= :idOperacion"
+				+ " and cats.user.idUser = :idUser");
+		query.setParameter("idOperacion", idOperacion);
+		query.setParameter("idUser", idUsuario);
+		
+		try {
+			Categoria categorizacion=(Categoria)query.getSingleResult();
+			return categorizacion;
+		} catch (NoResultException e) {
+			return null;
+		}
+		
+		
 	}
 
 }

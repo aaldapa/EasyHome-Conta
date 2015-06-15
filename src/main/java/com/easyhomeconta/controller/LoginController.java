@@ -22,6 +22,7 @@ import com.easyhomeconta.model.LogonInfo;
 import com.easyhomeconta.model.User;
 import com.easyhomeconta.service.LogonService;
 import com.easyhomeconta.service.UserService;
+import com.easyhomeconta.utils.MyUtils;
 import com.easyhomeconta.utils.Enumeraciones.LogonType;
 
 /**
@@ -31,7 +32,7 @@ import com.easyhomeconta.utils.Enumeraciones.LogonType;
  */
 @Scope("session")
 @Named(value="loginBean")
-public class LoginController extends BasicManageBean implements Serializable {
+public class LoginController implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -80,7 +81,7 @@ public class LoginController extends BasicManageBean implements Serializable {
 //	        FacesContext.getCurrentInstance().addMessage(null, facesMsg);
 	        
 	    	//Simplificado utilizando metodos en la superclase
-	    	addErrorMessage(getStringFromBundle("login.error.autenticacion"),getStringFromBundle("login.error.credenciales"));
+			MyUtils.addErrorMessage(MyUtils.getStringFromBundle("login.error.autenticacion"),MyUtils.getStringFromBundle("login.error.credenciales"));
 	    	log.info("Intento de acceso a la aplicacion. Error: "+ e.getMessage());
 	        return null;
 		}

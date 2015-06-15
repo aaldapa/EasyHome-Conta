@@ -8,7 +8,6 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 import com.easyhomeconta.utils.NumeroUtil;
-import com.easyhomeconta.utils.Enumeraciones.TipoOperacion;
 
 /**
  * @author Alberto
@@ -23,7 +22,6 @@ public class OperacionForm implements Serializable {
 	private Integer idCategoria;
 	private String nombreCategoria;
 	private Integer idProducto; 
-	private TipoOperacion tipoOperacion;
 	private Date fecha;
 	private String concepto;
 	private BigDecimal importe;
@@ -35,17 +33,27 @@ public class OperacionForm implements Serializable {
 	}
 
 	public OperacionForm(Long id, Integer idCategoria, Integer idProducto,
-			TipoOperacion tipoOperacion, Date fecha, String concepto,
+			Date fecha, String concepto,
 			BigDecimal importe, BigDecimal saldo, String notas) {
 		super();
 		this.id = id;
 		this.idCategoria = idCategoria;
 		this.idProducto = idProducto;
-		this.tipoOperacion = tipoOperacion;
 		this.fecha = fecha;
 		this.concepto = concepto;
 		this.importe = importe;
 		this.saldo = saldo;
+		this.notas = notas;
+	}
+	
+	public OperacionForm (Long id, Integer idCategoria, Integer idProducto, Date fecha, String concepto, BigDecimal importe, String notas){
+		super();
+		this.id = id;
+		this.idCategoria = idCategoria;
+		this.idProducto = idProducto;
+		this.fecha = fecha;
+		this.concepto = concepto;
+		this.importe = importe;
 		this.notas = notas;
 	}
 
@@ -71,14 +79,6 @@ public class OperacionForm implements Serializable {
 
 	public void setIdProducto(Integer idProducto) {
 		this.idProducto = idProducto;
-	}
-
-	public TipoOperacion getTipoOperacion() {
-		return tipoOperacion;
-	}
-
-	public void setTipoOperacion(TipoOperacion tipoOperacion) {
-		this.tipoOperacion = tipoOperacion;
 	}
 
 	public Date getFecha() {

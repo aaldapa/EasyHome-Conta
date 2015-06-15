@@ -11,12 +11,10 @@ public class FechaUtil {
 
   	 private static String PATRON_DEFECTO = "dd/MM/yyyy";
      	
-	 public FechaUtil() {   
-		 super();
-	 }
-
-     /* Entre nuestro Hosting en Espa�a y el Hosting en EEUU hay una diferencia de 
-     * 9 Horas por tanto la hora se ha de obtener desde este Lugar */     
+	 /**
+	  * Devuelve la hora actual
+	  * @return
+	  */
      public static Date getDate(){
     	DateTime horaActual = new DateTime();
     	return horaActual.toDate();
@@ -31,8 +29,17 @@ public class FechaUtil {
     	 DateTimeFormatter df =DateTimeFormat.forPattern(PATRON_DEFECTO);
          long millis = df.parseMillis(fechaStr);
          Date date  = new Date(millis);
-         
          return date;
      }
      
+     /**
+      * Resta los dias indicados a la fecha indicada
+      * @param fecha
+      * @param dias
+      * @return
+      */
+     public static Date restarDiasAFecha(Date fecha, int dias){
+    	 DateTime dt= new DateTime(fecha).minusDays(dias);
+    	 return dt.toDate();
+     }
 }

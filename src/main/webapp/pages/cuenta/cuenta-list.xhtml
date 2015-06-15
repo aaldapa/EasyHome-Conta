@@ -87,7 +87,7 @@
 								            
 								            <p:column>
 												
-												<button type="submit" class="btn btn-flat btn-primary btn-xs" title="#{msg['cuentas.listado.tabla.boton.consultar']}" jsf:id="btnConsultar" jsf:action="#{operacionBean.doListItems(cta.idProducto)}" >
+												<button type="submit" class="btn btn-flat btn-primary btn-xs" title="#{msg['cuentas.listado.tabla.boton.consultar']}" jsf:id="btnConsultar" jsf:action="#{cuentaBean.doLoadConsultas(cta.idProducto)}" >
 	 											  <span class="glyphicon glyphicon-search" aria-hidden="true"></span> 
 	 											  <h:outputText value=" #{msg['cuentas.listado.tabla.boton.consultar']}"/>
 												</button>

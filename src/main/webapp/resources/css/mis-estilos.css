@@ -26,3 +26,11 @@ Estilo para las filas de items que se muestran estando de baja
 	 text-decoration:line-through;
 	 color:rgb(197, 197, 197);
 }
+.opgasto{
+	color:rgb(0, 0, 0);
+	
+}
+.opingreso{
+	/*font-weight: bold;*/
+	 color:rgb(160, 160, 160);
+}

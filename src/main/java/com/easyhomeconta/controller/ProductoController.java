@@ -3,6 +3,7 @@
  */
 package com.easyhomeconta.controller;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -22,6 +23,7 @@ import com.easyhomeconta.service.BancoService;
 import com.easyhomeconta.service.ProductoService;
 import com.easyhomeconta.service.TipoProductoService;
 import com.easyhomeconta.service.UserService;
+import com.easyhomeconta.utils.MyUtils;
 
 /**
  * @author Alberto
@@ -29,7 +31,7 @@ import com.easyhomeconta.service.UserService;
  */
 @Scope("session")
 @Named(value="productoBean")
-public class ProductoController extends BasicManageBean {
+public class ProductoController implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
@@ -118,7 +120,8 @@ public class ProductoController extends BasicManageBean {
 		//Si el usuario no es el propietario muestro mensaje de error.
 		else{
 			selectedRow=true;
-			addErrorMessage(getStringFromBundle("productos.listado.error.eliminar.owner.sumary"), getStringFromBundle("productos.listado.error.eliminar.owner.detail"));
+			MyUtils.addErrorMessage(MyUtils.getStringFromBundle("productos.listado.error.eliminar.owner.sumary")
+					, MyUtils.getStringFromBundle("productos.listado.error.eliminar.owner.detail"));
 		}
     }
 	

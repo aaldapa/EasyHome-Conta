@@ -234,6 +234,7 @@ public class UserServiceImpl implements UserService {
 
 	
 	@Override
+	@Transactional
 	public UserDetails loadUserByUsername(String username)throws UsernameNotFoundException{
 		User usuario=userDao.loadUserByUsername(username);
 		return usuario;

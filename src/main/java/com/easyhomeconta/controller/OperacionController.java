@@ -3,9 +3,12 @@
  */
 package com.easyhomeconta.controller;
 
+import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseId;
 import javax.faces.model.SelectItem;
 import javax.inject.Inject;
@@ -20,7 +23,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import com.easyhomeconta.forms.OperacionForm;
 import com.easyhomeconta.model.User;
 import com.easyhomeconta.service.OperacionService;
+import com.easyhomeconta.service.ResultadoConsultaForm;
 import com.easyhomeconta.service.UserService;
+import com.easyhomeconta.utils.Constantes;
+import com.easyhomeconta.utils.FechaUtil;
+import com.easyhomeconta.utils.MyUtils;
 import com.sun.faces.context.flash.ELFlash;
 
 /**
@@ -28,126 +35,170 @@ import com.sun.faces.context.flash.ELFlash;
  *
  */
 @SuppressWarnings("serial")
-@Named(value="operacionBean")
+@Named(value = "operacionBean")
 @Scope("view")
-public class OperacionController extends BasicManageBean {
+public class OperacionController implements Serializable {
 
 	private final Logger log = Logger.getLogger(OperacionController.class);
 	
 	@Inject
 	OperacionService operacionService;
-	
+
 	@Inject
 	UserService userService;
+
+	private ResultadoConsultaForm resultadoConsulta;
 	
-	private Integer  idProducto;
+	private Date fechaInicio;
+	private Date fechaFin;
+	private Integer idProducto;
+	private int nRangodias;
+	private String busqueda;
+	private Integer idCategoria;
+
 	private UploadedFile archivo;
 	private List<SelectItem> lstProductos;
 	private List<SelectItem> lstCategorias;
 	private List<OperacionForm> lstOperacionesForm;
-
-	private List<OperacionForm> selectedOperacionesForm;
 	
+	private List<OperacionForm> selectedOperacionesForm;
+
 	/**
-	 * Al entrar en una vista en la que se llama algun metodo del controllador, primero se llama al init.
-	 * En esta ocasion, cargo el valor del idProducto que se ha introducido en el scope flash desde lel controller CuentaBean.
-	 * Lo hago asi porque con el scope vista no recoge parametros de otras vista y no quiero usar el scope session.
+	 * Al entrar en una vista en la que se llama algun metodo del controllador,
+	 * primero se llama al init. En esta ocasion, cargo el valor del idProducto
+	 * que se ha introducido en el scope flash desde lel controller CuentaBean.
+	 * Lo hago asi porque con el scope vista no recoge parametros de otras vista
+	 * y no quiero usar el scope session.
 	 */
 	@PostConstruct
-	public void init (){
-		this.idProducto=(Integer) ELFlash.getFlash().get("idProducto");	
+	public void init() {
+		// cargo la lista de categorias que se utilizara en la vista de consultas y la de importar
+		setLstCategorias(operacionService.getLstCategorias(getUserLogado().getIdUser()));
+		
+		//Como el scope de este controller view, si deseo recibir el idProducto desde otra vista o controller lo tendre que meter en el scope flash.
+		this.idProducto = (Integer) ELFlash.getFlash().get("idProducto");
+		
+		//Capturo la url a la que se esta haciendo el request para saber a que pagina se va a cargar
+		String path=FacesContext.getCurrentInstance().getExternalContext().getRequestServletPath();
+
+		//Si entro en la vista de consultas cargo la lista de operaciones por defecto
+		if (path.contains("operacion-list.xhtml")){
+			this.fechaFin=new Date();
+			this.fechaInicio=FechaUtil.restarDiasAFecha(fechaFin, getnRangodias());
+			resultadoConsulta=operacionService.getLstOperacionesForm(fechaInicio, fechaFin, idProducto, idCategoria, busqueda, getUserLogado().getIdUser());
+		}
 	}
-	
+
 	/**
-	 * Carga la vista de consulta desde la vista de cuentas corrientes
-	 * @param idProducto
+	 * Carga la vista de consulta desde el menu
 	 * @return
 	 */
-	public String doListItems(Integer idProducto){
-		setIdProducto(idProducto);
-		log.info(this.idProducto);
+	public String doListItems() {
+		//Reseteo el idProducto del scope flash para que cada vez que se realice la llamada desde el menu no se visualice ningún producto en el combo
+		ELFlash.getFlash().put("idProducto", null);
 		return "operacionList";
 	}
 	
 	/**
-	 * Carga la vista de consulta
+	 * Aprovechando el id del scope flash, cuando pulso el boton volver de la vista de importacion muestro las operaciones para
+	 * el producto con el que se ha trabajado anteriormente. 
 	 * @return
 	 */
-	public String doListItems(){
-		log.info(this.idProducto);
+	public String doVolver() {
+		ELFlash.getFlash().put("idProducto", idProducto);
 		return "operacionList";
+	}
+	
+	/**
+	 * Caga lo datos de la tabla de operaciones por medio de llamada asincrona 
+	 */
+	public void doLoadDateTable(){
+		resultadoConsulta=operacionService.getLstOperacionesForm(fechaInicio, fechaFin, idProducto, idCategoria, busqueda, getUserLogado().getIdUser());
+	}
+	
+	/**
+	 * Elimina las operaciones de la base de datos
+	 */
+	public void doDeleteItems(){
+		log.info("Eliminar lista");
+		
+		operacionService.deleteOperaciones(selectedOperacionesForm);
+		removeSelectedFromList(resultadoConsulta.getLstOperacionesForm(),true);
 	}
 	
 	/**
 	 * Carga la vista del formulario de importacion
+	 * 
 	 * @param idProducto
 	 * @return
 	 */
-	public String doLoadImportForm(Integer idProducto){		
-		
+	public String doLoadImportForm() {
 		log.info(this.idProducto);
 		clearSessionObjects();
-		this.idProducto=idProducto;
 		return "operacionImportForm";
 	}
 
 	/**
-	 * Carga la vista del formulario de importacion
-	 * @param idProducto
-	 * @return
+	 * Guarda en base de datos las operaciones seleccionadas y las elimina de la
+	 * tabla
 	 */
-	public String doLoadImportForm(){
-		log.info(this.idProducto);
-		clearSessionObjects();		
-		return "operacionImportForm";
-	}
-	
 	/**
-	 * Guarda en base de datos las operaciones seleccionadas y las elimina de la tabla
+	 * Utilizo este metodo para guardar las operaciones importadas del excel y para
+	 * modificar las operaciones de base de datos.  
+	 * @param accion. Posibles valores {IMPORT, UPDATE}
 	 */
-	public void doSaveItems(){
-		//Si la lista de operaciones seleccionadas no es nula ni esta vacia los guardo en bd
-		if (selectedOperacionesForm!=null&& !selectedOperacionesForm.isEmpty()){
-			
-			//Validacion de idProducto
-			if(idProducto==null)
-				addErrorMessage(getStringFromBundle("error"), getStringFromBundle("operacion.form.importar.guardar.error.detail"));
-			else{
-				operacionService.saveOperaciones(selectedOperacionesForm, idProducto);
-				addInfoMessage(getStringFromBundle("success"),selectedOperacionesForm.size()+" "+getStringFromBundle("operacion.form.importar.guardar.detail"));
-				removeSelectedFromList();
+	public void doSaveItems(String accion) {
+		// Si la lista de operaciones seleccionadas no es nula ni esta vacia los guardo en bd
+		if (selectedOperacionesForm != null && !selectedOperacionesForm.isEmpty()) {
+
+			// Validacion de idProducto
+			if (idProducto == null && accion.equalsIgnoreCase("IMPORT"))
+				MyUtils.addErrorMessage(MyUtils.getStringFromBundle("error"),
+						MyUtils.getStringFromBundle("operacion.form.importar.guardar.error.detail"));
+			else {
+				operacionService.saveOperaciones(selectedOperacionesForm,idProducto, accion);
+				MyUtils.addInfoMessage(MyUtils.getStringFromBundle("success"),selectedOperacionesForm.size()+ " "+ MyUtils.getStringFromBundle("operacion.form.importar.guardar.detail"));
+				if (accion.equalsIgnoreCase("IMPORT"))
+					removeSelectedFromList(lstOperacionesForm, false);
 			}
 		}
 	}
-	
+
 	/**
 	 * Eliminar la seleccion de la tabla
 	 */
-	public void doDeleteSelection(){
-		//Si la lista de operaciones seleccionadas no es nula ni esta vacia los borro de la tabla
-		if (selectedOperacionesForm!=null && !selectedOperacionesForm.isEmpty()){
-			addInfoMessage(getStringFromBundle("success"),selectedOperacionesForm.size()+" "+getStringFromBundle("operacion.form.importar.eliminar.detail"));
-			removeSelectedFromList();
-		}
+	public void doDeleteSelection() {
+		// Si la lista de operaciones seleccionadas no es nula ni esta vacia los borro de la tabla
+		if (selectedOperacionesForm != null && !selectedOperacionesForm.isEmpty()) 
+			removeSelectedFromList(lstOperacionesForm,true);
+		
 	}
-	
+
 	/**
 	 * Eliminar seleccion de la lista de operaciones cargadas
 	 */
-	private void removeSelectedFromList(){
-		//Elimino de la tabla los elementos seleccionados
-		for(OperacionForm o:selectedOperacionesForm)
-			lstOperacionesForm.remove(o);
+	/**
+	 * Elimina de la lista pasada como parametro, los objecto seleccionados en la tabla (tanto en la tabla importacion como en la de consultas) 
+	 * @param listado 
+	 * @param message true/false muestra mensaje con el numero de elementos eliminados de las lista.
+	 */
+	private void removeSelectedFromList(List<OperacionForm>listado, Boolean message) {
+		if (message)
+			MyUtils.addInfoMessage(MyUtils.getStringFromBundle("success"), selectedOperacionesForm.size()	+ " "+ MyUtils.getStringFromBundle("operacion.form.importar.eliminar.detail"));
+		// Elimino de la tabla los elementos seleccionados
+		for (OperacionForm o : selectedOperacionesForm)
+			listado.remove(o);
+		
 	}
 
-	private void clearSessionObjects(){
-		if(lstOperacionesForm!=null)
+	private void clearSessionObjects() {
+		if (lstOperacionesForm != null)
 			lstOperacionesForm.clear();
-		if (selectedOperacionesForm!=null)
+		if (selectedOperacionesForm != null)
 			selectedOperacionesForm.clear();
-		this.idProducto=null;
+		this.idProducto = null;
 	}
-	
+
 	/**
 	 * @return the idProducto
 	 */
@@ -156,64 +207,74 @@ public class OperacionController extends BasicManageBean {
 	}
 
 	/**
-	 * @param idProducto the idProducto to set
+	 * @param idProducto
+	 *            the idProducto to set
 	 */
 	public void setIdProducto(Integer idProducto) {
 		this.idProducto = idProducto;
 	}
-	
-	public void handleFileUpload(FileUploadEvent event) {
-		
-		if (!PhaseId.INVOKE_APPLICATION.equals(event.getPhaseId())) {
-	        event.setPhaseId(PhaseId.INVOKE_APPLICATION);
-	        event.queue();
-	    } else {
-	        //do stuff here, #{ngoPhotoBean.description} is set
-	    	log.info(idProducto);
-	    	
-	    	if (event.getFile().equals(null)) 
-				addErrorMessage(getStringFromBundle("operacion.form.importar.cargar.error.summary"),getStringFromBundle("operacion.form.importar.cargar.error.detail"));
-			
-			try {
-				lstOperacionesForm=operacionService.getLstOperacionesFormXLS(event.getFile().getInputstream(), idProducto);
 
-				//Como la p:datetable necesita que los items tengan id, recorro la lista añadiendole la posicion en el id
-				for (int i = 0; i < lstOperacionesForm.size(); i++) 
-					lstOperacionesForm.get(i).setId(new Long(i+1));
-				
-				//cargo la lista de categorias
+	public void handleFileUpload(FileUploadEvent event) {
+
+		if (!PhaseId.INVOKE_APPLICATION.equals(event.getPhaseId())) {
+			event.setPhaseId(PhaseId.INVOKE_APPLICATION);
+			event.queue();
+		} else {
+			// do stuff here, #{ngoPhotoBean.description} is set
+			log.info(idProducto);
+
+			if (event.getFile().equals(null))
+				MyUtils.addErrorMessage(
+						MyUtils.getStringFromBundle("operacion.form.importar.cargar.error.summary"),
+						MyUtils.getStringFromBundle("operacion.form.importar.cargar.error.detail"));
+
+			try {
+				lstOperacionesForm = operacionService.getLstOperacionesFormXLS(
+						event.getFile().getInputstream(), idProducto);
+
+				// Como la p:datetable necesita que los items tengan id, recorro
+				// la lista añadiendole la posicion en el id
+				for (int i = 0; i < lstOperacionesForm.size(); i++)
+					lstOperacionesForm.get(i).setId(new Long(i + 1));
+
+				// cargo la lista de categorias
 				setLstCategorias(operacionService.getLstCategorias(getUserLogado().getIdUser()));
-				
+
 			} catch (Exception e) {
-				addErrorMessage(getStringFromBundle("operacion.form.importar.cargar.error.summary"),getStringFromBundle("operacion.form.importar.cargar.error.detail"));
+				MyUtils.addErrorMessage(
+						MyUtils.getStringFromBundle("operacion.form.importar.cargar.error.summary"),
+						MyUtils.getStringFromBundle("operacion.form.importar.cargar.error.detail"));
 			}
-	    }
-		
-		
-		
-    }
+		}
+
+	}
 
 	/**
 	 * @return the lstProductos
 	 */
 	public List<SelectItem> getLstProductos() {
-		lstProductos=operacionService.getLstProductosOperables(getUserLogado().getIdUser());
+		lstProductos = operacionService
+				.getLstProductosOperables(getUserLogado().getIdUser());
 		return lstProductos;
 	}
-	
+
 	/**
-	 * @param lstProductos the lstProductos to set
+	 * @param lstProductos
+	 *            the lstProductos to set
 	 */
 	public void setLstProductos(List<SelectItem> lstProductos) {
 		this.lstProductos = lstProductos;
 	}
-	
+
 	/**
-	 * Cargo al usuario logado existente en el Contexto de spring security para obtener su id y referencias
+	 * Cargo al usuario logado existente en el Contexto de spring security para
+	 * obtener su id y referencias
+	 * 
 	 * @return
 	 */
 	public User getUserLogado() {
-		User userLogado=userService.getUserById(((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getIdUser());
+		User userLogado = userService.getUserById(((User) SecurityContextHolder
+				.getContext().getAuthentication().getPrincipal()).getIdUser());
 		return userLogado;
 	}
 
@@ -225,7 +286,8 @@ public class OperacionController extends BasicManageBean {
 	}
 
 	/**
-	 * @param archivo the archivo to set
+	 * @param archivo
+	 *            the archivo to set
 	 */
 	public void setArchivo(UploadedFile archivo) {
 		this.archivo = archivo;
@@ -233,6 +295,14 @@ public class OperacionController extends BasicManageBean {
 
 	public List<OperacionForm> getLstOperacionesForm() {
 		return lstOperacionesForm;
+	}
+
+	public ResultadoConsultaForm getResultadoConsulta() {
+		return resultadoConsulta;
+	}
+
+	public void setResultadoConsulta(ResultadoConsultaForm resultadoConsulta) {
+		this.resultadoConsulta = resultadoConsulta;
 	}
 
 	public void setLstOperacionesForm(List<OperacionForm> lstOperacionesForm) {
@@ -247,7 +317,8 @@ public class OperacionController extends BasicManageBean {
 	}
 
 	/**
-	 * @param lstCategorias the lstCategorias to set
+	 * @param lstCategorias
+	 *            the lstCategorias to set
 	 */
 	public void setLstCategorias(List<SelectItem> lstCategorias) {
 		this.lstCategorias = lstCategorias;
@@ -261,10 +332,67 @@ public class OperacionController extends BasicManageBean {
 	}
 
 	/**
-	 * @param selectedOperacionesForm the selectedOperacionesForm to set
+	 * @param selectedOperacionesForm
+	 *            the selectedOperacionesForm to set
 	 */
-	public void setSelectedOperacionesForm(List<OperacionForm> selectedOperacionesForm) {
+	public void setSelectedOperacionesForm(
+			List<OperacionForm> selectedOperacionesForm) {
 		this.selectedOperacionesForm = selectedOperacionesForm;
 	}
-	
+
+	public Date getFechaInicio() {
+		return fechaInicio;
+	}
+
+	public void setFechaInicio(Date fechaInicio) {
+		this.fechaInicio = fechaInicio;
+	}
+
+	public Date getFechaFin() {
+		return fechaFin;
+	}
+
+	public void setFechaFin(Date fechaFin) {
+		this.fechaFin = fechaFin;
+	}
+
+	public String getBusqueda() {
+		return busqueda;
+	}
+
+	public void setBusqueda(String busqueda) {
+		this.busqueda = busqueda;
+	}
+
+	/**
+	 * Utilizo esta prodiedad para recoger el numero de dias por defecto a restar a la fecha actual para establecer 
+	 * el rango de fechas para la busqueda de operaciones.
+	 * @return the nRangodias
+	 */
+	public int getnRangodias() {
+		nRangodias=Constantes.RANGODIASDEFAULT;
+		return nRangodias;
+	}
+
+	/**
+	 * @param nRangodias the nRangodias to set
+	 */
+	public void setnRangodias(int nRangodias) {
+		this.nRangodias = nRangodias;
+	}
+
+	/**
+	 * @return the idCategoria
+	 */
+	public Integer getIdCategoria() {
+		return idCategoria;
+	}
+
+	/**
+	 * @param idCategoria the idCategoria to set
+	 */
+	public void setIdCategoria(Integer idCategoria) {
+		this.idCategoria = idCategoria;
+	}
+
 }

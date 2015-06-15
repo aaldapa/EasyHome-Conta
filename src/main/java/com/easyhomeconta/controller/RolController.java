@@ -3,6 +3,7 @@
  */
 package com.easyhomeconta.controller;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -20,7 +21,7 @@ import com.easyhomeconta.service.RolService;
  */
 @Scope("session")
 @Named(value="rolBean")
-public class RolController extends BasicManageBean {
+public class RolController implements Serializable {
 
 	
 	private static final long serialVersionUID = 1L;

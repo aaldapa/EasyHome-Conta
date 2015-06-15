@@ -3,6 +3,7 @@
  */
 package com.easyhomeconta.controller;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -25,7 +26,7 @@ import com.sun.faces.context.flash.ELFlash;
  */
 @Scope("view")
 @Named(value="cuentaBean")
-public class CuentaController extends BasicManageBean {
+public class CuentaController implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -59,11 +60,30 @@ public class CuentaController extends BasicManageBean {
 		return "cuentaList";
 	}
 	
+	/**
+	 * Carga el id de producto en el contexto flash para hacerlo accesible desde la pagina de
+	 * importacion de managed bean OperacionController
+	 * @param idProducto
+	 * @return
+	 */
 	public String doLoadImportForm(Integer idProducto){		
 		log.info(idProducto);
 		ELFlash.getFlash().put("idProducto", idProducto);
 		
 		return "operacionImportForm";
+	}
+	
+	/**
+	 * Carga el id de producto en el contexto flash para hacerlo accesible desde la pagina de
+	 * consultas de managed bean OperacionController
+	 * @param idProducto
+	 * @return
+	 */
+	public String doLoadConsultas(Integer idProducto){		
+		log.info(idProducto);
+		ELFlash.getFlash().put("idProducto", idProducto);
+		
+		return "operacionList";
 	}
 	
 	

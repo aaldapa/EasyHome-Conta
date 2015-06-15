@@ -31,7 +31,9 @@ public class ProductoDaoImpl extends GenericDaoImpl<Producto> implements Product
 	public List<Producto> findProductosForUser(Integer idUser) {
 		
 		Query query=entityManager.createQuery("select p from Producto p "
-				+ " join fetch p.lstUsuarios as u" 
+				+ " join fetch p.lstUsuarios as u"
+				+ " join p.banco b "
+				+ " join p.tipoProducto t"
 				+ " where u.idUser = :idUser"
 				+ " and p.baja = :baja");
 		
@@ -86,6 +88,16 @@ public class ProductoDaoImpl extends GenericDaoImpl<Producto> implements Product
 		
 		return lstProductos;
 		
+	}
+
+	@Override
+	public Producto findWithBancoById(Integer idProducto) {
+		Query query=entityManager.createQuery(" select p from Producto p"
+				+ " join fetch p.banco b"
+				+ " where p.idProducto = :idProducto");
+		query.setParameter("idProducto", idProducto);
+		Producto producto=(Producto) query.getSingleResult();
+		return producto;
 	}
 
 

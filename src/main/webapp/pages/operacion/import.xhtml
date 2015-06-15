@@ -121,7 +121,7 @@
 						           		<p:column headerText="#{msg['operaciones.listado.tabla.col.concepto']}" >
 						           			<p:cellEditor>
 							           			<f:facet name="output"><h:outputText value="#{item.concepto}" /> </f:facet>
-		           			                	<f:facet name="input"><p:inputText id="id_concepto" value="#{item.concepto}" style="width:100%"/></f:facet>
+		           			                	<f:facet name="input"><p:inputText id="id_concepto" value="#{item.concepto}" style="width:100%" maxlength="50"/></f:facet>
 	           			                	</p:cellEditor>
 						           		</p:column>
 						           		
@@ -147,13 +147,13 @@
 						<!-- Para la botonera -->
 				        <div class="box-footer">
 	 						<div class="btn-toolbar">
-    							<h:commandLink action="#{operacionBean.doListItems}" immediate="true" styleClass="btn btn-default pull-right" value="#{msg['boton.volver']}" title="#{msg['boton.volver']}"/>
+    							<h:commandLink action="#{operacionBean.doVolver}" styleClass="btn btn-default pull-right" value="#{msg['boton.volver']}" title="#{msg['boton.volver']}"/>
    					 			
    					 			<h:commandButton action="#{operacionBean.doDeleteSelection}" styleClass="btn btn-default pull-right" value="#{msg['boton.eliminar']}" title="#{msg['boton.eliminar']}" >
-   					 				<f:ajax execute="id_form" render="@form"/>
+   					 				<f:ajax execute="id_form" render="id_form:id_data_table"/>
    					 			</h:commandButton>
-   					 			<h:commandButton action="#{operacionBean.doSaveItems}" styleClass="btn btn-primary pull-right" value="#{msg['boton.guardar']}" title="#{msg['boton.guardar']}" >
-   					 				<f:ajax execute="id_form" render="@form" />
+   					 			<h:commandButton action="#{operacionBean.doSaveItems('IMPORT')}" styleClass="btn btn-primary pull-right" value="#{msg['boton.guardar']}" title="#{msg['boton.guardar']}" >
+   					 				<f:ajax execute="id_form" render="id_form:id_data_table" />
    					 			</h:commandButton>
     						</div>
 				        </div><!-- /.box-footer-->

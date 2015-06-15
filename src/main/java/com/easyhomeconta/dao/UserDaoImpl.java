@@ -20,8 +20,9 @@ public class UserDaoImpl extends GenericDaoImpl<User> implements UserDao {
 	
 	@Override
 	public User loadUserByUsername(String username) {
-	    Query query = entityManager.createQuery("select u from User u where "
-	    		+ " u.username= :username");
+	    Query query = entityManager.createQuery("select u from User u "
+	    		+ " join fetch u.lstRoles r "
+	    		+ "where u.username= :username");
 	    query.setParameter("username", username);
 	    User user = (User) query.getSingleResult();
 	    return user;
@@ -81,5 +82,17 @@ public class UserDaoImpl extends GenericDaoImpl<User> implements UserDao {
 	@Override
 	public void deleteUser(User user) {
 		entityManager.remove(user);
+	}
+
+	@Override
+	public User findById(Integer idUser) {
+		
+		Query query= entityManager.createQuery( " select u from User u"
+				+ " join fetch u.lstRoles r "
+				+ " where u.idUser= :idUser");
+		query.setParameter("idUser", idUser);
+		User user=(User)query.getSingleResult();
+		
+		return user;
 	}
 }

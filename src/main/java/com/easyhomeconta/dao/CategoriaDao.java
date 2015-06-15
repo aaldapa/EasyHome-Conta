@@ -20,4 +20,11 @@ public interface CategoriaDao extends GenericDao<Categoria> {
 	 */
 	public List<Categoria> findCategoriaForUser (Integer idUser);
 	
+	/**
+	 * Devuelve la categoria con la que un usuario a categorizado una operacion. En caso de no tener categorizacion devuelve null.
+	 * @param idOperacion
+	 * @param idUsuario
+	 * @return
+	 */
+	public Categoria findCategorizacionUsuarioByIdOperacion(Long idOperacion,Integer idUsuario);
 }

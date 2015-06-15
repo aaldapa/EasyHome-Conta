@@ -16,6 +16,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 
 import com.easyhomeconta.forms.FamiliaForm;
 import com.easyhomeconta.service.FamiliaService;
+import com.easyhomeconta.utils.MyUtils;
 
 /**
  * @author Alberto
@@ -23,7 +24,7 @@ import com.easyhomeconta.service.FamiliaService;
  */
 @Scope("session")
 @Named(value="familiaBean")
-public class FamiliaController extends BasicManageBean implements Serializable{
+public class FamiliaController implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	private final Logger log = Logger.getLogger(FamiliaController.class);
@@ -59,7 +60,7 @@ public class FamiliaController extends BasicManageBean implements Serializable{
 	 */
 	public void doNewForm(AjaxBehaviorEvent event) {
     	log.info("Click en nuevo");
-    	tituloForm=getStringFromBundle("familias.form.title.nuevo");
+    	tituloForm=MyUtils.getStringFromBundle("familias.form.title.nuevo");
     	familia=new FamiliaForm();
     } 
 	
@@ -69,7 +70,7 @@ public class FamiliaController extends BasicManageBean implements Serializable{
 	 */
 	public void doUpdateForm(AjaxBehaviorEvent event) {
     	log.info("Click en editar");
-    	tituloForm=getStringFromBundle("familias.form.title.editar");
+    	tituloForm=MyUtils.getStringFromBundle("familias.form.title.editar");
     	familia=selectedfamilia;
     } 
 	
@@ -100,7 +101,7 @@ public class FamiliaController extends BasicManageBean implements Serializable{
 			lstFamilias.remove(selectedfamilia);
 		}catch(DataIntegrityViolationException e){
 			selectedRow=true;
-			addErrorMessage(getStringFromBundle("familias.listado.error.eliminar.familia.activa.summary"),getStringFromBundle("familias.listado.error.eliminar.familia.activa.detail"));
+			MyUtils.addErrorMessage(MyUtils.getStringFromBundle("familias.listado.error.eliminar.familia.activa.summary"),MyUtils.getStringFromBundle("familias.listado.error.eliminar.familia.activa.detail"));
 		}
 		
 		

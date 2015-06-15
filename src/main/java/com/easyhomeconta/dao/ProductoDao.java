@@ -44,5 +44,11 @@ public interface ProductoDao extends GenericDao<Producto> {
 	 */
 	public List<Producto> findProductosOperablesForUser (Integer idUser);
 	
+	/**
+	 * Devuelve el producto con los datos del banco cargados
+	 * @param idProducto
+	 * @return
+	 */
+	public Producto findWithBancoById(Integer idProducto);
 	
 }

@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -21,6 +22,7 @@ import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.easyhomeconta.dao.BancoDao;
@@ -32,7 +34,9 @@ import com.easyhomeconta.model.Banco;
 import com.easyhomeconta.model.Categoria;
 import com.easyhomeconta.model.Operacion;
 import com.easyhomeconta.model.Producto;
+import com.easyhomeconta.model.User;
 import com.easyhomeconta.utils.FechaUtil;
+import com.easyhomeconta.utils.MyUtils;
 
 /**
  * @author Alberto
@@ -55,6 +59,12 @@ public class OperacionServiceImpl implements OperacionService {
 	@Inject
 	BancoDao bancoDao;
 	
+	@Inject
+	UserService userService;
+	
+	@Inject
+	CategoriaService categoriaService;
+	
 	@Override
 	public List<SelectItem> getLstProductosOperables(Integer idUsuario) {
 
@@ -66,7 +76,6 @@ public class OperacionServiceImpl implements OperacionService {
 		return lstItems;
 	}
 	
-	
 	@Override
 	public List<SelectItem> getLstCategorias(Integer idUsuario) {
 		List<Categoria>lstCategorias=categoriaDao.findCategoriaForUser(idUsuario);
@@ -76,7 +85,47 @@ public class OperacionServiceImpl implements OperacionService {
 		
 		return lstItems;
 	}
+	
+	@Override
+	@Transactional
+	public ResultadoConsultaForm getLstOperacionesForm(Date fInicio, Date fFin, Integer idProducto,Integer idCategoria, String busqueda, Integer idUsuario) {
+		
+		ResultadoConsultaForm resultado= new ResultadoConsultaForm();
+		
+		List<Operacion> lstOperaciones=operacionDao.findOperacionesWithCategoria(fInicio, fFin, idProducto, idCategoria, busqueda, idUsuario);
+		List<OperacionForm> lstOperacionesForm=new ArrayList<OperacionForm>();
+		
+		log.info("Operaciones "+lstOperaciones.size());
+		//Casteo de operaciones
+		for(Operacion op:lstOperaciones){
+			OperacionForm opf=new OperacionForm();
+			
+			opf.setId(op.getIdOperacion());
+			opf.setFecha(op.getFecha());
+			opf.setConcepto(op.getConcepto());
+			opf.setImporte(op.getImporte());
+			opf.setNotas(op.getNotas());
+			
+			if (op.getLstCategorias()!=null && !op.getLstCategorias().isEmpty()){
+				//Si la lista de categorias no es nula cargo la primera ya que solo deberia de haber una.
+				opf.setIdCategoria(op.getLstCategorias().get(0).getIdCategoria());
+				//Cargo el nombre para realizar la ordenacion alfabetica de categorias en la tabla
+				opf.setNombreCategoria(op.getLstCategorias().get(0).getNombre());
+			}
+			
+			lstOperacionesForm.add(opf);
+		}
+	
+		BigDecimal balance=new BigDecimal("0");
+		for (OperacionForm opf: lstOperacionesForm)
+			balance=balance.add(opf.getImporte());
 
+		resultado.setLstOperacionesForm(lstOperacionesForm);
+		resultado.setBalance(balance);
+		
+		return resultado;
+	}
+	
 	@Override
 	public List<OperacionForm> getLstOperacionesFormXLS(InputStream file, Integer idProducto) {
 		
@@ -108,32 +157,144 @@ public class OperacionServiceImpl implements OperacionService {
 	
 	@Override
 	@Transactional
-	public void saveOperaciones(List<OperacionForm> lstOperacionesForm,	Integer idProducto) {
+	public void saveOperaciones(List<OperacionForm> lstOperacionesForm,	Integer idProducto, String accion) {
 
 		for (OperacionForm opForm: lstOperacionesForm){
-			Operacion op=new Operacion();
-			op.setFecha(opForm.getFecha());
-			op.setProducto(productoDao.findById(idProducto));
-			op.setNotas("Importado desde fichero");
-			op.setConcepto(opForm.getConcepto());
-			op.setImporte(opForm.getImporte());
-			
-			//Si el usuario ha seleccionado una categoria para la operacion 
-			if (opForm.getIdCategoria()!=null){
-				Categoria categoria=categoriaDao.findById(opForm.getIdCategoria());
-				//Inserto la operacion en la categoria
-				categoria.getLstOperaciones().add(op);
-
-				//Inserto la categoria en la operacion
-				op.setLstCategorias(new ArrayList<Categoria>());
-				op.getLstCategorias().add(categoria);
+			//Si desde la importacion notas esta vacio inserto literal
+			if (accion.equalsIgnoreCase("IMPORT")){
+				//Elimino el id que le he dado con la posicion en la tabla porque el componente primefaces lo necesita
+				opForm.setId(null);
+				
+				String notas=MyUtils.getStringFromBundle("operacion.form.importar.notas.text.default");
+				
+				if (opForm.getNotas()==null || opForm.getNotas().isEmpty())
+					opForm.setNotas(notas);
+				else
+					opForm.getNotas().concat(" ."+notas);
 			}
-			operacionDao.create(op);
-			
-		}
-		
+			opForm.setIdProducto(idProducto);	
+			this.saveOperacion(opForm);
+		}	
 	}
 
+	
+	@Override
+	@Transactional
+	public void saveOperacion(OperacionForm opForm) {
+		
+		Operacion op=new Operacion();
+		
+		op.setIdOperacion(opForm.getId());	
+		op.setFecha(opForm.getFecha());
+		
+		//Si el idProducto es null (por que no se ha seleccionado del combo) el producto se recoge desde la operacion
+		if (opForm.getIdProducto()==null)
+			op.setProducto(operacionDao.getProductoByIdOperacion(opForm.getId()));
+		else
+			op.setProducto(productoDao.findById(opForm.getIdProducto()));
+			
+		op.setNotas(opForm.getNotas());
+		op.setConcepto(opForm.getConcepto());
+		op.setImporte(opForm.getImporte());
+		
+		//GESTION CATEGORIA
+		this.gestionarCategoria(opForm, op);
+		
+		//En funcion del id guardo o modifico
+		if (opForm.getId()!=null)
+			operacionDao.update(op);
+		else
+			operacionDao.create(op);
+		
+	}
+	
+	/**
+	 * Gestiona el guardado de la categoria en caso necesario
+	 * @param opForm
+	 * @param op
+	 */
+	private void gestionarCategoria(OperacionForm opForm, Operacion op){
+	
+		//MODIFICACION DE OPERACION
+		if (opForm.getId()!=null){
+			//Obtengo el usuario logado
+			User userLogado = userService.getUserById(((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getIdUser());
+
+			//Obtengo la operacion a modificar con todas las categorizaciones
+			Operacion opAntAllCat=operacionDao.findById(opForm.getId());
+			
+			//Obtengo la categorizacion anterior del usuario
+			Categoria catAntUser=categoriaDao.findCategorizacionUsuarioByIdOperacion(opForm.getId(), userLogado.getIdUser());
+
+			
+			//Si antes no tenia y ahora si tiene
+			if (catAntUser==null){
+				if (opForm.getIdCategoria()!=null)
+					crearCategorizacion(opForm.getIdCategoria(), op);
+			}
+			//Si antes tenia categoria
+			else{
+				//Si ahora no tiene categoria
+				if (opForm.getIdCategoria()==null)
+					borrarCategorizacionAnterior(catAntUser, opAntAllCat);				
+				//Si ahora tiene una categoria diferente que antes
+				else if(opForm.getIdCategoria().compareTo(catAntUser.getIdCategoria())!=0){
+					borrarCategorizacionAnterior(catAntUser, opAntAllCat);
+					crearCategorizacion(opForm.getIdCategoria(), op);
+				}
+			}
+		}
+		//CREAR NUEVA OPERACION
+		else{
+			//Si el usuario ha seleccionado una categoria para la operacion 
+			if (opForm.getIdCategoria()!=null)
+				crearCategorizacion(opForm.getIdCategoria(), op);
+		}
+	}
+	
+	@Override
+	@Transactional
+	public void deleteOperaciones(List<OperacionForm> lstOperacionesForm) {
+
+		for (OperacionForm opForm: lstOperacionesForm){
+			Operacion op=operacionDao.findById(opForm.getId());
+			this.deleteOperacion(op);
+		}
+	}
+	
+	/**
+	 * Borra todas las categorias de la operacion y la operacion 
+	 * @param op
+	 */
+	private void deleteOperacion(Operacion op){
+		
+		for(Categoria cat:op.getLstCategorias())
+			cat.getLstOperaciones().remove(op);
+		
+		operacionDao.delete(op.getIdOperacion());
+	}
+	
+	/**
+	 * 
+	 * @param catAntUser Categorizacion del usuario anterior a la modificacion de la operacion. 
+	 * @param opAntAllCat Operacion anterior a la modificacion.
+	 */
+	private void borrarCategorizacionAnterior(Categoria catAntUser, Operacion opAntAllCat){
+		catAntUser.getLstOperaciones().remove(opAntAllCat);
+		opAntAllCat.getLstCategorias().remove(catAntUser);
+		operacionDao.update(opAntAllCat);
+	}
+	/**
+	 * 
+	 * @param idCategoria Id de la categoria seleccionada desde el formulario
+	 * @param op Nueva operacion creada. 
+	 */
+	private void crearCategorizacion(Integer idCategoria, Operacion op){
+		Categoria newCategorizacion=categoriaDao.findById(idCategoria);
+		newCategorizacion.getLstOperaciones().add(op);
+		op.setLstCategorias(new ArrayList<Categoria>());
+		op.getLstCategorias().add(newCategorizacion);	
+	}
 	
 	/**
 	 * Itera las filas y sus celdas para obtener los datos de la hoja de calculo.
@@ -174,6 +335,7 @@ public class OperacionServiceImpl implements OperacionService {
 	 * @param cellDataList
 	 * @return
 	 */
+	@Transactional
 	private List<OperacionForm> loadLstOperacionesForm(List<List<HSSFCell>> cellDataList, Integer idProducto){
 		List<OperacionForm> lstOperacionesForm= new ArrayList<OperacionForm>();
 		/*------------- Kutxabank --------------
@@ -183,7 +345,7 @@ public class OperacionServiceImpl implements OperacionService {
 		 */
 		
 		//Obtengo el banco para ver en que posiciones debe de obtener los datos de la hoja de calculo
-		Banco banco=productoDao.findById(idProducto).getBanco();
+		Banco banco=productoDao.findWithBancoById(idProducto).getBanco();
 		
 		
 		for (int i = banco.getFilaInicio(); i < cellDataList.size(); i++){
@@ -238,6 +400,5 @@ public class OperacionServiceImpl implements OperacionService {
 			}
 			System.out.println();
 		}
-	}	
-	
+	}
 }

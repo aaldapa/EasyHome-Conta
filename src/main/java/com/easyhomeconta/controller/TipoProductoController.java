@@ -3,6 +3,7 @@
  */
 package com.easyhomeconta.controller;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +23,7 @@ import com.easyhomeconta.service.TipoProductoService;
  */
 @Scope("session")
 @Named(value="tProductoBean")
-public class TipoProductoController extends BasicManageBean{
+public class TipoProductoController implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	

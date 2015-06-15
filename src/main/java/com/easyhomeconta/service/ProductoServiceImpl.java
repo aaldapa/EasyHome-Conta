@@ -46,6 +46,7 @@ public class ProductoServiceImpl implements ProductoService {
 	
 	
 	@Override
+	@Transactional
 	public List<ProductoForm> getProductosForUser(Integer idUser) {
 		List<Producto> lstProductos=productoDao.findProductosForUser(idUser);
 		List<ProductoForm> lstBeans=new ArrayList<ProductoForm>();
@@ -170,6 +171,7 @@ public class ProductoServiceImpl implements ProductoService {
 	}
 	
 	@Override
+	@Transactional
 	public List<BancoForm> findAllByTypeForUser(Integer idUser, Integer idTProducto) {
 		
 		List<Banco> lstBancos=bancoDao.findAllCompleteByTipoForUser(idUser, idTProducto);
