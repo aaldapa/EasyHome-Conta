@@ -72,7 +72,7 @@
 							        <div class="col-md-2 form-group-inline">
 							        	<h:message for="id_apertura" errorClass="has-error control-label" infoClass="has-info control-label" />
 							            <div class="input-group input-append">
-							            	<h:inputText id="id_apertura" class="form-control date" value="#{productoBean.producto.fechaApertura}" required="true" requiredMessage="#{msg['error.campo.obligatorio']}">
+							            	<h:inputText id="id_apertura" class="form-control date" value="#{productoBean.producto.fechaApertura}" required="true" requiredMessage="#{msg['error.campo.obligatorio']}" autocomplete="off">
        	             							<f:convertDateTime pattern="#{msg['patron.fecha.corta']}" />
 	 					          			</h:inputText>
 							                <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
@@ -82,7 +82,7 @@
 								  	<h:outputLabel styleClass="col-md-offset-1  col-md-2 control-label" for="id_nombre" value="#{msg['producto.form.vencimiento']}"/>
 							        <div class="col-md-2 ">
 							            <div class="input-group input-append">
-							            	<h:inputText id="id_vencimiento" class="form-control date" value="#{productoBean.producto.fechaVencimiento}" >
+							            	<h:inputText id="id_vencimiento" class="form-control date" value="#{productoBean.producto.fechaVencimiento}" autocomplete="off">
        	             							<f:convertDateTime pattern="#{msg['patron.fecha.corta']}" />
 	 					          			</h:inputText>
 							                <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
@@ -202,17 +202,6 @@
 		    	
 		    	<script type="text/javascript">
 				   $(document).ready(function(){
-						
-					   $('.date').datepicker({
- 						  	format:'dd-mm-yyyy',
- 						  	language: 'es',
- 						  	weekStart:1,
- 						 	autoclose:true,
- 						  	todayHighlight:true,
- 						  	showOnFocus:true,
- 						  	keyboardNavigation:false,
- 						  	forceParse:true
-					  	});
 					});
 
 				</script>

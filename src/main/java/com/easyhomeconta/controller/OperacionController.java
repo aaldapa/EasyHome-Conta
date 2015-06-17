@@ -4,6 +4,7 @@
 package com.easyhomeconta.controller;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -61,6 +62,8 @@ public class OperacionController implements Serializable {
 	private List<SelectItem> lstCategorias;
 	private List<OperacionForm> lstOperacionesForm;
 	
+	private OperacionForm operacionForm=new OperacionForm();
+	
 	private List<OperacionForm> selectedOperacionesForm;
 
 	/**
@@ -87,6 +90,8 @@ public class OperacionController implements Serializable {
 			this.fechaInicio=FechaUtil.restarDiasAFecha(fechaFin, getnRangodias());
 			resultadoConsulta=operacionService.getLstOperacionesForm(fechaInicio, fechaFin, idProducto, idCategoria, busqueda, getUserLogado().getIdUser());
 		}
+		//Inicializo operacionForm para que los campos required (fecha y importe) pasen la validacion cuando se hace cualquier request.
+		operacionForm=new OperacionForm(fechaFin,new BigDecimal("0"));
 	}
 
 	/**
@@ -114,6 +119,9 @@ public class OperacionController implements Serializable {
 	 */
 	public void doLoadDateTable(){
 		resultadoConsulta=operacionService.getLstOperacionesForm(fechaInicio, fechaFin, idProducto, idCategoria, busqueda, getUserLogado().getIdUser());
+		log.info("Balance: "+resultadoConsulta.getBalance()+"€ -- Nº de registros: "+resultadoConsulta.getnRegistros());
+		
+		
 	}
 	
 	/**
@@ -124,6 +132,8 @@ public class OperacionController implements Serializable {
 		
 		operacionService.deleteOperaciones(selectedOperacionesForm);
 		removeSelectedFromList(resultadoConsulta.getLstOperacionesForm(),true);
+		//Cargo de nuevo los datos de resultado para obtener los calculos
+		resultadoConsulta=operacionService.getLstOperacionesForm(fechaInicio, fechaFin, idProducto, idCategoria, busqueda, getUserLogado().getIdUser());
 	}
 	
 	/**
@@ -158,10 +168,30 @@ public class OperacionController implements Serializable {
 			else {
 				operacionService.saveOperaciones(selectedOperacionesForm,idProducto, accion);
 				MyUtils.addInfoMessage(MyUtils.getStringFromBundle("success"),selectedOperacionesForm.size()+ " "+ MyUtils.getStringFromBundle("operacion.form.importar.guardar.detail"));
+				//Si viene de un proceso de importacion elimino la lista
 				if (accion.equalsIgnoreCase("IMPORT"))
 					removeSelectedFromList(lstOperacionesForm, false);
+				else
+					//Recargo los calculos y la tabla
+					resultadoConsulta=operacionService.getLstOperacionesForm(fechaInicio, fechaFin, idProducto, idCategoria, busqueda, getUserLogado().getIdUser());
+
 			}
 		}
+	}
+	
+	/**
+	 * Crea nueva operacion
+	 */
+	public void doNewItem(){
+		log.info("doNew");
+		//Guardo la nueva operacion
+		operacionService.saveOperacion(operacionForm);
+		//Recargo los calculos y la tabla
+		resultadoConsulta=operacionService.getLstOperacionesForm(fechaInicio, fechaFin, idProducto, idCategoria, busqueda, getUserLogado().getIdUser());
+		//Reseteo operacionForm para que los campos required (fecha y importe) pasen la validacion cuando se hace cualquier request.
+		operacionForm=new OperacionForm(fechaFin,new BigDecimal("0"));
+		
+		MyUtils.addInfoMessage(MyUtils.getStringFromBundle("success"), MyUtils.getStringFromBundle("operacion.form.guardar.detail"));
 	}
 
 	/**
@@ -172,11 +202,10 @@ public class OperacionController implements Serializable {
 		if (selectedOperacionesForm != null && !selectedOperacionesForm.isEmpty()) 
 			removeSelectedFromList(lstOperacionesForm,true);
 		
+		
 	}
 
-	/**
-	 * Eliminar seleccion de la lista de operaciones cargadas
-	 */
+	
 	/**
 	 * Elimina de la lista pasada como parametro, los objecto seleccionados en la tabla (tanto en la tabla importacion como en la de consultas) 
 	 * @param listado 
@@ -393,6 +422,20 @@ public class OperacionController implements Serializable {
 	 */
 	public void setIdCategoria(Integer idCategoria) {
 		this.idCategoria = idCategoria;
+	}
+
+	/**
+	 * @return the operacionForm
+	 */
+	public OperacionForm getOperacionForm() {
+		return operacionForm;
+	}
+
+	/**
+	 * @param operacionForm the operacionForm to set
+	 */
+	public void setOperacionForm(OperacionForm operacionForm) {
+		this.operacionForm = operacionForm;
 	}
 
 }

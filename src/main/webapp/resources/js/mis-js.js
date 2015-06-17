@@ -46,3 +46,27 @@ function mostrarModal(){
 function ocultarModal(){
 	$('.modal').hide();
 }
+
+//calendario
+$(document).ready(function(){
+	
+	   $('.date').datepicker({
+		  	format:'dd-mm-yyyy',
+		  	language: 'es',
+		  	weekStart:1,
+		 	autoclose:true,
+		  	todayHighlight:true,
+		  	showOnFocus:true,
+		  	keyboardNavigation:false,
+		  	forceParse:true
+	  	});
+	});
+
+function loadingShow(){
+	$('#id_loading').removeClass('hide');
+}
+
+//Imagen de cargando en los box
+function loadingHide(){
+	$('#id_loading').addClass('hide');
+}

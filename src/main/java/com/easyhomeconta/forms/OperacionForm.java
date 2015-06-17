@@ -32,6 +32,12 @@ public class OperacionForm implements Serializable {
 		super();
 	}
 
+	public OperacionForm(Date fecha, BigDecimal importe) {
+		super();
+		this.fecha = fecha;
+		this.importe = importe;
+	}
+
 	public OperacionForm(Long id, Integer idCategoria, Integer idProducto,
 			Date fecha, String concepto,
 			BigDecimal importe, BigDecimal saldo, String notas) {

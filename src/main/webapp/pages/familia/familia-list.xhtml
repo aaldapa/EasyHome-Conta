@@ -89,9 +89,7 @@
 	            					rendered="#{isRowSelected}">
 	            					<f:ajax listener="#{familiaBean.doUpdateForm}" event="click" render="id_nombre id_familia id_titulo_form"></f:ajax>
 	            					</h:commandButton>
-	            				<h:commandButton type="button" class="btn btn-primary  pull-right" onclick="PF('familiaForm').show()" title="#{msg['boton.nuevo']}" value="#{msg['boton.nuevo']}">
-	            					<f:ajax listener="#{familiaBean.doNewForm}" event="click" render="id_nombre id_familia id_titulo_form"></f:ajax>
-	            				</h:commandButton>
+	            				<h:commandButton type="button" class="btn btn-primary  pull-right" onclick="PF('familiaForm').show()" title="#{msg['boton.nuevo']}" value="#{msg['boton.nuevo']}"/>
 	
 	    					</div>
 			    			
@@ -124,7 +122,7 @@
 			            </div><!-- /.modal -->        
 				        
 				        <!--  Capa emergente que muestra los datos del usuario -->
-					   	<p:dialog id="id_popup_form" header="#{msg['familias.form.title']}"  widgetVar="familiaForm" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+					   	<p:dialog id="id_popup_form" header="#{msg['familias.form.title']}"  widgetVar="familiaForm" modal="true" showEffect="fade" hideEffect="fade" resizable="false" styleClass="uix-dialog-fluid" >
 					        <h:inputHidden id="id_familia" value="#{familiaBean.familia.idFamilia}"/>
 					        <div class="row">
 					        	<div class="col-md-12">

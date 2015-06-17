@@ -25,6 +25,10 @@
 			 	<h:outputScript name="./plugins/daterangepicker/moment.min.js" />
 			 	<h:outputScript name="./plugins/daterangepicker/daterangepicker.js" />
 			 	<h:outputStylesheet name="./plugins/daterangepicker/daterangepicker-bs3.css" />
+			 	<!-- Include Date Picker -->
+			 	<h:outputScript name="./plugins/datepicker/bootstrap-datepicker.js" />
+			 	<h:outputScript name="./plugins/datepicker/locales/bootstrap-datepicker.es.js" />
+			 	<h:outputStylesheet name="./plugins/datepicker/datepicker3.css" />
 			</ui:define>
 			
 			<ui:define name="content">
@@ -73,7 +77,7 @@
 								            	<h:selectOneMenu id="id_producto" value="#{operacionBean.idProducto}" styleClass="form-control">
 						            				<f:selectItem itemValue="" itemLabel="#{msg['operaciones.listado.combo.todos']}" noSelectionOption="true"></f:selectItem>
 						            				<f:selectItems value="#{operacionBean.lstProductos}" var="item" itemValue="#{item.value}" itemLabel="#{item.label}" ></f:selectItems>
-						            				<f:ajax event="change" execute="@form" render="id_form:id_data_table id_form:id_nRegistros id_form:id_balance" listener="#{operacionBean.doLoadDateTable}"></f:ajax>
+						            				<f:ajax event="change" execute="@form" render="id_form:id_data_table id_form:id_nRegistros id_form:id_balance" listener="#{operacionBean.doLoadDateTable}"/>
 					            				</h:selectOneMenu>
 								            </div>
 								        </div>
@@ -85,7 +89,7 @@
 			            							<f:selectItem itemValue="" itemLabel="#{msg['operaciones.listado.combo.todas']}" noSelectionOption="true"></f:selectItem>
 			            							<f:selectItem itemValue="0" itemLabel="#{msg['operaciones.listado.combo.ninguna']}" noSelectionOption="true"></f:selectItem>
 			            							<f:selectItems value="#{operacionBean.lstCategorias}" var="cat" itemLabel="#{cat.nombre}" itemValue="#{cat.idCategoria}" />
-			            							<f:ajax event="change" execute="@form" render="id_form:id_data_table id_form:id_nRegistros id_form:id_balance" listener="#{operacionBean.doLoadDateTable}"></f:ajax>
+			            							<f:ajax event="change" execute="@form" render="id_form:id_data_table id_form:id_nRegistros id_form:id_balance" listener="#{operacionBean.doLoadDateTable}"/>
 			            						</h:selectOneMenu>
 			            				 	</div>
 								        </div>
@@ -112,7 +116,7 @@
 
 							<div class="input-group pull-right">
               					<h:inputText class="form-control" value="#{operacionBean.busqueda}" pt:placeholder="#{msg['operaciones.listado.combo.buscar.placeholder']}">
-              						<f:ajax event="keyup" execute="@form" render="id_form:id_data_table" listener="#{operacionBean.doLoadDateTable}"/>
+              						<f:ajax event="keyup" execute="@form" render="id_form:id_data_table id_popup_form id_form:id_nRegistros id_form:id_balance" listener="#{operacionBean.doLoadDateTable}"/>
               					</h:inputText>
               					<span class="input-group-btn">
 	              					<button class="btn btn-default" type="button" onclick="envioAjax()">
@@ -129,15 +133,15 @@
 								 <div class="col-md-12">		
 								<!-- Campos de texto -->
 						           <p:dataTable id="id_data_table"  value="#{operacionBean.resultadoConsulta.lstOperacionesForm}" var="item" style="margin-bottom:20px" tableStyle="font-size: 80%;"
+						           	selection="#{operacionBean.selectedOperacionesForm}" rowKey="#{item.id}"
+						           	editable="true" editMode="cell" widgetVar="dtOperaciones"
+						           	scrollable="true" scrollHeight="400" 
+						           	liveScroll="true" scrollRows="15"
 						           	rowStyleClass="#{item.importe>0?'opingreso':'opgasto'}"
 					           		reflow="true"
-					           		editable="true" editMode="cell" widgetVar="dtOperaciones"
-					           		selection="#{operacionBean.selectedOperacionesForm}" rowKey="#{item.id}"
-						        	scrollable="true" scrollHeight="400" 
-					    	 		emptyMessage="#{msg['tabla.filas.mensaje.no.records']}"
+						           	emptyMessage="#{msg['tabla.filas.mensaje.no.records']}"
 						           >
-						           		
-						           		<p:column selectionMode="multiple" style="width:40px;text-align:center"/>
+										<p:column selectionMode="multiple" style="width:40px;text-align:center"/>
 						           		
 						           		<p:column headerText="#{msg['operaciones.listado.tabla.col.fecha']}" width="85" sortBy="#{item.fecha}">
 						           			<p:cellEditor>
@@ -218,26 +222,23 @@
 				        <div class="box-footer">
 	 						<div class="btn-toolbar">
 	    							
-   					 			<h:commandButton type="button" id="id_boton_eliminar" styleClass="btn btn-default pull-right" value="#{msg['boton.eliminar']}" title="#{msg['boton.eliminar']}"  onclick="mostrarModal();">
-   					 				<f:ajax execute="id_form" render="id_form:id_data_table"/>
+   					 			<h:commandButton type="button" id="id_boton_eliminar" styleClass="btn btn-default pull-right" value="#{msg['boton.eliminar']}" title="#{msg['boton.eliminar']}"  onclick="$('#id_popup_delete').show()"/>
+   					 			
+   					 			<h:commandButton styleClass="btn btn-default pull-right" value="#{msg['boton.guardar']}" title="#{msg['boton.guardar']}" >
+   					 				<f:ajax execute="id_form" render="id_form:id_data_table id_form:id_nRegistros id_form:id_balance" listener="#{operacionBean.doSaveItems('UPDATE')}"/>
    					 			</h:commandButton>
    					 			
-   					 			<h:commandButton action="#{operacionBean.doSaveItems('UPDATE')}" styleClass="btn btn-default pull-right" value="#{msg['boton.guardar']}" title="#{msg['boton.guardar']}" >
-   					 				<f:ajax execute="id_form" render="id_form:id_data_table" />
-   					 			</h:commandButton>
-   					 			
-   					 			<h:commandButton type="button" class="btn btn-primary  pull-right" onclick="PF('familiaForm').show()" title="#{msg['boton.nuevo']}" value="#{msg['boton.nuevo']}"/>
-	            				
+	            				<h:commandButton type="button" class="btn btn-primary  pull-right" onclick="$('#id_popup_form').show()" title="#{msg['boton.nuevo']}" value="#{msg['boton.nuevo']}"/>
    					 			
     						</div>
 				        </div><!-- /.box-footer-->
 			
-					<!-- Ventana modal de confirmacion para eliminar un registro -->
-			            <div class="modal" >
+					<!-- Ventana modal de confirmacion para ELIMINAR REGISTRO -->
+			            <div class="modal" id="id_popup_delete">
 			              <div class="modal-dialog">
 			                <div class="modal-content">
 			                  <div class="modal-header">
-			                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="ocultarModal();"><span aria-hidden="true">×</span></button>
+			                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="$('#id_popup_delete').hide();"><span aria-hidden="true">×</span></button>
 			                    <h4 class="modal-title"><h:outputLabel value="#{msg['modal.titulo']}"/></h4>
 			                  </div>
 			                  <div class="modal-body">
@@ -245,25 +246,130 @@
 			                    <p><h:outputText value="#{msg['modal.confirmacion']}"/></p>
 			                  </div>
 			                  <div class="modal-footer">
-			                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal" onclick="ocultarModal();">
+			                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal" onclick="$('#id_popup_delete').hide();">
 			                    	<h:outputText value="#{msg['boton.cancelar']}"/>
 								</button>
 								
-								<h:commandButton  styleClass="btn btn-primary" value="#{msg['boton.aceptar']}" onclick="ocultarModal();" title="#{msg['boton.aceptar']}">
-		    						<f:ajax listener="#{operacionBean.doDeleteItems}" event="click" render="id_form:id_data_table" execute="id_form"></f:ajax>
+								<h:commandButton  styleClass="btn btn-primary" value="#{msg['boton.aceptar']}" onclick="$('#id_popup_delete').hide();" title="#{msg['boton.aceptar']}">
+		    						<f:ajax listener="#{operacionBean.doDeleteItems}" event="click" render="id_form:id_data_table id_form:id_nRegistros id_form:id_balance" execute="id_form"></f:ajax>
 								</h:commandButton>
 			                  </div>
 			                </div><!-- /.modal-content -->
 			              </div><!-- /.modal-dialog -->
 			            </div><!-- /.modal -->        
 			
+			
+						<!--  Capa emergente que NUEVA OPERACION -->
+						<div id="id_popup_form" class="modal newForm" >
+			              <div class="modal-dialog">
+			                <div class="modal-content">
+			                  <div class="modal-header">
+			                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="$('#id_popup_form').hide();"><span aria-hidden="true">×</span></button>
+			                    <h4 class="modal-title"><h:outputLabel value="#{msg['operacion.form.subtitulo']}"/></h4>
+			                  </div>
+			                  <div class="modal-body">
+								<div class="row">
+					        	<div class="col-md-12">
+					        		 <!-- Text inputs combos-->
+					        		 <div class="form-group">
+							         	<h:outputLabel class="col-md-2 control-label" value="#{msg['operacion.form.productos']}"/>
+						        		<div class="col-md-4 form-group-inline">
+						            		<h:message for="id_producto_form" errorClass="has-error control-label" infoClass="has-info control-label" />
+								            <div class="input-group input-append ">
+								            	<h:selectOneMenu id="id_producto_form" value="#{operacionBean.operacionForm.idProducto}" styleClass="form-control" required="false" requiredMessage="#{msg['error.campo.obligatorio']}">
+<!-- 								            		<f:selectItem itemValue="" itemLabel="#{msg['combo.selection.option']}" noSelectionOption="true"></f:selectItem> -->
+								            		<f:selectItems value="#{operacionBean.lstProductos}" var="item" itemValue="#{item.value}" itemLabel="#{item.label}" ></f:selectItems>
+								            	</h:selectOneMenu>
+								            </div>
+								        </div>
+								        
+								       <h:outputLabel class="col-md-2 control-label" value="#{msg['operacion.form.categorias']}"/>
+								        <div class="col-md-4">
+								            <div class="input-group input-append">
+								            	<h:selectOneMenu id="id_categoria_form" value="#{operacionBean.operacionForm.idCategoria}" styleClass="form-control" >
+								            		<f:selectItem itemValue="" itemLabel="#{msg['operaciones.listado.tabla.combo.seleccion']}" noSelectionOption="true"></f:selectItem>
+								            		<f:selectItems value="#{operacionBean.lstCategorias}" var="item" itemValue="#{item.value}" itemLabel="#{item.label}" ></f:selectItems>
+								            	</h:selectOneMenu>
+								            </div>						            
+								        </div>
+							        </div>
+							        
+								    <!-- Text inputs fecha-->
+									<div class="form-group">
+								        <h:outputLabel styleClass="col-md-2 control-label" for="id_fecha" value="#{msg['operacion.form.fecha']}"/>
+								        <div class="col-md-4 form-group-inline">
+								        	<h:message for="id_fecha_form" errorClass="has-error control-label" infoClass="has-info control-label" />
+								            <div class="input-group input-append">
+								            	<h:inputText id="id_fecha_form" class="form-control date" value="#{operacionBean.operacionForm.fecha}" required="true" requiredMessage="#{msg['error.campo.obligatorio']}" autocomplete="off">
+	       	             							<f:convertDateTime pattern="#{msg['patron.fecha.corta']}" />
+		 					          			</h:inputText>
+								                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+								            </div>
+								        </div>	
+								    </div>
+								    
+								     <!-- Text inputs concepto, importe-->
+						          	<div class="form-group">
+							            <h:outputLabel styleClass="col-md-2 control-label" for="id_concepto_form" value="#{msg['operacion.form.concepto']}"/>
+							            <div class="col-md-6">
+							            	<h:inputText id="id_concepto_form" pt:placeholder="#{msg['operacion.form.concepto']}" class="form-control" label="#{msg['operacion.form.concepto']}" value="#{operacionBean.operacionForm.concepto}" maxlength="50"/>
+							            </div>
+							            
+							            
+							            <h:outputLabel styleClass="col-md-1 control-label" for="id_importe" value="#{msg['operacion.form.importe']}"/>
+							            <div class="col-md-3 form-group-inline">
+							            	<h:message for="id_importe_form" errorClass="has-error control-label" infoClass="has-info control-label" />
+							            	<div class="input-group">
+							            		<h:inputText id="id_importe_form" pt:placeholder="#{msg['operacion.form.importe']}" class="form-control" label="#{msg['operacion.form.importe']}" value="#{operacionBean.operacionForm.importe}" required="true" requiredMessage="#{msg['error.campo.obligatorio']}" autocomplete="off">
+							            			<f:convertNumber  maxFractionDigits="2"  for="id_importe"/>
+							            		</h:inputText>
+							              		<span class="input-group-addon"><i class="fa fa-euro"></i></span>
+							            	</div>
+							            </div>
+							        </div>
+							        
+							         <!-- Text inputs notas-->
+							        <div class="form-group">
+						                <h:outputLabel styleClass="col-md-2 control-label" for="id_notas_form" value="#{msg['operacion.form.notas']}"/> 
+							            <div class="col-md-10 ">
+							              <h:inputTextarea id="id_notas_form" pt:placeholder="#{msg['operacion.form.notas']}" class="form-control" label="#{msg['producto.form.notas']}" value="#{operacionBean.operacionForm.notas}"/>
+							            </div>
+							        </div>
+							        
+					        	</div>
+					        </div>
+
+			                  </div>
+			                  <div class="modal-footer">
+								<div class="btn-toolbar">
+		    						<h:commandButton type="button" onclick="$('#id_popup_form').hide();" styleClass="btn btn-default pull-right" value="#{msg['boton.cancelar']}" title="#{msg['boton.cancelar']}"/>
+		    						<h:commandButton id="id_boton_guardar_form"  actionListener="#{operacionBean.doNewItem}" styleClass="btn btn-primary pull-right" value="#{msg['boton.guardar']}" title="#{msg['boton.guardar']}" onclick="PF('operacionForm').hide()">
+			    						<f:ajax listener="#{operacionBean.doNewItem}" event="click" execute="id_popup_form" render="id_form:id_data_table id_popup_form id_form:id_nRegistros id_form:id_balance"></f:ajax>
+									</h:commandButton>
+									
+									<h:outputScript rendered="#{facesContext.validationFailed}">
+    									$('#id_popup_form').show();
+									</h:outputScript> 
+		   					 	</div>
+			                  </div>
+			                </div><!-- /.modal-content -->
+			              </div><!-- /.modal-dialog -->
+			            </div><!-- /.modal -->        
+			
+			
+						<!-- Loadinggg -->
+			  			<div id="id_loading" class="overlay hide">
+                  			<i class="fa fa-refresh fa-spin"></i>
+                		</div>
+			
 					</div>
 					
 					<!-- Peticion ajax invocada desde javascript -->
-					<p:remoteCommand name="envioAjax" actionListener="#{operacionBean.doLoadDateTable}" update="id_form:id_data_table id_form:id_nRegistros id_form:id_balance" ></p:remoteCommand>
+					<p:remoteCommand name="envioAjax" actionListener="#{operacionBean.doLoadDateTable}" update="id_form:id_data_table id_form:id_nRegistros id_form:id_balance" 
+					onstart="loadingShow();" oncomplete="loadingHide();"/>
 		    	</h:form>
 		    	<script type="text/javascript">
-				   $(document).ready(function(){
+					$(document).ready(function(){
 
 					   $('#id_form\\:reportrange').val(moment().subtract(#{operacionBean.nRangodias}+1, 'days').format("#{msg['patron.corto']}") + " #{msg['operaciones.listado.al']} " + moment().format("#{msg['patron.corto']}"));
 					   
@@ -314,10 +420,12 @@
 					        envioAjax();
 					        
 					    });
+
+					    
 										
 					});
-
 				</script>
+				
 			</ui:define>
     	</ui:composition>
     	

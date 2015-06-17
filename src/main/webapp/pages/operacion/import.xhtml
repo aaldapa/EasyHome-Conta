@@ -62,6 +62,7 @@
 			 					         			dragDropSupport="true"
 			 					    				update="@form"
 			 					    				process="@form"
+			 					    				onstart="loadingShow();" oncomplete="loadingHide();"
 					         				>
 					         					
 					         				</p:fileUpload>
@@ -80,7 +81,8 @@
 						           editable="true" editMode="cell" widgetVar="cellCars"
 						           selection="#{operacionBean.selectedOperacionesForm}" rowKey="#{item.id}"
 						           scrollable="true" scrollHeight="375" 
-						           emptyMessage="#{msg['tabla.filas.mensaje.no.records']}">
+						           emptyMessage="#{msg['tabla.filas.mensaje.no.records']}"
+						           >
 						           		
 						           		<p:column selectionMode="multiple" style="width:40px;text-align:center"/>
 						           		
@@ -158,6 +160,10 @@
     						</div>
 				        </div><!-- /.box-footer-->
 					  
+					  	<!-- Loadinggg -->
+			  			<div id="id_loading" class="overlay hide">
+                  			<i class="fa fa-refresh fa-spin"></i>
+                		</div>
 					</div><!-- /.box -->
 					
 		    	</h:form>
