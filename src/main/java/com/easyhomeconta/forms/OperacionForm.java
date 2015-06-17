@@ -119,6 +119,10 @@ public class OperacionForm implements Serializable {
 		return saldo;
 	}
 
+	public String getSaldoStr(){
+		return NumeroUtil.formatearACastellano(this.getSaldo());
+	}
+	
 	public void setSaldo(BigDecimal saldo) {
 		this.saldo = saldo;
 	}

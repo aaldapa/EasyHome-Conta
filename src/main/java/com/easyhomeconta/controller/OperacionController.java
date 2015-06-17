@@ -120,15 +120,13 @@ public class OperacionController implements Serializable {
 	public void doLoadDateTable(){
 		resultadoConsulta=operacionService.getLstOperacionesForm(fechaInicio, fechaFin, idProducto, idCategoria, busqueda, getUserLogado().getIdUser());
 		log.info("Balance: "+resultadoConsulta.getBalance()+"€ -- Nº de registros: "+resultadoConsulta.getnRegistros());
-		
-		
 	}
 	
 	/**
 	 * Elimina las operaciones de la base de datos
 	 */
 	public void doDeleteItems(){
-		log.info("Eliminar lista");
+//		log.info("Eliminar lista");
 		
 		operacionService.deleteOperaciones(selectedOperacionesForm);
 		removeSelectedFromList(resultadoConsulta.getLstOperacionesForm(),true);
@@ -143,7 +141,7 @@ public class OperacionController implements Serializable {
 	 * @return
 	 */
 	public String doLoadImportForm() {
-		log.info(this.idProducto);
+//		log.info(this.idProducto);
 		clearSessionObjects();
 		return "operacionImportForm";
 	}
@@ -158,9 +156,11 @@ public class OperacionController implements Serializable {
 	 * @param accion. Posibles valores {IMPORT, UPDATE}
 	 */
 	public void doSaveItems(String accion) {
+		
 		// Si la lista de operaciones seleccionadas no es nula ni esta vacia los guardo en bd
 		if (selectedOperacionesForm != null && !selectedOperacionesForm.isEmpty()) {
-
+			log.info("Entro en guardar. idProducto: "+idProducto+" , accion: "+accion );
+			
 			// Validacion de idProducto
 			if (idProducto == null && accion.equalsIgnoreCase("IMPORT"))
 				MyUtils.addErrorMessage(MyUtils.getStringFromBundle("error"),
@@ -174,7 +174,6 @@ public class OperacionController implements Serializable {
 				else
 					//Recargo los calculos y la tabla
 					resultadoConsulta=operacionService.getLstOperacionesForm(fechaInicio, fechaFin, idProducto, idCategoria, busqueda, getUserLogado().getIdUser());
-
 			}
 		}
 	}

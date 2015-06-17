@@ -24,7 +24,8 @@ public class CategoriaDaoImpl extends GenericDaoImpl<Categoria> implements
 	@Override
 	public List<Categoria> findCategoriaForUser(Integer idUser) {
 		Query query = entityManager.createQuery("select c from Categoria c where "
-		    		+ " c.user.idUser= :idUser");
+		    		+ " c.user.idUser= :idUser"
+		    		+ " order by c.nombre");
 	    	query.setParameter("idUser", idUser);
 		    
 	    List<Categoria> lstCategorias= (List<Categoria>)query.getResultList();

@@ -120,11 +120,39 @@ public class OperacionServiceImpl implements OperacionService {
 		for (OperacionForm opf: lstOperacionesForm)
 			balance=balance.add(opf.getImporte());
 
+		setSaldosToLstOperacionesForm(lstOperacionesForm, idProducto, idCategoria);
 		resultado.setLstOperacionesForm(lstOperacionesForm);
 		resultado.setBalance(balance);
 		
 		return resultado;
 	}
+	
+	private void setSaldosToLstOperacionesForm(List<OperacionForm>lstOperacionesForm, Integer idProducto, Integer idCategoria){
+		log.info("Inicio");
+		BigDecimal saldo=new BigDecimal("0");
+		if (idProducto!=null && idCategoria==null){
+			BigDecimal saldoInicial=productoDao.findById(idProducto).getImporte();
+			saldo=saldo.add(saldoInicial!=null?saldoInicial:new BigDecimal(0));
+			
+			//Obtengo todos los productos
+			List<Operacion>lstOperacionesAll=operacionDao.findAll();
+			
+			for (Operacion op:lstOperacionesAll){
+				
+				//Sumatorio para el saldo para cada operacion
+				saldo=saldo.add(op.getImporte());
+				
+				for (OperacionForm opForm:lstOperacionesForm){
+					if (opForm.getId().compareTo(op.getIdOperacion())==0){
+						opForm.setSaldo(saldo);
+					}
+				}
+			}
+							
+		}
+		log.info("fin");
+	}
+	
 	
 	@Override
 	public List<OperacionForm> getLstOperacionesFormXLS(InputStream file, Integer idProducto) {
@@ -201,8 +229,10 @@ public class OperacionServiceImpl implements OperacionService {
 		this.gestionarCategoria(opForm, op);
 		
 		//En funcion del id guardo o modifico
-		if (opForm.getId()!=null)
+		if (opForm.getId()!=null){
 			operacionDao.update(op);
+			log.info("operacion "+op.getIdOperacion()+" guardada con categoria "+opForm.getIdCategoria());
+		}
 		else
 			operacionDao.create(op);
 		
