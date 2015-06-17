@@ -34,3 +34,7 @@ Estilo para las filas de items que se muestran estando de baja
 	/*font-weight: bold;*/
 	 color:rgb(0, 0, 0);
 }
+.optitle{
+	font-size: 15px;
+	font-family: inherit; 
+}

@@ -18,7 +18,7 @@ public class ResultadoConsultaForm implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private BigDecimal balance;
+	private BigDecimal balance, totalIngresos, totalGastos;
 	private List<OperacionForm> lstOperacionesForm;
 	private Integer nRegistros;
 	
@@ -27,6 +27,7 @@ public class ResultadoConsultaForm implements Serializable {
 	}
 
 	public BigDecimal getBalance() {
+		this.balance=this.totalIngresos.add(this.totalGastos);
 		return balance;
 	}
 
@@ -56,6 +57,42 @@ public class ResultadoConsultaForm implements Serializable {
 
 	public void setnRegistros(Integer nRegistros) {
 		this.nRegistros = nRegistros;
+	}
+
+	/**
+	 * @return the totalGastos
+	 */
+	public BigDecimal getTotalGastos() {
+		return totalGastos;
+	}
+	
+	public String getTotalGastosStr(){
+		return NumeroUtil.formatearACastellano(this.getTotalGastos());
+	}
+
+	/**
+	 * @param totalGastos the totalGastos to set
+	 */
+	public void setTotalGastos(BigDecimal totalGastos) {
+		this.totalGastos = totalGastos;
+	}
+
+	/**
+	 * @return the totalIngresos
+	 */
+	public BigDecimal getTotalIngresos() {
+		return totalIngresos;
+	}
+
+	
+	public String getTotalIngresosStr(){
+		return NumeroUtil.formatearACastellano(this.getTotalIngresos());
+	}
+	/**
+	 * @param totalIngresos the totalIngresos to set
+	 */
+	public void setTotalIngresos(BigDecimal totalIngresos) {
+		this.totalIngresos = totalIngresos;
 	}
 	
 }

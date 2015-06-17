@@ -116,13 +116,19 @@ public class OperacionServiceImpl implements OperacionService {
 			lstOperacionesForm.add(opf);
 		}
 	
-		BigDecimal balance=new BigDecimal("0");
-		for (OperacionForm opf: lstOperacionesForm)
-			balance=balance.add(opf.getImporte());
+		BigDecimal totalIngresos=new BigDecimal("0"), totalGastos=new BigDecimal("0");
+		
+		for (OperacionForm opf: lstOperacionesForm){
+			if (opf.getImporte().compareTo(new BigDecimal(0))<0)
+				totalIngresos=totalIngresos.add(opf.getImporte());
+			else
+				totalGastos=totalGastos.add(opf.getImporte());
+		}
 
 		setSaldosToLstOperacionesForm(lstOperacionesForm, idProducto, idCategoria);
 		resultado.setLstOperacionesForm(lstOperacionesForm);
-		resultado.setBalance(balance);
+		resultado.setTotalIngresos(totalGastos);
+		resultado.setTotalGastos(totalIngresos);
 		
 		return resultado;
 	}

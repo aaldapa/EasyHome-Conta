@@ -62,6 +62,7 @@ public class OperacionController implements Serializable {
 	private List<SelectItem> lstCategorias;
 	private List<OperacionForm> lstOperacionesForm;
 	
+	
 	private OperacionForm operacionForm=new OperacionForm();
 	
 	private List<OperacionForm> selectedOperacionesForm;

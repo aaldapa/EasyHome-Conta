@@ -9,7 +9,7 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui">  
       
-    <h:body>	
+    <h:body >	
     	
     	<ui:composition template="../../templates/main.xhtml">
 			<!-- Parametros para el paso de titulos, cabeceras, etc -->
@@ -37,13 +37,16 @@
 					
 					<div class="box box-success">
 					  <div class="box-header with-border">
-					    <h3 class="box-title col-md-12">
-					    	<h:outputText class="col-md-4" value="#{msg['operaciones.listado.subtitulo1']}"/>
-					    	<h:outputText class="col-md-offset-2 col-md-2" value="#{msg['operaciones.listado.registros']}"/>
-					    	<h:outputText id="id_nRegistros" class="col-md-1" value="#{operacionBean.resultadoConsulta.nRegistros}"/>
-					    	<h:outputText class="col-md-1" value="#{msg['operaciones.listado.balance']}"/>
-					    	<h:outputText id="id_balance" class="col-md-2 #{operacionBean.resultadoConsulta.balance >= 0 ? 'opingreso':'opgasto'}" value="#{operacionBean.resultadoConsulta.balanceStr} €"/>
-					    </h3>
+					    <span class="box-title col-md-12">
+					    	<h:outputText class="col-md-2" value="#{msg['operaciones.listado.subtitulo1']}"/>
+					    	<h:outputText class="col-md-offset-1 col-md-1 text-right optitle" value="#{msg['operaciones.listado.ingresos']}"/>
+					    	<h:outputText id="id_tIngresos" class="col-md-2 optitle" value="#{operacionBean.resultadoConsulta.totalIngresosStr} €"/>
+					    	<h:outputText class="col-md-1 text-right optitle" value="#{msg['operaciones.listado.gastos']}"/>
+					    	<h:outputText id="id_tGastos" class="col-md-2 optitle" value="#{operacionBean.resultadoConsulta.totalGastosStr} €"/>
+					    	<h:outputText class="col-md-1 text-right optitle" value="#{msg['operaciones.listado.balance']}"/>
+					    	<h:outputLabel id="id_balance" class="col-md-2 optitle #{operacionBean.resultadoConsulta.balance >= 0 ? 'opingreso':'opgasto'}" value="#{operacionBean.resultadoConsulta.balanceStr} €"/>
+					    	
+					    </span>
 					    <div class="box-tools pull-right">
 					<!--           Caja o fieldset en la que aparecen los datos. Los botones que aparecen a continuacion son los de minimizar y cerrar la caja. -->
 					          <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Colapsar"><i class="fa fa-minus"></i></button>
@@ -77,7 +80,7 @@
 								            	<h:selectOneMenu id="id_producto" value="#{operacionBean.idProducto}" styleClass="form-control">
 						            				<f:selectItem itemValue="" itemLabel="#{msg['operaciones.listado.combo.todos']}" noSelectionOption="true"></f:selectItem>
 						            				<f:selectItems value="#{operacionBean.lstProductos}" var="item" itemValue="#{item.value}" itemLabel="#{item.label}" ></f:selectItems>
-						            				<f:ajax event="change" execute="@form" render="id_form:id_data_table id_form:id_nRegistros id_form:id_balance" listener="#{operacionBean.doLoadDateTable}"/>
+						            				<f:ajax event="change" execute="@form" render="id_form:id_data_table id_form:id_nRegistros id_form:id_balance id_form:id_tIngresos id_form:id_tGastos" listener="#{operacionBean.doLoadDateTable}"/>
 					            				</h:selectOneMenu>
 								            </div>
 								        </div>
@@ -89,7 +92,7 @@
 			            							<f:selectItem itemValue="" itemLabel="#{msg['operaciones.listado.combo.todas']}" noSelectionOption="true"></f:selectItem>
 			            							<f:selectItem itemValue="0" itemLabel="#{msg['operaciones.listado.combo.ninguna']}" noSelectionOption="true"></f:selectItem>
 			            							<f:selectItems value="#{operacionBean.lstCategorias}" var="cat" itemLabel="#{cat.nombre}" itemValue="#{cat.idCategoria}" />
-			            							<f:ajax event="change" execute="@form" render="id_form:id_data_table id_form:id_nRegistros id_form:id_balance" listener="#{operacionBean.doLoadDateTable}"/>
+			            							<f:ajax event="change" execute="@form" render="id_form:id_data_table id_form:id_nRegistros id_form:id_balance id_form:id_tIngresos id_form:id_tGastos" listener="#{operacionBean.doLoadDateTable}"/>
 			            						</h:selectOneMenu>
 			            				 	</div>
 								        </div>
@@ -106,9 +109,11 @@
 					
 					<div class="box box-primary">
 					  <div class="box-header with-border">
-					    <h3 class="box-title col-md-7">
-					    	#{msg['operaciones.listado.subtitulo2']}
-					    </h3>
+					    <span class="box-title col-md-7">
+					    	<h:outputText class="col-md-6" value="#{msg['operaciones.listado.subtitulo2']}"/>
+					    	<h:outputText class="col-md-4 text-right optitle" value="#{msg['operaciones.listado.registros']}" />
+					    	<h:outputText id="id_nRegistros" class="col-md-1 optitle" value="#{operacionBean.resultadoConsulta.nRegistros}" />
+					    </span>
 					    
 					    <div class="box-tools col-md-5">
 					<!--           Caja o fieldset en la que aparecen los datos. Los botones que aparecen a continuacion son los de minimizar y cerrar la caja. -->
@@ -116,8 +121,7 @@
 
 							<div class="input-group pull-right">
               					<h:inputText class="form-control" value="#{operacionBean.busqueda}" pt:placeholder="#{msg['operaciones.listado.combo.buscar.placeholder']}" autocomplete="off">
-<!--               						<f:ajax   event="keyup" execute="@form" render="id_form:id_data_table id_popup_form id_form:id_nRegistros id_form:id_balance" listener="#{operacionBean.doLoadDateTable}"/> -->
-              						<p:ajax event="keyup" onstart="loadingShow();" oncomplete="loadingHide();" delay="1000" process="@form" update="id_form:id_data_table id_form:id_nRegistros id_form:id_balance" listener="#{operacionBean.doLoadDateTable}"/>
+              						<p:ajax event="keyup" onstart="loadingShow();" oncomplete="loadingHide();" delay="1000" process="@form" update="id_form:id_data_table id_form:id_nRegistros id_form:id_balance id_form:id_tIngresos id_form:id_tGastos" listener="#{operacionBean.doLoadDateTable}"/>
               					</h:inputText>
               					<span class="input-group-btn">
 	              					<button class="btn btn-default" type="button" onclick="envioAjax()">
@@ -136,12 +140,13 @@
 						           <p:dataTable id="id_data_table"  value="#{operacionBean.resultadoConsulta.lstOperacionesForm}" var="item" style="margin-bottom:20px" tableStyle="font-size: 80%;"
 						           	selection="#{operacionBean.selectedOperacionesForm}" rowKey="#{item.id}"
 						           	editable="true" editMode="cell" widgetVar="dtOperaciones"
-						           	scrollable="true" scrollHeight="400"
+						           	scrollable="true" scrollHeight="200"
 						           	liveScroll="true" scrollRows="15"
 						           	
 					           		reflow="true"
 						           	emptyMessage="#{msg['tabla.filas.mensaje.no.records']}"
 						           >
+						           		<p:ajax event="sort" onstart="loadingShow()" oncomplete="loadingHide()"></p:ajax>
 										<!-- Columna expandible -->
 						           		<p:column style="width:35px">
             								<p:rowToggler />
@@ -230,7 +235,7 @@
    					 			<h:commandButton type="button" id="id_boton_eliminar" styleClass="btn btn-default pull-right" value="#{msg['boton.eliminar']}" title="#{msg['boton.eliminar']}"  onclick="$('#id_popup_delete').show()"/>
    					 			
    					 			<h:commandButton styleClass="btn btn-default pull-right" value="#{msg['boton.guardar']}" title="#{msg['boton.guardar']}" >
-   					 				<f:ajax execute="id_form" render="id_form:id_data_table id_form:id_nRegistros id_form:id_balance" listener="#{operacionBean.doSaveItems('UPDATE')}"/>
+   					 				<f:ajax execute="id_form" render="id_form:id_data_table id_form:id_nRegistros id_form:id_balance id_form:id_tIngresos id_form:id_tGastos" listener="#{operacionBean.doSaveItems('UPDATE')}"/>
    					 			</h:commandButton>
    					 			
 	            				<h:commandButton type="button" class="btn btn-primary  pull-right" onclick="$('#id_popup_form').show()" title="#{msg['boton.nuevo']}" value="#{msg['boton.nuevo']}"/>
@@ -256,7 +261,7 @@
 								</button>
 								
 								<h:commandButton  styleClass="btn btn-primary" value="#{msg['boton.aceptar']}" onclick="$('#id_popup_delete').hide();" title="#{msg['boton.aceptar']}">
-		    						<f:ajax listener="#{operacionBean.doDeleteItems}" event="click" render="id_form:id_data_table id_form:id_nRegistros id_form:id_balance" execute="id_form"></f:ajax>
+		    						<f:ajax listener="#{operacionBean.doDeleteItems}" event="click" render="id_form:id_data_table id_form:id_nRegistros id_form:id_balance id_form:id_tIngresos id_form:id_tGastos" execute="id_form"></f:ajax>
 								</h:commandButton>
 			                  </div>
 			                </div><!-- /.modal-content -->
@@ -349,9 +354,9 @@
 								<div class="btn-toolbar">
 		    						<h:commandButton type="button" onclick="$('#id_popup_form').hide();" styleClass="btn btn-default pull-right" value="#{msg['boton.cancelar']}" title="#{msg['boton.cancelar']}"/>
 		    						<h:commandButton id="id_boton_guardar_form"  actionListener="#{operacionBean.doNewItem}" styleClass="btn btn-primary pull-right" value="#{msg['boton.guardar']}" title="#{msg['boton.guardar']}" onclick="PF('operacionForm').hide()">
-			    						<f:ajax listener="#{operacionBean.doNewItem}" event="click" execute="id_popup_form" render="id_form:id_data_table id_popup_form id_form:id_nRegistros id_form:id_balance"></f:ajax>
+			    						<f:ajax listener="#{operacionBean.doNewItem}" event="click" execute="id_popup_form" render="id_form:id_data_table id_popup_form id_form:id_nRegistros id_form:id_balance id_form:id_tIngresos id_form:id_tGastos"></f:ajax>
 									</h:commandButton>
-									
+									<!-- Este script se ejecuta cuando hay un error de validacion cargado en la pagina -->
 									<h:outputScript rendered="#{facesContext.validationFailed}">
     									$('#id_popup_form').show();
 									</h:outputScript> 
@@ -370,7 +375,7 @@
 					</div>
 					
 					<!-- Peticion ajax invocada desde javascript -->
-					<p:remoteCommand name="envioAjax" actionListener="#{operacionBean.doLoadDateTable}" update="id_form:id_data_table id_form:id_nRegistros id_form:id_balance" 
+					<p:remoteCommand name="envioAjax" actionListener="#{operacionBean.doLoadDateTable}" update="id_form:id_data_table id_form:id_nRegistros id_form:id_balance id_form:id_tIngresos id_form:id_tGastos" 
 					onstart="loadingShow();" oncomplete="loadingHide();"/>
 		    	</h:form>
 		    	<script type="text/javascript">
@@ -427,7 +432,9 @@
 					    });
 
 						(function(){
-							console.log("altura del navegador:"+$(window).height());
+							var altura=$(window).height()-500;
+							$('.ui-datatable-scrollable-body').css('height',altura+'px');
+							console.log("altura del navegador:"+altura);
 							
 						})();							
 					});
