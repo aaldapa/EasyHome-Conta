@@ -141,7 +141,7 @@ public class OperacionServiceImpl implements OperacionService {
 			saldo=saldo.add(saldoInicial!=null?saldoInicial:new BigDecimal(0));
 			
 			//Obtengo todos los productos
-			List<Operacion>lstOperacionesAll=operacionDao.findAll();
+			List<Operacion>lstOperacionesAll=operacionDao.findAllByIdProducto(idProducto);
 			
 			for (Operacion op:lstOperacionesAll){
 				

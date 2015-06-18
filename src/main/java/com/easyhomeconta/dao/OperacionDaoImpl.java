@@ -193,4 +193,18 @@ public class OperacionDaoImpl extends GenericDaoImpl<Operacion> implements Opera
 			return (Operacion) query2.getSingleResult();
 		}
 	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<Operacion> findAllByIdProducto(Integer idProducto) {
+		Query query=entityManager.createQuery(" select o from Operacion o "
+				+ " join fetch o.lstCategorias cats"
+				+ " join o.producto p"
+				+ " where p.idProducto= :idProducto");
+		
+		query.setParameter("idProducto", idProducto);
+	
+		List<Operacion> lstOperaciones=(List<Operacion>) query.getResultList();
+		return lstOperaciones;
+	}
 }

@@ -41,6 +41,14 @@ public interface OperacionDao extends GenericDao<Operacion> {
 	 * @param id
 	 * @return
 	 */
-	public Operacion findById(Long id);	
+	public Operacion findById(Long id);
+	
+	
+	/**
+	 * Obtiene todas las operaciones para un producto
+	 * @param idProducto
+	 * @return
+	 */
+	public List<Operacion> findAllByIdProducto(Integer idProducto);
 	
 }
