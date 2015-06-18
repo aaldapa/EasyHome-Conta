@@ -291,7 +291,7 @@
 		    	<script type="text/javascript">
 					$(document).ready(function(){
 
-					   $('#id_form\\:reportrange').val(moment().subtract(#{operacionBean.nRangodias}+1, 'days').format("#{msg['patron.corto']}") + " #{msg['operaciones.listado.al']} " + moment().format("#{msg['patron.corto']}"));
+					   $('#id_form\\:reportrange').val(moment().subtract(#{operacionBean.nRangodias}, 'days').format("#{msg['patron.corto']}") + " #{msg['operaciones.listado.al']} " + moment().format("#{msg['patron.corto']}"));
 					   
 					   $('#id_form\\:reportrange').daterangepicker({
 						   format: "#{msg['patron.corto']}",
