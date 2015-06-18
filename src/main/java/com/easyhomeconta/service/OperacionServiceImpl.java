@@ -298,6 +298,22 @@ public class OperacionServiceImpl implements OperacionService {
 		}
 	}
 	
+	
+	@Override
+	@Transactional
+	public void reorganizarOperaciones(List<OperacionForm> lstOperacionesForm, Integer idCategoria, Integer idProducto) {
+
+		//Recorro las operaciones setteando la categoria y producto que proceda para reutilizar el metodo de salvado.
+		for (OperacionForm opf:lstOperacionesForm){
+			opf.setIdCategoria(idCategoria);
+			if (idProducto!=null)
+				opf.setIdProducto(idProducto);
+			
+			this.saveOperacion(opf);
+		}
+		
+	}
+	
 	/**
 	 * Borra todas las categorias de la operacion y la operacion 
 	 * @param op

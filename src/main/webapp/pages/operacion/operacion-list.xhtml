@@ -234,6 +234,8 @@
 	    							
    					 			<h:commandButton type="button" id="id_boton_eliminar" styleClass="btn btn-default pull-right" value="#{msg['boton.eliminar']}" title="#{msg['boton.eliminar']}"  onclick="$('#id_popup_delete').show()"/>
    					 			
+   					 			<h:commandButton type="button" class="btn btn-default  pull-right" onclick="$('#id_popup_form_reorganizar').show()" title="#{msg['operaciones.listado.boton.reorganizar']}" value="#{msg['operaciones.listado.boton.reorganizar']}"/>
+   					 			
    					 			<h:commandButton styleClass="btn btn-default pull-right" value="#{msg['boton.guardar']}" title="#{msg['boton.guardar']}" >
    					 				<f:ajax execute="id_form" render="id_form:id_data_table id_form:id_nRegistros id_form:id_balance id_form:id_tIngresos id_form:id_tGastos" listener="#{operacionBean.doSaveItems('UPDATE')}"/>
    					 			</h:commandButton>
@@ -269,8 +271,11 @@
 			            </div><!-- /.modal -->        
 			
 			
-						<!--  Capa emergente que NUEVA OPERACION -->
+						<!--  Capa emergente para NUEVA OPERACION -->
 						<ui:include src="operacion.xhtml" />
+						
+						<!--  Capa emergente para  REORGANIZAR OPERACIONES-->
+						<ui:include src="operacion-reorganizar.xhtml" />
 			
 						<!-- Loadinggg -->
 			  			<div id="id_loading" class="overlay hide">

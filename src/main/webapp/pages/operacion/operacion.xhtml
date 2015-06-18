@@ -94,8 +94,10 @@
                <div class="modal-footer">
 		<div class="btn-toolbar">
 			<h:commandButton type="button" onclick="$('#id_popup_form').hide();" styleClass="btn btn-default pull-right" value="#{msg['boton.cancelar']}" title="#{msg['boton.cancelar']}"/>
-			<h:commandButton id="id_boton_guardar_form"  actionListener="#{operacionBean.doNewItem}" styleClass="btn btn-primary pull-right" value="#{msg['boton.guardar']}" title="#{msg['boton.guardar']}" onclick="PF('operacionForm').hide()">
-				<f:ajax listener="#{operacionBean.doNewItem}" event="click" execute="id_popup_form" render="id_form:id_data_table id_popup_form id_form:id_nRegistros id_form:id_balance id_form:id_tIngresos id_form:id_tGastos"></f:ajax>
+			<h:commandButton id="id_boton_guardar_form"  actionListener="#{operacionBean.doNewItem}" styleClass="btn btn-primary pull-right" value="#{msg['boton.guardar']}" title="#{msg['boton.guardar']}" onclick="$('#id_popup_form').hide();">
+				<f:ajax listener="#{operacionBean.doNewItem}" event="click" 
+					execute="id_producto_form id_categoria_form id_fecha_form id_concepto_form id_importe_form id_notas_form" 
+					render="id_form:id_data_table id_form:id_nRegistros id_form:id_balance id_form:id_tIngresos id_form:id_tGastos"></f:ajax>
 			</h:commandButton>
 			<!-- Este script se ejecuta cuando hay un error de validacion cargado en la pagina -->
 			<h:outputScript rendered="#{facesContext.validationFailed}">

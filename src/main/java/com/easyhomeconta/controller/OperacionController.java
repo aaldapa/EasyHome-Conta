@@ -52,10 +52,11 @@ public class OperacionController implements Serializable {
 	
 	private Date fechaInicio;
 	private Date fechaFin;
-	private Integer idProducto;
+	private Integer idProducto,idProductoReorganizar;
 	private int nRangodias;
 	private String busqueda;
-	private Integer idCategoria;
+	private Integer idCategoria,idCategoriaReorganizar;
+	
 
 	private UploadedFile archivo;
 	private List<SelectItem> lstProductos;
@@ -142,15 +143,11 @@ public class OperacionController implements Serializable {
 	 * @return
 	 */
 	public String doLoadImportForm() {
-//		log.info(this.idProducto);
 		clearSessionObjects();
 		return "operacionImportForm";
 	}
 
-	/**
-	 * Guarda en base de datos las operaciones seleccionadas y las elimina de la
-	 * tabla
-	 */
+
 	/**
 	 * Utilizo este metodo para guardar las operaciones importadas del excel y para
 	 * modificar las operaciones de base de datos.  
@@ -201,10 +198,24 @@ public class OperacionController implements Serializable {
 		// Si la lista de operaciones seleccionadas no es nula ni esta vacia los borro de la tabla
 		if (selectedOperacionesForm != null && !selectedOperacionesForm.isEmpty()) 
 			removeSelectedFromList(lstOperacionesForm,true);
-		
-		
 	}
 
+	/**
+	 * Reorganiza las operaciones con la categoria y el producto seleccionado en el popup
+	 */
+	public void doReorganizarSelection(){
+		log.info("doReorganizar");
+		// Si la lista de operaciones seleccionadas no es nula ni esta modifico las operaciones
+		if (selectedOperacionesForm != null && !selectedOperacionesForm.isEmpty()) {
+			//Guardo reorganizacion
+			operacionService.reorganizarOperaciones(selectedOperacionesForm, idCategoriaReorganizar, idProductoReorganizar);
+			//Recargo los calculos y la tabla
+			resultadoConsulta=operacionService.getLstOperacionesForm(fechaInicio, fechaFin, idProducto, idCategoria, busqueda, getUserLogado().getIdUser());
+			//Reseteo formulario
+			idCategoriaReorganizar=null;idProductoReorganizar=null;
+			MyUtils.addInfoMessage(MyUtils.getStringFromBundle("success"),selectedOperacionesForm.size()+ " "+ MyUtils.getStringFromBundle("operacion.form.importar.guardar.detail"));
+		}
+	}
 	
 	/**
 	 * Elimina de la lista pasada como parametro, los objecto seleccionados en la tabla (tanto en la tabla importacion como en la de consultas) 
@@ -436,6 +447,22 @@ public class OperacionController implements Serializable {
 	 */
 	public void setOperacionForm(OperacionForm operacionForm) {
 		this.operacionForm = operacionForm;
+	}
+
+	public Integer getIdProductoReorganizar() {
+		return idProductoReorganizar;
+	}
+
+	public void setIdProductoReorganizar(Integer idProductoReorganizar) {
+		this.idProductoReorganizar = idProductoReorganizar;
+	}
+
+	public Integer getIdCategoriaReorganizar() {
+		return idCategoriaReorganizar;
+	}
+
+	public void setIdCategoriaReorganizar(Integer idCategoriaReorganizar) {
+		this.idCategoriaReorganizar = idCategoriaReorganizar;
 	}
 
 }

@@ -75,4 +75,12 @@ public interface OperacionService {
 	 * @param lstOperacionesForm
 	 */
 	public void deleteOperaciones(List<OperacionForm> lstOperacionesForm);
+	
+	/**
+	 * Guarda las operaciones recibidas en la lista asignando la categoria y producto pasado como parametro a todas las operaciones.
+	 * @param lstOperacionesForm
+	 * @param idCategoria
+	 * @param idProducto Si el producto es null no se modifica el producto al que pertenecen las operaciones. 
+	 */
+	public void reorganizarOperaciones(List<OperacionForm> lstOperacionesForm, Integer idCategoria, Integer idProducto);
 }
