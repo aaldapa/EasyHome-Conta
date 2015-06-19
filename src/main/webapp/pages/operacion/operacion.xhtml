@@ -28,7 +28,7 @@
             		<h:message for="id_producto_form" errorClass="has-error control-label" infoClass="has-info control-label" />
 		            <div class="input-group input-append ">
 		            	<h:selectOneMenu id="id_producto_form" value="#{operacionBean.operacionForm.idProducto}" styleClass="form-control" required="false" requiredMessage="#{msg['error.campo.obligatorio']}">
-<!-- 								            		<f:selectItem itemValue="" itemLabel="#{msg['combo.selection.option']}" noSelectionOption="true"></f:selectItem> -->
+<!-- 						<f:selectItem itemValue="" itemLabel="#{msg['combo.selection.option']}" noSelectionOption="true"></f:selectItem> -->
 		            		<f:selectItems value="#{operacionBean.lstProductos}" var="item" itemValue="#{item.value}" itemLabel="#{item.label}" ></f:selectItems>
 		            	</h:selectOneMenu>
 		            </div>
@@ -52,11 +52,20 @@
 		        	<h:message for="id_fecha_form" errorClass="has-error control-label" infoClass="has-info control-label" />
 		            <div class="input-group input-append">
 		            	<h:inputText id="id_fecha_form" class="form-control date" value="#{operacionBean.operacionForm.fecha}" required="true" requiredMessage="#{msg['error.campo.obligatorio']}" autocomplete="off">
-  	             							<f:convertDateTime pattern="#{msg['patron.fecha.corta']}" />
-		          			</h:inputText>
+     						<f:convertDateTime pattern="#{msg['patron.fecha.corta']}" />
+		          		</h:inputText>
 		                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
 		            </div>
-		        </div>	
+		        </div>
+		        
+		        <h:outputLabel styleClass="col-md-2 control-label" for="id_traspaso_form" value="#{msg['operacion.form.traspaso']}"/>
+		        
+	        	<div class="col-md-4 input-group checkbox ">
+          			<label>
+          				<h:selectBooleanCheckbox id="id_traspaso_form" value="#{operacionBean.operacionForm.traspaso}" />
+          			</label>
+	            </div>
+		        
 		    </div>
 		    
 		     <!-- Text inputs concepto, importe-->
@@ -67,12 +76,12 @@
 	            </div>
 	            
 	            
-	            <h:outputLabel styleClass="col-md-1 control-label" for="id_importe" value="#{msg['operacion.form.importe']}"/>
+	            <h:outputLabel styleClass="col-md-1 control-label" for="id_importe_form" value="#{msg['operacion.form.importe']}"/>
 	            <div class="col-md-3 form-group-inline">
 	            	<h:message for="id_importe_form" errorClass="has-error control-label" infoClass="has-info control-label" />
 	            	<div class="input-group">
 	            		<h:inputText id="id_importe_form" pt:placeholder="#{msg['operacion.form.importe']}" class="form-control" label="#{msg['operacion.form.importe']}" value="#{operacionBean.operacionForm.importe}" required="true" requiredMessage="#{msg['error.campo.obligatorio']}" autocomplete="off">
-	            			<f:convertNumber  maxFractionDigits="2"  for="id_importe"/>
+	            			<f:convertNumber  maxFractionDigits="2"  for="id_importe_form"/>
 	            		</h:inputText>
 	              		<span class="input-group-addon"><i class="fa fa-euro"></i></span>
 	            	</div>
@@ -96,7 +105,7 @@
 			<h:commandButton type="button" onclick="$('#id_popup_form').hide();" styleClass="btn btn-default pull-right" value="#{msg['boton.cancelar']}" title="#{msg['boton.cancelar']}"/>
 			<h:commandButton id="id_boton_guardar_form"  actionListener="#{operacionBean.doNewItem}" styleClass="btn btn-primary pull-right" value="#{msg['boton.guardar']}" title="#{msg['boton.guardar']}" onclick="$('#id_popup_form').hide();">
 				<f:ajax listener="#{operacionBean.doNewItem}" event="click" 
-					execute="id_producto_form id_categoria_form id_fecha_form id_concepto_form id_importe_form id_notas_form" 
+					execute="id_producto_form id_categoria_form id_fecha_form id_traspaso_form id_concepto_form id_importe_form id_notas_form" 
 					render="id_form:id_data_table id_form:id_nRegistros id_form:id_balance id_form:id_tIngresos id_form:id_tGastos"></f:ajax>
 			</h:commandButton>
 			<!-- Este script se ejecuta cuando hay un error de validacion cargado en la pagina -->

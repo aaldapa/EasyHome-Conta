@@ -23,6 +23,7 @@ public class OperacionForm implements Serializable {
 	private String nombreCategoria;
 	private Integer idProducto; 
 	private Date fecha;
+	private Boolean traspaso;
 	private String concepto;
 	private BigDecimal importe;
 	private BigDecimal saldo;
@@ -36,31 +37,6 @@ public class OperacionForm implements Serializable {
 		super();
 		this.fecha = fecha;
 		this.importe = importe;
-	}
-
-	public OperacionForm(Long id, Integer idCategoria, Integer idProducto,
-			Date fecha, String concepto,
-			BigDecimal importe, BigDecimal saldo, String notas) {
-		super();
-		this.id = id;
-		this.idCategoria = idCategoria;
-		this.idProducto = idProducto;
-		this.fecha = fecha;
-		this.concepto = concepto;
-		this.importe = importe;
-		this.saldo = saldo;
-		this.notas = notas;
-	}
-	
-	public OperacionForm (Long id, Integer idCategoria, Integer idProducto, Date fecha, String concepto, BigDecimal importe, String notas){
-		super();
-		this.id = id;
-		this.idCategoria = idCategoria;
-		this.idProducto = idProducto;
-		this.fecha = fecha;
-		this.concepto = concepto;
-		this.importe = importe;
-		this.notas = notas;
 	}
 
 	public Long getId() {
@@ -147,6 +123,20 @@ public class OperacionForm implements Serializable {
 	 */
 	public void setNombreCategoria(String nombreCategoria) {
 		this.nombreCategoria = nombreCategoria;
+	}
+
+	/**
+	 * @return the traspaso
+	 */
+	public Boolean getTraspaso() {
+		return traspaso;
+	}
+
+	/**
+	 * @param traspaso the traspaso to set
+	 */
+	public void setTraspaso(Boolean traspaso) {
+		this.traspaso = traspaso;
 	}
 
 }

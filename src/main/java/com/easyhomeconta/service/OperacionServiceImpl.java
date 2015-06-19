@@ -102,6 +102,7 @@ public class OperacionServiceImpl implements OperacionService {
 			
 			opf.setId(op.getIdOperacion());
 			opf.setFecha(op.getFecha());
+			opf.setTraspaso(op.getTraspaso());
 			opf.setConcepto(op.getConcepto());
 			opf.setImporte(op.getImporte());
 			opf.setNotas(op.getNotas());
@@ -230,6 +231,7 @@ public class OperacionServiceImpl implements OperacionService {
 		op.setNotas(opForm.getNotas());
 		op.setConcepto(opForm.getConcepto());
 		op.setImporte(opForm.getImporte());
+		op.setTraspaso(opForm.getTraspaso());
 		
 		//GESTION CATEGORIA
 		this.gestionarCategoria(opForm, op);
@@ -428,6 +430,8 @@ public class OperacionServiceImpl implements OperacionService {
 						operacion.setImporte(new BigDecimal(stringCellValue));
 						log.info("Importe: "+stringCellValue);
 					}
+					
+					operacion.setTraspaso(false);
 				}
 			}
 			if (pintarlinea)

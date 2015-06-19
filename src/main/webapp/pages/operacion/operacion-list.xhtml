@@ -154,10 +154,26 @@
 										<!-- Contenido de columna expandible -->
         								<p:rowExpansion>
 											<div class="form-group">
-												<h:outputText class="col-md-1" value="#{msg['operaciones.listado.tabla.notas']}" />
-												<div class="input-group col-md-10">
-													<h:inputTextarea id="id_notas" class="form-control" pt:placeholder="#{msg['operaciones.listado.tabla.notas.placeholder']}" label="#{msg['operaciones.listado.tabla.notas']}" value="#{item.notas}"/>
-								    			</div>
+
+									         	<h:outputLabel class="col-md-1 control-label" value="#{msg['operaciones.listado.tabla.notas']}" />
+								        		<div class="col-md-7">
+								            		<div class="input-group col-md-12">
+														<h:inputTextarea id="id_notas" class="form-control" pt:placeholder="#{msg['operaciones.listado.tabla.notas.placeholder']}" label="#{msg['operaciones.listado.tabla.notas']}" value="#{item.notas}" style="width:100%"/>
+										            </div>
+										        </div>
+										        <div class="col-md-2 control-label"> 
+										        	<span title="#{msg['operacion.form.traspaso.info']}" class="glyphicon glyphicon-info-sign col-md-1 text-right"/>
+										        	<b>#{msg['operaciones.listado.tabla.col.traspaso']}</b>
+										        </div>										       
+
+										       	<div class="col-md-1">
+										            <div class="input-group checkbox">
+										            	<label>
+       														<h:selectBooleanCheckbox id="id_traspaso" value="#{item.traspaso}" />					
+	       												</label>
+										            </div>
+										        </div>
+         										
 								    		</div>
 										</p:rowExpansion>
 						           		
@@ -204,7 +220,7 @@
 							           			<f:facet name="output"><h:outputText value="#{item.concepto}" /> </f:facet>
 		           			                	<f:facet name="input"><p:inputText id="id_concepto" value="#{item.concepto}" style="width:100%" maxlength="50"/></f:facet>
 	           			                	</p:cellEditor>
-						           		</p:column>
+						           		</p:column>						           		
 						           		
 						           		<p:column headerText="#{msg['operaciones.listado.tabla.col.importe']}" width="100" sortBy="#{item.importe}" styleClass="#{item.importe >=0 ? 'opingreso':'opgasto'}">
 						           			<p:cellEditor>

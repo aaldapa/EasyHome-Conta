@@ -198,7 +198,6 @@ public class OperacionDaoImpl extends GenericDaoImpl<Operacion> implements Opera
 	@SuppressWarnings("unchecked")
 	public List<Operacion> findAllByIdProducto(Integer idProducto) {
 		Query query=entityManager.createQuery(" select o from Operacion o "
-				+ " join fetch o.lstCategorias cats"
 				+ " join o.producto p"
 				+ " where p.idProducto= :idProducto");
 		

@@ -56,6 +56,13 @@ public class Operacion implements Serializable{
 	@ManyToMany(mappedBy="lstOperaciones")
 	private List<Categoria> lstCategorias;
 	
+	/* Este campo se utiliza para identificar aquellas operacion que mueven dinero entre cuentas bancarias registradas en el sistema propiedad del mismo usuario.
+	 * Una operacion marcada como traspaso no tendrá efectos a nivel de sumatorio de balances / gastos / ingresos. Estos sumatorios son usuados en graficas o informes 
+	 * y posicion global.
+	 */
+	@Column (nullable=false, columnDefinition= "boolean default false")
+	private Boolean traspaso;
+	
 	public Operacion() {
 		super();
 	}
@@ -220,6 +227,14 @@ public class Operacion implements Serializable{
 			return comparacion;
 		}
 	};
+
+	public Boolean getTraspaso() {
+		return traspaso;
+	}
+
+	public void setTraspaso(Boolean traspaso) {
+		this.traspaso = traspaso;
+	}
 }
 	
 
