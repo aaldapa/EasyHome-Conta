@@ -29,6 +29,11 @@
       	<property name="password" value="${jdbc.password}"/>
    </bean>
    
+   <!-- Inicializador de base de datos. Si algun script falla, la inicializacion se para. -->
+    <jdbc:initialize-database data-source="dataSource">
+        <jdbc:script location="${jdbc.initLocation}"/>
+    </jdbc:initialize-database>
+   
    <bean id="entityManager" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
       <property name="dataSource" ref="dataSource" />
       <property name="packagesToScan" value="com.easyhomeconta.model" />
