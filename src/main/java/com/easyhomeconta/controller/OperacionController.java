@@ -3,9 +3,13 @@
  */
 package com.easyhomeconta.controller;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.sql.DriverManager;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -14,6 +18,15 @@ import javax.faces.event.PhaseId;
 import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperRunManager;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 import org.apache.log4j.Logger;
 import org.primefaces.event.FileUploadEvent;
@@ -147,7 +160,6 @@ public class OperacionController implements Serializable {
 		return "operacionImportForm";
 	}
 
-
 	/**
 	 * Utilizo este metodo para guardar las operaciones importadas del excel y para
 	 * modificar las operaciones de base de datos.  
@@ -254,13 +266,16 @@ public class OperacionController implements Serializable {
 		this.idProducto = idProducto;
 	}
 
+	/**
+	 * Metodo que carga la tabla de operaciones a importar con los datos del excel seleccionado
+	 * @param event
+	 */
 	public void handleFileUpload(FileUploadEvent event) {
 
 		if (!PhaseId.INVOKE_APPLICATION.equals(event.getPhaseId())) {
 			event.setPhaseId(PhaseId.INVOKE_APPLICATION);
 			event.queue();
 		} else {
-			// do stuff here, #{ngoPhotoBean.description} is set
 			log.info(idProducto);
 
 			if (event.getFile().equals(null))
@@ -289,6 +304,37 @@ public class OperacionController implements Serializable {
 
 	}
 
+	
+	public void generatePDF(){
+		JRBeanCollectionDataSource beanCollectionDataSource= new JRBeanCollectionDataSource(selectedOperacionesForm);
+		 try {
+			 
+			//Buscamos el contexto de jsf  
+			  FacesContext facesContext = FacesContext.getCurrentInstance();  
+			  HttpServletResponse response = (HttpServletResponse) facesContext.getExternalContext().getResponse();  
+			  //Con el contexto buscamos el jasper  
+			  // Ojo / es webapp  
+			  InputStream reportStream = facesContext.getExternalContext().getResourceAsStream("/reports/pruebas.jasper");
+			  ServletOutputStream servletOutputStream = response.getOutputStream();  
+			  facesContext.responseComplete();  
+			  //seteamos el contentType  
+			  response.setContentType("application/pdf");  
+			    
+			  //ejecutamos el reporte  
+			  JasperRunManager.runReportToPdfStream(reportStream, servletOutputStream, new HashMap(), beanCollectionDataSource);  
+			  // Cerramos la coneccion a la Base  
+//			  connection.close();  
+			  // flush y close del reporte  
+			  servletOutputStream.flush();  
+			  servletOutputStream.close();  
+			 
+			
+		} catch (JRException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	/**
 	 * @return the lstProductos
 	 */

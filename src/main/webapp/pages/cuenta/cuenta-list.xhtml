@@ -87,12 +87,12 @@
 								            
 								            <p:column>
 												
-												<button type="submit" class="btn btn-flat btn-primary btn-xs" title="#{msg['cuentas.listado.tabla.boton.consultar']}" jsf:id="btnConsultar" jsf:action="#{cuentaBean.doLoadConsultas(cta.idProducto)}" >
+												<button type="submit" class="btn btn-flat bg-navy btn-xs" title="#{msg['cuentas.listado.tabla.boton.consultar']}" jsf:id="btnConsultar" jsf:action="#{cuentaBean.doLoadConsultas(cta.idProducto)}" >
 	 											  <span class="glyphicon glyphicon-search" aria-hidden="true"></span> 
 	 											  <h:outputText value=" #{msg['cuentas.listado.tabla.boton.consultar']}"/>
 												</button>
 												<p:row rendered="#{cta.activo}">
-													<button type="submit" title="#{msg['cuentas.listado.tabla.boton.importar']}"  jsf:id="btnImport" jsf:action="#{cuentaBean.doLoadImportForm(cta.idProducto)}" class="btn bg-olive btn-flat btn-xs pull-right">
+													<button type="submit" title="#{msg['cuentas.listado.tabla.boton.importar']}"  jsf:id="btnImport" jsf:action="#{cuentaBean.doLoadImportForm(cta.idProducto)}" class="btn bg-blue btn-flat btn-xs pull-right">
 		 											  <span class="glyphicon glyphicon-import" aria-hidden="true"></span> 
 		 											  <h:outputText value=" #{msg['cuentas.listado.tabla.boton.importar']}"/>
 													</button>

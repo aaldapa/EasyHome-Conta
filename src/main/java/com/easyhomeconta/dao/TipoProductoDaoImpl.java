@@ -1,5 +1,6 @@
 package com.easyhomeconta.dao;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.inject.Named;
@@ -24,6 +25,35 @@ public class TipoProductoDaoImpl extends GenericDaoImpl<TipoProducto> implements
 		List<TipoProducto> lstProductos=(List<TipoProducto>)query.getResultList();
 				
 		return lstProductos;
+	}
+
+	@Override
+	public BigDecimal getSumatorioOperacionesByTProducto(Integer idTProducto) {
+		
+		Query query = entityManager.createQuery(
+				" select  sum(op.importe) "
+				+ " from Operacion op "
+				+ " where op.producto.idProducto in "
+					+ "( select p.idProducto from Producto p "
+					+ "where p.tipoProducto.idTipoProducto= :idTProducto)");
+		query.setParameter("idTProducto", idTProducto);
+		
+		BigDecimal sumatorio=(BigDecimal)query.getSingleResult();
+		
+		return sumatorio==null?new BigDecimal(0):sumatorio;
+	}
+
+	@Override
+	public BigDecimal getSumatorioProductosByTProducto(Integer idTProducto) {
+		Query query = entityManager.createQuery(
+				" select  sum(p.importe) "
+				+ " from Producto p "
+				+ " where p.tipoProducto.idTipoProducto= :idTProducto)");
+		query.setParameter("idTProducto", idTProducto);
+		
+		BigDecimal sumatorio=(BigDecimal)query.getSingleResult();
+		
+		return sumatorio==null?new BigDecimal(0):sumatorio;
 	}
 
 	

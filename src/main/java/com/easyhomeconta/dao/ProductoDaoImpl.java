@@ -100,5 +100,17 @@ public class ProductoDaoImpl extends GenericDaoImpl<Producto> implements Product
 		return producto;
 	}
 
+	@Override
+	public BigDecimal sumatorioProductos() {
+				
+		Query query=entityManager.createQuery(
+				"  select sum(p.importe) from Producto p"
+				+ " where p.baja= :baja");
+		
+		query.setParameter("baja", SiNo.N);
+		BigDecimal sumatorio=(BigDecimal)query.getSingleResult();
+		return sumatorio==null?new BigDecimal(0):sumatorio;
+	}
+
 
 }

@@ -45,7 +45,6 @@
 					    	<h:outputText id="id_tGastos" class="col-md-2 optitle" value="#{operacionBean.resultadoConsulta.totalGastosStr} €"/>
 					    	<h:outputText class="col-md-1 text-right optitle" value="#{msg['operaciones.listado.balance']}"/>
 					    	<h:outputLabel id="id_balance" class="col-md-2 optitle #{operacionBean.resultadoConsulta.balance >= 0 ? 'opingreso':'opgasto'}" value="#{operacionBean.resultadoConsulta.balanceStr} €"/>
-					    	
 					    </span>
 					    <div class="box-tools pull-right">
 					<!--           Caja o fieldset en la que aparecen los datos. Los botones que aparecen a continuacion son los de minimizar y cerrar la caja. -->
@@ -109,17 +108,25 @@
 					
 					<div class="box box-primary">
 					  <div class="box-header with-border">
-					    <span class="box-title col-md-7">
-					    	<h:outputText class="col-md-6" value="#{msg['operaciones.listado.subtitulo2']}"/>
+					    <span class="box-title col-md-6">
+					    	<h:outputText class="col-md-4" value="#{msg['operaciones.listado.subtitulo2']}"/>
 					    	<h:outputText class="col-md-4 text-right optitle" value="#{msg['operaciones.listado.registros']}" />
 					    	<h:outputText id="id_nRegistros" class="col-md-1 optitle" value="#{operacionBean.resultadoConsulta.nRegistros}" />
 					    </span>
-					    
-					    <div class="box-tools col-md-5">
+					    <div class="col-md-1 pull-right">
+							<p:commandLink>
+	    						<h:graphicImage name="img/pdf.png" width="28px" height="28px"/>
+	    						<f:ajax execute="@form" render="@form" listener="#{operacionBean.generatePDF}"/>
+							</p:commandLink>
+							<p:commandLink action="#{reportBean.generateReport}">
+	    						<h:graphicImage name="img/xls.png" width="28px" height="28px"/>
+							</p:commandLink>	
+				    	</div>
+					    <div class="col-md-5 pull-right">
 					<!--           Caja o fieldset en la que aparecen los datos. Los botones que aparecen a continuacion son los de minimizar y cerrar la caja. -->
 <!-- 					          <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Colapsar"><i class="fa fa-minus"></i></button> -->
 
-							<div class="input-group pull-right">
+							<div class="input-group">
               					<h:inputText class="form-control" value="#{operacionBean.busqueda}" pt:placeholder="#{msg['operaciones.listado.combo.buscar.placeholder']}" autocomplete="off">
               						<p:ajax event="keyup" onstart="loadingShow();" oncomplete="loadingHide();" delay="1000" process="@form" update="id_form:id_data_table id_form:id_nRegistros id_form:id_balance id_form:id_tIngresos id_form:id_tGastos" listener="#{operacionBean.doLoadDateTable}"/>
               					</h:inputText>
@@ -128,8 +135,10 @@
 	              						<span class="glyphicon glyphicon-search"></span>
 	             					</button>
              					</span>
-             				</div>
+             				</div> 
 					    </div>
+					    
+					    
 					  </div>
 					  
 					  <div class="box-body">

@@ -3,6 +3,7 @@
  */
 package com.easyhomeconta.dao;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -15,8 +16,10 @@ import javax.persistence.TemporalType;
 import org.apache.log4j.Logger;
 
 import com.easyhomeconta.model.Operacion;
+import com.easyhomeconta.model.OperacionView;
 import com.easyhomeconta.model.Producto;
 import com.easyhomeconta.utils.Enumeraciones.SiNo;
+import com.easyhomeconta.utils.Enumeraciones.TipoOperacion;
 
 /**
  * @author Alberto
@@ -206,4 +209,53 @@ public class OperacionDaoImpl extends GenericDaoImpl<Operacion> implements Opera
 		List<Operacion> lstOperaciones=(List<Operacion>) query.getResultList();
 		return lstOperaciones;
 	}
+
+	@Override
+	public BigDecimal sumatorioOperaciones(TipoOperacion tipoOperacion, Date inicio, Date fin) {
+		
+		StringBuffer sql =new StringBuffer();
+		
+		sql.append(" select sum(op.importe) from Operacion op"
+				+ " join op.producto p "
+				+ " where p.baja= :baja");
+				
+		if (inicio!=null && fin!=null)
+				sql.append(	" and op.fecha between :fInicio and :fFin ");
+		
+		if (tipoOperacion!=null && tipoOperacion.compareTo(TipoOperacion.INGRESO)==0)
+			sql.append(	" and op.importe >=0 ");
+		
+		if (tipoOperacion!=null && tipoOperacion.compareTo(TipoOperacion.GASTO)==0)
+			sql.append(	" and op.importe <0 ");
+		
+		Query query=entityManager.createQuery(sql.toString());
+		
+		query.setParameter("baja", SiNo.N);
+		
+		if (inicio!=null && fin!=null){
+			query.setParameter("fInicio", inicio, TemporalType.DATE);
+			query.setParameter("fFin", fin, TemporalType.DATE);
+		}
+			
+		BigDecimal sumatorio=(BigDecimal)query.getSingleResult();
+		return sumatorio==null?new BigDecimal(0):sumatorio;
+	}
+
+	@Override
+	public List<OperacionView> getVistaBalancesMes(Integer year) {
+		
+		Query query=entityManager.createQuery(
+				" select vista from OperacionView vista "
+				+ "where vista.anio=  :year group by vista.mesNumero");
+		
+		query.setParameter("year", year);
+		
+		@SuppressWarnings("unchecked")
+		List<OperacionView> lstOperacionesView=(List<OperacionView>) query.getResultList();
+		
+		return lstOperacionesView;
+	}
+	
+	
+	
 }

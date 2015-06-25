@@ -51,4 +51,10 @@ public interface ProductoDao extends GenericDao<Producto> {
 	 */
 	public Producto findWithBancoById(Integer idProducto);
 	
+	/**
+	 * Obtiene el sumatorio de saldos iniciales de productos no dados de baja
+	 * @return
+	 */
+	public BigDecimal sumatorioProductos();
+	
 }

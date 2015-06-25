@@ -36,6 +36,10 @@
 		
 		              <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
 		            </div>
+<!-- 		            <div class="text-center" style=""> -->
+<!-- 		            	<p:clock pattern="HH:mm:ss"/> -->
+<!-- 		            </div> -->
+		            
 		          </div>
 		          <!-- sidebar menu: : style can be found in sidebar.less -->
 		          <ul class="sidebar-menu">
@@ -55,9 +59,9 @@
 		                <span><h:outputText value="#{msg['leftmenu.mis.productos']}"/></span>
 		              </a>
 		              <ul class="treeview-menu" style="#{ubicacion=='cuenta' || ubicacion=='deposito' || 'otro' ? 'display:block': ''}">
-		                <li class="#{ubicacion=='cuenta' ? 'active': ''}"><h:commandLink action="#{cuentaBean.doListItems}"><i class="fa fa-circle-o text-blue"></i> <h:outputText value="#{msg['leftmenu.cuentas']}"/></h:commandLink></li>
-		                 <li class="#{ubicacion=='deposito' ? 'active': ''}"><h:commandLink action="#{depositoBean.doListItems}"><i class="fa fa-circle-o text-green"></i> <h:outputText value="#{msg['leftmenu.depositos']}"/></h:commandLink></li>
-		                <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <h:outputText value="#{msg['leftmenu.otros']}"/></a></li>
+		                <li class="#{ubicacion=='cuenta' ? 'active': ''}"><h:commandLink action="#{cuentaBean.doListItems}"><i class="fa fa-circle-o text-navy"></i> <h:outputText value="#{msg['leftmenu.cuentas']}"/></h:commandLink></li>
+		                 <li class="#{ubicacion=='deposito' ? 'active': ''}"><h:commandLink action="#{depositoBean.doListItems}"><i class="fa fa-circle-o text-blue"></i> <h:outputText value="#{msg['leftmenu.depositos']}"/></h:commandLink></li>
+		                <li><h:commandLink action="#{reportBean.generateReport}"><i class="fa fa-circle-o text-aqua"></i> <h:outputText value="#{msg['leftmenu.otros']}"/></h:commandLink></li>
 		              </ul>
 		            </li>
 		            
@@ -68,8 +72,8 @@
 		                <span><h:outputText value="#{msg['leftmenu.operaciones']}"/></span>
 		              </a>
 		              <ul class="treeview-menu" style="#{ubicacion=='operacion' || ubicacion=='import'  ? 'display:block': ''}">
-		                <li class="#{ubicacion=='operacion' ? 'active': ''}"><h:commandLink action="#{operacionBean.doListItems}"><i class="fa fa-circle-o text-blue"></i> <h:outputText value="#{msg['leftmenu.consultar']}"/></h:commandLink></li>
-		                 <li class="#{ubicacion=='import' ? 'active': ''}"><h:commandLink action="#{operacionBean.doLoadImportForm}"><i class="fa fa-circle-o text-green"></i> <h:outputText value="#{msg['leftmenu.importar']}"/></h:commandLink></li>
+		                <li class="#{ubicacion=='operacion' ? 'active': ''}"><h:commandLink action="#{operacionBean.doListItems}"><i class="fa fa-circle-o text-navy"></i> <h:outputText value="#{msg['leftmenu.consultar']}"/></h:commandLink></li>
+		                 <li class="#{ubicacion=='import' ? 'active': ''}"><h:commandLink action="#{operacionBean.doLoadImportForm}"><i class="fa fa-circle-o text-blue"></i> <h:outputText value="#{msg['leftmenu.importar']}"/></h:commandLink></li>
 		              </ul>
 		            </li>
 		            

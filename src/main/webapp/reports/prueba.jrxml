@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
+<!-- 2015-06-25T11:46:43 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="prueba" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="df622a11-c381-4618-82c0-be29848e11dc">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="86" splitType="Stretch">
+			<staticText>
+				<reportElement x="-10" y="10" width="100" height="30" uuid="4d124a0c-3681-4bf6-ab4d-cc885a0e6bef"/>
+				<text><![CDATA[Prueba]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="390" y="0" width="95" height="20" forecolor="#000000" uuid="6d572cf4-a822-47c8-9bd7-86126f228594"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="62" splitType="Stretch">
+			<staticText>
+				<reportElement x="60" y="20" width="100" height="30" uuid="cc339d31-8fee-4dca-941d-7262624d82c3"/>
+				<text><![CDATA[Prueba]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="390" y="0" width="95" height="20" forecolor="#000000" uuid="9dc9458a-0320-437d-92ac-349f41e858bb"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="62" splitType="Stretch">
+			<staticText>
+				<reportElement x="230" y="32" width="100" height="30" uuid="aca0381b-d1fc-40ea-a973-e83e8afcdf88"/>
+				<text><![CDATA[Prueba]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="390" y="0" width="95" height="20" forecolor="#000000" uuid="8fc57f2e-eebd-4d73-8dc1-0ea1d83e09ac"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<staticText>
+				<reportElement x="140" y="30" width="100" height="30" uuid="da2e27ca-42d5-43b5-8b51-02a5c389a77a"/>
+				<text><![CDATA[Prueba]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="390" y="0" width="95" height="20" forecolor="#000000" uuid="a4cd1522-1c30-4911-ac53-5637475f740c"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch">
+			<staticText>
+				<reportElement x="370" y="15" width="100" height="30" uuid="f0bfd62d-3ce9-4edf-9b17-d11e12223d38"/>
+				<text><![CDATA[Prueba]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="50" y="10" width="95" height="20" forecolor="#000000" uuid="774b3684-7ec6-49bc-ba0f-567f718d55e4"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="62" splitType="Stretch">
+			<staticText>
+				<reportElement x="110" y="10" width="100" height="30" uuid="a6951fda-1e05-4091-b633-6276e391ff8a"/>
+				<text><![CDATA[Prueba]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="390" y="0" width="95" height="20" forecolor="#000000" uuid="cdf25c5b-9242-48fc-af9d-6f78f1ba31f8"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch">
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="390" y="0" width="95" height="20" forecolor="#000000" uuid="65c48d17-9273-46d5-a783-b893bef8a9cd"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>
