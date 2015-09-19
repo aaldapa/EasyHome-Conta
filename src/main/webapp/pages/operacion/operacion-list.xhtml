@@ -84,7 +84,7 @@
 								            </div>
 								        </div>
 								        
-								        <h:outputLabel styleClass="col-md-1 control-label" for="id_categorias" value="Categorias"/>
+								        <h:outputLabel styleClass="col-md-1 control-label" for="id_categorias" value="#{msg['operaciones.listado.categoria']}"/>
 								        <div class="col-md-2">
 								            <div class="input-group ">
 								        		<h:selectOneMenu id="id_categorias" value="#{operacionBean.idCategoria}" styleClass="form-control" >
@@ -114,11 +114,11 @@
 					    	<h:outputText id="id_nRegistros" class="col-md-1 optitle" value="#{operacionBean.resultadoConsulta.nRegistros}" />
 					    </span>
 					    <div class="col-md-1 pull-right">
-							<p:commandLink>
+							<p:commandLink action="#{operacionBean.generateReport}" ajax="false">
 	    						<h:graphicImage name="img/pdf.png" width="28px" height="28px"/>
-	    						<f:ajax execute="@form" render="@form" listener="#{operacionBean.generatePDF}"/>
+	    						
 							</p:commandLink>
-							<p:commandLink action="#{reportBean.generateReport}">
+							<p:commandLink action="#{reportBean.generateReport}" ajax="false">
 	    						<h:graphicImage name="img/xls.png" width="28px" height="28px"/>
 							</p:commandLink>	
 				    	</div>

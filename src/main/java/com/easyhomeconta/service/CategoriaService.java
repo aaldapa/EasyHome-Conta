@@ -14,6 +14,13 @@ import com.easyhomeconta.model.Categoria;
 public interface CategoriaService {
 
 	/**
+	 * Obtiene la categoria con el id pasado como parametro
+	 * @param idCategoria
+	 * @return
+	 */
+	public Categoria getCategoriaById(Integer idCategoria);
+	
+	/**
 	 * Obtiene todas las categorias dadas de alta en base de datos por el usuario logado
 	 * @param idUser
 	 * @return

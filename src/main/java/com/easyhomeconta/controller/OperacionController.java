@@ -7,10 +7,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
@@ -21,11 +22,13 @@ import javax.inject.Named;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperRunManager;
+import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 import org.apache.log4j.Logger;
@@ -35,8 +38,11 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.easyhomeconta.forms.OperacionForm;
+import com.easyhomeconta.model.Categoria;
 import com.easyhomeconta.model.User;
+import com.easyhomeconta.service.CategoriaService;
 import com.easyhomeconta.service.OperacionService;
+import com.easyhomeconta.service.ProductoService;
 import com.easyhomeconta.service.ResultadoConsultaForm;
 import com.easyhomeconta.service.UserService;
 import com.easyhomeconta.utils.Constantes;
@@ -60,6 +66,12 @@ public class OperacionController implements Serializable {
 
 	@Inject
 	UserService userService;
+	
+	@Inject
+	CategoriaService categoriaService;
+	
+	@Inject
+	ProductoService productoService;
 
 	private ResultadoConsultaForm resultadoConsulta;
 	
@@ -305,35 +317,59 @@ public class OperacionController implements Serializable {
 	}
 
 	
-	public void generatePDF(){
-		JRBeanCollectionDataSource beanCollectionDataSource= new JRBeanCollectionDataSource(selectedOperacionesForm);
-		 try {
-			 
-			//Buscamos el contexto de jsf  
-			  FacesContext facesContext = FacesContext.getCurrentInstance();  
-			  HttpServletResponse response = (HttpServletResponse) facesContext.getExternalContext().getResponse();  
-			  //Con el contexto buscamos el jasper  
-			  // Ojo / es webapp  
-			  InputStream reportStream = facesContext.getExternalContext().getResourceAsStream("/reports/pruebas.jasper");
-			  ServletOutputStream servletOutputStream = response.getOutputStream();  
-			  facesContext.responseComplete();  
-			  //seteamos el contentType  
-			  response.setContentType("application/pdf");  
-			    
-			  //ejecutamos el reporte  
-			  JasperRunManager.runReportToPdfStream(reportStream, servletOutputStream, new HashMap(), beanCollectionDataSource);  
-			  // Cerramos la coneccion a la Base  
-//			  connection.close();  
-			  // flush y close del reporte  
-			  servletOutputStream.flush();  
-			  servletOutputStream.close();  
-			 
-			
-		} catch (JRException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+	public void generateReport()  throws ClassNotFoundException, SQLException, IOException,  
+	   JRException { 
+		 
+		FacesContext ctx = FacesContext.getCurrentInstance();
+
+		
+		// Definimos cual sera nuestra fuente de datos
+		JRBeanCollectionDataSource ds =new JRBeanCollectionDataSource(resultadoConsulta.getLstOperacionesForm());
+		
+		String reportPath = "/reports/prueba.jrxml";
+		InputStream jasperTemplate = ctx.getExternalContext()
+				.getResourceAsStream(reportPath);
+		// Compilamos el informe jrxml
+		JasperReport jasperReport = JasperCompileManager
+				.compileReport(jasperTemplate);
+
+		String producto=idProducto!=null?productoService.getProductoById(idProducto).getNombre(): "TODOS";
+		String categoria="";
+		if (idCategoria==null)
+			categoria="TODAS";
+		else if (idCategoria.compareTo(new Integer(0))==0)
+			categoria="NINGUNA";
+		else
+			producto=categoriaService.getCategoriaById(idCategoria).getNombre();
+		
+		Map parameters = new HashMap();
+		
+		parameters.put("titulo","Cuentas - Operaciones");
+		parameters.put("tituloTabla","Lista de operaciones");
+		parameters.put("fechaInicio", fechaInicio);
+		parameters.put("fechaFin", fechaFin);
+		parameters.put("categoria", categoria);
+		parameters.put("producto", producto);
+		
+		// Rellenamos el informe con la conexion creada y sus parametros establecidos
+		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters,ds);
+
+		HttpServletResponse response = (HttpServletResponse) FacesContext
+				.getCurrentInstance().getExternalContext().getResponse();
+
+		response.setContentType("application/pdf");
+		response.setHeader("Content-Disposition", "attachment; filename=\"report.pdf\"");
+
+		ServletOutputStream outputStream = response.getOutputStream();
+		// Exportamos el informe a formato PDF
+		JasperExportManager.exportReportToPdfStream(jasperPrint, outputStream);
+
+		outputStream.flush();
+		outputStream.close();
+		ctx.renderResponse();
+		ctx.responseComplete();
+
+}
 	
 	/**
 	 * @return the lstProductos

@@ -259,4 +259,10 @@ public class ProductoServiceImpl implements ProductoService {
 		
 	}
 
+	@Override
+	public Producto getProductoById(Integer idProducto) {
+		Producto producto=productoDao.findById(idProducto);
+		return producto;
+	}
+
 }

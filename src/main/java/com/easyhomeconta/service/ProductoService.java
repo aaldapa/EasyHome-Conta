@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.easyhomeconta.forms.BancoForm;
 import com.easyhomeconta.forms.ProductoForm;
+import com.easyhomeconta.model.Producto;
 
 /**
  * @author Alberto
@@ -14,6 +15,13 @@ import com.easyhomeconta.forms.ProductoForm;
  */
 public interface ProductoService {
 
+	/**
+	 * Obtiene el producto cuyo id es pasado como parametro
+	 * @param idProducto
+	 * @return
+	 */
+	public Producto getProductoById(Integer idProducto);
+	
 	/**
 	 * Obtiene todas los productos dadas de alta en base de datos (baja N) por el usuario logado
 	 * y los transforma en bean para representarlos
