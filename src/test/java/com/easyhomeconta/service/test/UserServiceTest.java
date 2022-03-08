@@ -57,7 +57,7 @@ public class UserServiceTest extends AbstractTransactionalJUnit4SpringContextTes
 	@Test(expected = AccessDeniedException.class)
 	public void testFindAllUsers1() {
 
-        UserDetails userDetails = userService.loadUserByUsername ("Lorea");
+        UserDetails userDetails = userService.loadUserByUsername ("Prueba");
         Authentication authToken = new UsernamePasswordAuthenticationToken (userDetails.getUsername(), userDetails.getPassword(), userDetails.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authToken);
 		
@@ -80,9 +80,9 @@ public class UserServiceTest extends AbstractTransactionalJUnit4SpringContextTes
 		user.setEnabled(true);
 		userService.createUser(user);
 		
-		User userCreado=userService.getUserById(user.getIdUser());
+		//User userCreado=userService.getUserById(user.getIdUser());
 		
-		log.info(userCreado.getUsername());
+		//log.info(userCreado.getUsername());
 	
 	}
 

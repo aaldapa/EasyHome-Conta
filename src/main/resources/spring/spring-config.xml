@@ -30,7 +30,7 @@
    </bean>
    
    <!-- Inicializador de base de datos. Si algun script falla, la inicializacion se para. -->
-    <jdbc:initialize-database data-source="dataSource">
+    <jdbc:initialize-database data-source="dataSource" enabled="false">
         <jdbc:script location="${jdbc.initLocation}"/>
     </jdbc:initialize-database>
    

@@ -3,12 +3,14 @@
  */
 package com.easyhomeconta.dao.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.persistence.NoResultException;
 
 import org.apache.log4j.Logger;
 import org.junit.Test;
@@ -107,10 +109,8 @@ public class UserDaoTest extends AbstractTransactionalJUnit4SpringContextTests{
 		user.setAccountNonLocked(true);
 		user.setCredentialsNonExpired(true);
 		user.setEnabled(true);
-		userDao.create(user);
+		assertNotNull(userDao.create(user).getIdUser());
 		
-		User userCreado=userDao.findById(user.getIdUser());
-		log.info(userCreado.getUsername());
 	}
 
 	/**
@@ -131,12 +131,12 @@ public class UserDaoTest extends AbstractTransactionalJUnit4SpringContextTests{
 	/**
 	 * Test method for {@link com.easyhomeconta.dao.GenericDaoImpl#delete(java.lang.Object)}.
 	 */
-	@Test
+	@Test(expected = NoResultException.class)
 	@Rollback
 	public void testDelete() {
 		//Eliminar el usuario de username Alberto
 		userDao.delete(new Integer(1));
-		assertNull(userDao.findById(1));
+		userDao.findById(1);
 	}
 
 	/**

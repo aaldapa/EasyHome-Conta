@@ -15,12 +15,12 @@ import com.easyhomeconta.utils.NumeroUtil;
 public class PosicionGlobalForm implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	//Totales
+	// Totales
 	public BigDecimal totalCuentas, totalDepositos, totalOtros, total;
 	public String totalCuentasStr, totalDepositosStr, totalOtrosStr, totalStr;
 	public Float percentCuentas, percentDepositos, percentOtros;
 	public String percentCuentasStr, percentDepositosStr, percentOtrosStr;
-	//Mes
+	// Mes
 	public BigDecimal totalMes, totalIngresosMes, totalGastosMes;
 	public String totalMesStr, totalIngresosMesStr, totalGastosMesStr;
 
@@ -31,48 +31,63 @@ public class PosicionGlobalForm implements Serializable {
 	public BigDecimal getTotalCuentas() {
 		return totalCuentas;
 	}
+
 	public void setTotalCuentas(BigDecimal totalCuentas) {
 		this.totalCuentas = totalCuentas;
 	}
+
 	public BigDecimal getTotalDepositos() {
 		return totalDepositos;
 	}
+
 	public void setTotalDepositos(BigDecimal totalDepositos) {
 		this.totalDepositos = totalDepositos;
 	}
+
 	public BigDecimal getTotalOtros() {
 		return totalOtros;
 	}
+
 	public void setTotalOtros(BigDecimal totalOtros) {
 		this.totalOtros = totalOtros;
 	}
+
 	public BigDecimal getTotal() {
 		return total;
 	}
+
 	public void setTotal(BigDecimal total) {
 		this.total = total;
 	}
+
 	public String getTotalCuentasStr() {
 		return NumeroUtil.formatearACastellano(this.getTotalCuentas());
 	}
+
 	public void setTotalCuentasStr(String totalCuentasStr) {
 		this.totalCuentasStr = totalCuentasStr;
 	}
+
 	public String getTotalDepositosStr() {
 		return NumeroUtil.formatearACastellano(this.getTotalDepositos());
 	}
+
 	public void setTotalDepositosStr(String totalDepositosStr) {
 		this.totalDepositosStr = totalDepositosStr;
 	}
+
 	public String getTotalOtrosStr() {
 		return NumeroUtil.formatearACastellano(this.getTotalOtros());
 	}
+
 	public void setTotalOtrosStr(String totalOtrosStr) {
 		this.totalOtrosStr = totalOtrosStr;
 	}
+
 	public String getTotalStr() {
 		return NumeroUtil.formatearACastellano(this.getTotal());
 	}
+
 	public void setTotalStr(String totalStr) {
 		this.totalStr = totalStr;
 	}
@@ -102,9 +117,11 @@ public class PosicionGlobalForm implements Serializable {
 	}
 
 	public String getPercentCuentasStr() {
-		BigDecimal percent=totalCuentas.multiply(new BigDecimal(100)).divide(total,2,BigDecimal.ROUND_HALF_UP);
+
+		BigDecimal percent = new BigDecimal(0).compareTo(total) == 0 ? new BigDecimal(0)
+				: totalCuentas.multiply(new BigDecimal(100)).divide(total, 2, BigDecimal.ROUND_HALF_UP);
 		return NumeroUtil.formatearACastellano(percent);
-		
+
 	}
 
 	public void setPercentCuentasStr(String percentCuentasStr) {
@@ -112,7 +129,8 @@ public class PosicionGlobalForm implements Serializable {
 	}
 
 	public String getPercentDepositosStr() {
-		BigDecimal percent=totalDepositos.multiply(new BigDecimal(100)).divide(total,2,BigDecimal.ROUND_HALF_UP);
+		BigDecimal percent = new BigDecimal(0).compareTo(total) == 0 ? new BigDecimal(0)
+				: totalDepositos.multiply(new BigDecimal(100)).divide(total, 2, BigDecimal.ROUND_HALF_UP);
 		return NumeroUtil.formatearACastellano(percent);
 	}
 
@@ -121,9 +139,10 @@ public class PosicionGlobalForm implements Serializable {
 	}
 
 	public String getPercentOtrosStr() {
-		BigDecimal percent=totalOtros.multiply(new BigDecimal(100)).divide(total,2,BigDecimal.ROUND_HALF_UP);
+		BigDecimal percent = new BigDecimal(0).compareTo(total) == 0 ? new BigDecimal(0)
+				: totalOtros.multiply(new BigDecimal(100)).divide(total, 2, BigDecimal.ROUND_HALF_UP);
 		return NumeroUtil.formatearACastellano(percent);
-		
+
 	}
 
 	public void setPercentOtrosStr(String percentOtrosStr) {
@@ -177,5 +196,5 @@ public class PosicionGlobalForm implements Serializable {
 	public void setTotalGastosMesStr(String totalGastosMesStr) {
 		this.totalGastosMesStr = totalGastosMesStr;
 	}
-	
+
 }

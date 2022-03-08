@@ -92,7 +92,7 @@ public class User implements UserDetails{
 	private Boolean enabled=true;
 	
 	//Mapeo para NaN con Roles (Usamos EAGER para que los roles se carguen por defecto al hacer la query de usuarios y no tengamos que hacer una join en la select)
-	@ManyToMany(fetch=FetchType.LAZY)
+	@ManyToMany(fetch=FetchType.LAZY)//(fetch=FetchType.EAGER)
 	@JoinTable(
 	      name="USER_ROLES",
 	      joinColumns={@JoinColumn(name="id_user")},
@@ -100,7 +100,7 @@ public class User implements UserDetails{
 	private List<Rol> lstRoles;
 	
 	//Mapeo para NaN con Roles (Usamos EAGER para que los roles se carguen por defecto al hacer la query de usuarios y no tengamos que hacer una join en la select)
-	@ManyToMany (cascade=CascadeType.ALL)//(fetch=FetchType.EAGER)
+	@ManyToMany (cascade=CascadeType.ALL)
 	@JoinTable(
 	      name="USER_PRODUCTOS",
 	      joinColumns={@JoinColumn(name="id_user")},
