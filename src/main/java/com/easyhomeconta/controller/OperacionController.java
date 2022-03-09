@@ -197,7 +197,7 @@ public class OperacionController implements Serializable {
 			log.info("Entro en guardar. idProducto: " + idProducto + " , accion: " + accion);
 
 			// Validacion de idProducto
-			if (idProducto == null && new Integer("0").compareTo(idProducto) > 0 && accion.equalsIgnoreCase("IMPORT"))
+			if ((idProducto == null || new Integer("0").compareTo(idProducto) == 0) && accion.equalsIgnoreCase("IMPORT"))
 				MyUtils.addErrorMessage(MyUtils.getStringFromBundle("error"),
 						MyUtils.getStringFromBundle("operacion.form.importar.guardar.error.detail"));
 			else {
