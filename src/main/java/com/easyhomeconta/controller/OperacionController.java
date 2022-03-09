@@ -111,7 +111,7 @@ public class OperacionController implements Serializable {
 		String path = FacesContext.getCurrentInstance().getExternalContext().getRequestServletPath();
 
 		// Si entro en la vista de consultas cargo la lista de operaciones por
-		// defecto
+		// defecto.
 		if (path.contains("operacion-list.xhtml")) {
 			this.fechaFin = new Date();
 			this.fechaInicio = FechaUtil.restarDiasAFecha(fechaFin, getnRangodias());
