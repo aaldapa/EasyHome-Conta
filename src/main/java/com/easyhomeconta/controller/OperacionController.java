@@ -149,7 +149,7 @@ public class OperacionController implements Serializable {
 	}
 
 	/**
-	 * Caga lo datos de la tabla de operaciones por medio de llamada asincrona
+	 * Caga los datos de la tabla de operaciones por medio de llamada asincrona
 	 */
 	public void doLoadDateTable() {
 		resultadoConsulta = operacionService.getLstOperacionesForm(fechaInicio, fechaFin, idProducto, idCategoria,
